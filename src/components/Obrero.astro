@@ -14,7 +14,6 @@
             sans-serif;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         min-height: 100vh;
         padding: 2rem;
@@ -37,7 +36,9 @@
         display: flex;
         gap: 2rem;
         align-items: flex-end;
-        margin-bottom: 2rem;
+        position: absolute;
+        top: 40%;
+        transform: translateY(-50%);
     }
 
     .worker-emoji {
@@ -70,6 +71,9 @@
         max-width: 90%;
         line-height: 1.2;
         padding: 0 1rem;
+        position: absolute;
+        top: 60%;
+        min-height: 7.2rem;
     }
 
     @keyframes bounce1 {
