@@ -23,6 +23,7 @@
             sans-serif;
         font-size: 1rem;
         font-weight: 500;
+        line-height: 1.4;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -34,12 +35,44 @@
         }
     }
 
+    /* Tablet */
     @media (max-width: 768px) {
         .wip-banner {
-            padding: 0.75rem;
+            padding: 0.875rem 1rem;
         }
         .wip-banner p {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+        .wip-banner {
+            padding: 0.75rem 0.5rem;
+        }
+        .wip-banner p {
+            font-size: 0.8rem;
+        }
+    }
+
+    /* Small mobile */
+    @media (max-width: 320px) {
+        .wip-banner {
+            padding: 0.625rem 0.5rem;
+        }
+        .wip-banner p {
+            font-size: 0.75rem;
+            line-height: 1.3;
+        }
+    }
+
+    /* Landscape mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .wip-banner {
+            padding: 0.5rem 1rem;
+        }
+        .wip-banner p {
+            font-size: 0.8rem;
         }
     }
 </style>

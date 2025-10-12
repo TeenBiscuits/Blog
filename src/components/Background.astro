@@ -108,10 +108,45 @@
         }
     }
 
+    /* Tablet */
     @media (max-width: 768px) {
         .icon-row span {
             font-size: 2rem;
             margin: 0 1.5rem;
+            opacity: 0.12;
+        }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+        .icon-row span {
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            opacity: 0.1;
+        }
+
+        .row-1 {
+            top: 8%;
+        }
+
+        .row-2 {
+            top: 32%;
+        }
+
+        .row-3 {
+            top: 56%;
+        }
+
+        .row-4 {
+            top: 80%;
+        }
+    }
+
+    /* Small mobile */
+    @media (max-width: 320px) {
+        .icon-row span {
+            font-size: 1.2rem;
+            margin: 0 0.8rem;
         }
     }
 </style>

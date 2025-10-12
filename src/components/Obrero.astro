@@ -20,6 +20,10 @@
         padding: 2rem;
     }
 
+    .construction-text {
+        color: #111827;
+    }
+
     @media (prefers-color-scheme: dark) {
         .construction-text {
             color: #f9fafb;
@@ -60,6 +64,9 @@
         font-weight: 600;
         text-align: center;
         animation: fadeIn 1s;
+        max-width: 90%;
+        line-height: 1.2;
+        padding: 0 1rem;
     }
 
     @keyframes bounce1 {
@@ -103,21 +110,104 @@
         }
     }
 
+    /* Tablet */
     @media (max-width: 768px) {
-        .workers {
-            gap: 1rem;
+        .construction-container {
+            padding: 1.5rem;
         }
+
+        .workers {
+            gap: 1.5rem;
+        }
+
         .worker-emoji {
             font-size: 5rem;
         }
+
         .worker-2 {
-            font-size: 6rem;
+            font-size: 6.5rem;
         }
+
         .worker-3 {
-            font-size: 4rem;
+            font-size: 4.5rem;
         }
+
         .construction-text {
             font-size: 2rem;
+        }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+        .construction-container {
+            padding: 1rem;
+        }
+
+        .workers {
+            gap: 1rem;
+        }
+
+        .worker-emoji {
+            font-size: 3.5rem;
+        }
+
+        .worker-2 {
+            font-size: 4.5rem;
+        }
+
+        .worker-3 {
+            font-size: 3rem;
+        }
+
+        .construction-text {
+            font-size: 1.5rem;
+            line-height: 1.3;
+        }
+    }
+
+    /* Small mobile */
+    @media (max-width: 320px) {
+        .workers {
+            gap: 0.5rem;
+        }
+
+        .worker-emoji {
+            font-size: 2.5rem;
+        }
+
+        .worker-2 {
+            font-size: 3.5rem;
+        }
+
+        .worker-3 {
+            font-size: 2rem;
+        }
+
+        .construction-text {
+            font-size: 1.2rem;
+        }
+    }
+
+    /* Landscape mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .workers {
+            margin-bottom: 1rem;
+        }
+
+        .worker-emoji {
+            font-size: 3rem;
+        }
+
+        .worker-2 {
+            font-size: 4rem;
+        }
+
+        .worker-3 {
+            font-size: 2.5rem;
+        }
+
+        .construction-text {
+            font-size: 1.3rem;
         }
     }
 </style>
