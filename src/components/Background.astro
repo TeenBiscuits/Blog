@@ -1,0 +1,117 @@
+<div class="background-container">
+    <div class="icon-row row-1">
+        <span>💻</span><span>🚀</span><span>⚡</span><span>🎨</span><span
+            >📱</span
+        ><span>🔧</span><span>💡</span><span>🎯</span>
+        <span>💻</span><span>🚀</span><span>⚡</span><span>🎨</span><span
+            >📱</span
+        ><span>🔧</span><span>💡</span><span>🎯</span>
+    </div>
+    <div class="icon-row row-2">
+        <span>🌟</span><span>📊</span><span>🎪</span><span>🔥</span><span
+            >✨</span
+        ><span>🎭</span><span>🎸</span><span>🎲</span>
+        <span>🌟</span><span>📊</span><span>🎪</span><span>🔥</span><span
+            >✨</span
+        ><span>🎭</span><span>🎸</span><span>🎲</span>
+    </div>
+    <div class="icon-row row-3">
+        <span>🎮</span><span>📚</span><span>🎬</span><span>🎵</span><span
+            >🎤</span
+        ><span>🎧</span><span>📸</span><span>🎹</span>
+        <span>🎮</span><span>📚</span><span>🎬</span><span>🎵</span><span
+            >🎤</span
+        ><span>🎧</span><span>📸</span><span>🎹</span>
+    </div>
+    <div class="icon-row row-4">
+        <span>🚗</span><span>✈️</span><span>🏆</span><span>⚽</span><span
+            >🎾</span
+        ><span>🏀</span><span>⚾</span><span>🎳</span>
+        <span>🚗</span><span>✈️</span><span>🏆</span><span>⚽</span><span
+            >🎾</span
+        ><span>🏀</span><span>⚾</span><span>🎳</span>
+    </div>
+</div>
+
+<style>
+    .background-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+        background: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .background-container {
+            background: #0f172a;
+        }
+        .icon-row span {
+            filter: grayscale(1) brightness(0.4);
+        }
+    }
+
+    .icon-row {
+        display: flex;
+        position: absolute;
+        white-space: nowrap;
+        animation: scrollDiagonal 30s linear infinite;
+    }
+
+    .icon-row span {
+        font-size: 3rem;
+        margin: 0 2rem;
+        opacity: 0.15;
+        filter: grayscale(1) brightness(1.5);
+    }
+
+    .row-1 {
+        top: 5%;
+        left: -100%;
+        animation-duration: 25s;
+        transform: rotate(-15deg);
+    }
+
+    .row-2 {
+        top: 30%;
+        left: -100%;
+        animation-duration: 35s;
+        animation-delay: -5s;
+        transform: rotate(-15deg);
+    }
+
+    .row-3 {
+        top: 55%;
+        left: -100%;
+        animation-duration: 28s;
+        animation-delay: -10s;
+        transform: rotate(-15deg);
+    }
+
+    .row-4 {
+        top: 80%;
+        left: -100%;
+        animation-duration: 32s;
+        animation-delay: -15s;
+        transform: rotate(-15deg);
+    }
+
+    @keyframes scrollDiagonal {
+        0% {
+            transform: translateX(0) rotate(-15deg);
+        }
+        100% {
+            transform: translateX(100%) rotate(-15deg);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .icon-row span {
+            font-size: 2rem;
+            margin: 0 1.5rem;
+        }
+    }
+</style>

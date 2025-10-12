@@ -1,0 +1,158 @@
+<div class="construction-container">
+    <div class="workers">
+        <div class="worker-emoji worker-1">👷🏻</div>
+        <div class="worker-emoji worker-2">👷🏽‍♀️</div>
+        <div class="worker-emoji worker-3">👷🏿‍♂️</div>
+    </div>
+    <div class="construction-text" id="constructionText"></div>
+</div>
+
+<style>
+    .construction-container {
+        font-family:
+            Inter, Roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial,
+            sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 2rem;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .construction-text {
+            color: #f9fafb;
+        }
+    }
+
+    .workers {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-end;
+        margin-bottom: 2rem;
+    }
+
+    .worker-emoji {
+        font-size: 8rem;
+        filter: grayscale(0);
+    }
+
+    .worker-1 {
+        animation: bounce1 2s infinite;
+        animation-delay: 0s;
+    }
+
+    .worker-2 {
+        animation: bounce2 2.2s infinite;
+        animation-delay: 0.3s;
+        font-size: 10rem;
+    }
+
+    .worker-3 {
+        animation: bounce3 2.4s infinite;
+        animation-delay: 0.6s;
+        font-size: 7rem;
+    }
+
+    .construction-text {
+        font-size: 3rem;
+        font-weight: 600;
+        text-align: center;
+        animation: fadeIn 1s;
+    }
+
+    @keyframes bounce1 {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    @keyframes bounce2 {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-30px);
+        }
+    }
+
+    @keyframes bounce3 {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-15px);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .workers {
+            gap: 1rem;
+        }
+        .worker-emoji {
+            font-size: 5rem;
+        }
+        .worker-2 {
+            font-size: 6rem;
+        }
+        .worker-3 {
+            font-size: 4rem;
+        }
+        .construction-text {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<script>
+    const phrases = [
+        "¡Estamos trabajando!",
+        "¡Estamos en el descanso del bocadillo!",
+        "¡Señor no se apoye en la valla!",
+        "¡Aquí levantando el país!",
+        "¡Otro día más cotizado!",
+        "¡Volvemos en 5 minutos... o 50!",
+        "¡Aquí currando duro desde las 8:30!",
+        "¡Perdone las molestias!",
+        "¡El jefe viene, haced que trabajáis!",
+        "¡Obra en proceso... desde 2023!",
+        "¡Hoy no es buen día para preguntar!",
+        "¡Cuidado con el escalón que no hay!",
+        "¡Un ratito más y listos!",
+        "¡Estamos mejorando su experiencia!",
+        "¡Pa' cuando esté, está!",
+    ];
+
+    function updatePhrase() {
+        const textElement = document.getElementById("constructionText");
+        if (textElement) {
+            textElement.style.animation = "none";
+            setTimeout(() => {
+                textElement.textContent =
+                    phrases[Math.floor(Math.random() * phrases.length)];
+                textElement.style.animation = "fadeIn 1s";
+            }, 50);
+        }
+    }
+
+    updatePhrase();
+    setInterval(updatePhrase, 3000);
+</script>

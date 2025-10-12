@@ -1,0 +1,45 @@
+<div class="wip-banner">
+    <p>⚠️ Estoy trabajando en este blog, todavía no está listo.</p>
+</div>
+
+<style>
+    .wip-banner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        padding: 1rem;
+        text-align: center;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .wip-banner p {
+        margin: 0;
+        color: #991b1b;
+        font-family:
+            Inter, Roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial,
+            sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .wip-banner {
+            background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+        }
+        .wip-banner p {
+            color: #fecaca;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .wip-banner {
+            padding: 0.75rem;
+        }
+        .wip-banner p {
+            font-size: 0.875rem;
+        }
+    }
+</style>
