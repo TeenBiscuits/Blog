@@ -31,6 +31,7 @@ import LogoSVG from '../assets/logo.svg'
 				id="nav-open-btn"
 				aria-label="Open navigation menu"
 				title="Open navigation menu"
+				transition:persist
 			>
 				<Icon aria-hidden name="mdi:menu" size={32} />
 			</button>
@@ -86,6 +87,7 @@ import LogoSVG from '../assets/logo.svg'
 
 		// Setup nav on initial load and on page navigation
 		setupNav()
+		document.addEventListener('DOMContentLoaded', setupNav)
 		document.addEventListener('astro:page-load', setupNav)
 	</script>
 </header>
