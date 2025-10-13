@@ -1,6 +1,7 @@
 ---
 import { SITE_BASE } from '@/consts'
 import '../styles/global.css'
+import { ClientRouter } from 'astro:transitions'
 
 interface Props {
 	title: string
@@ -64,3 +65,6 @@ const { title, description, image = `${SITE_BASE}/saral-og.jpg` } = Astro.props
 	title="Saral Theme RSS Feed"
 	href={new URL('rss.xml', Astro.site)}
 />
+
+<!-- View Transitions -->
+<ClientRouter />

@@ -63,77 +63,95 @@ import LogoSVG from '../assets/logo.svg'
 	</nav>
 
 	<script>
-		function toggleNav() {
-			document
-				.querySelector('#mobile-menu')
-				?.classList.toggle('mobile-nav-open')
+		// Setup mobile navigation toggle functionality
+		function setupNav() {
+			// Get references to the open and close buttons
+			const openBtn = document.querySelector('#nav-open-btn')
+			const closeBtn = document.querySelector('#nav-close-btn')
+
+			// Toggle the mobile navigation menu visibility
+			function toggleNav() {
+				document
+					.querySelector('#mobile-menu')
+					?.classList.toggle('mobile-nav-open')
+			}
+
+			// Attach click listeners to open and close buttons
+			openBtn?.addEventListener('click', toggleNav)
+			closeBtn?.addEventListener('click', toggleNav)
 		}
 
-		document
-			.querySelector('#nav-open-btn')
-			?.addEventListener('click', toggleNav)
-		document
-			.querySelector('#nav-close-btn')
-			?.addEventListener('click', toggleNav)
+		// Setup nav on initial load and on page navigation
+		setupNav()
+		document.addEventListener('astro:page-load', setupNav)
 	</script>
 </header>
 
 <script is:inline>
-	function reComputeTheme() {
-		if (
+	// Apply the current theme (dark/light/auto) to the document
+	function applyTheme() {
+		// Determine if dark mode should be active based on localStorage or OS preference
+		const isDark =
 			localStorage.theme === 'dark' ||
 			(!('theme' in localStorage) &&
 				window.matchMedia('(prefers-color-scheme: dark)').matches)
-		) {
-			document.documentElement.classList.add('dark')
-		} else {
-			document.documentElement.classList.remove('dark')
-		}
 
+		// Toggle the 'dark' class on the root element
+		document.documentElement.classList.toggle('dark', isDark)
+
+		// Get the current theme setting (defaults to 'auto' if not set)
 		const theme = localStorage.theme || 'auto'
-		document
-			.querySelectorAll(`[data-theme="theme-${theme}"]`)
-			.forEach((el) => el.classList.add('active'))
+		// Update theme button active states to reflect current selection
+		document.querySelectorAll('.theme-button').forEach((el) => {
+			el.classList.toggle('active', el.dataset.theme === `theme-${theme}`)
+		})
 	}
 
-	function addThemeEventListeners() {
-		themeButtons = document.querySelectorAll('.theme-button')
-		themeButtons.forEach((button) => {
+	// Setup click listeners for all theme selector buttons
+	function setupThemeListeners() {
+		document.querySelectorAll('.theme-button').forEach((button) => {
 			button.addEventListener('click', () => {
-				themeButtons.forEach((btn) => btn.classList.remove('active'))
-				button.classList.add('active')
-				if (button.dataset.theme === 'theme-auto') {
+				// Extract theme name from button's data attribute
+				const theme = button.dataset.theme.replace('theme-', '')
+
+				// Save theme preference to localStorage or remove it for 'auto'
+				if (theme === 'auto') {
 					localStorage.removeItem('theme')
-					reComputeTheme()
 				} else {
-					localStorage.theme = button.dataset.theme.replace('theme-', '')
-					document.documentElement.classList.toggle(
-						'dark',
-						button.dataset.theme === 'theme-dark'
-					)
+					localStorage.theme = theme
 				}
+
+				// Apply the newly selected theme
+				applyTheme()
 			})
 		})
 	}
 
-	// Set active class on OS theme change
+	// Initialize theme system
+	function init() {
+		setupThemeListeners()
+		applyTheme()
+	}
+
+	// Initial setup
+	init()
+
+	// View transitions support - preserve theme class during navigation
+	document.addEventListener('astro:before-swap', (event) => {
+		// Determine dark mode state before page swap
+		const isDark =
+			localStorage.theme === 'dark' ||
+			(!('theme' in localStorage) &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches)
+		// Apply dark class to new document before it's displayed
+		event.newDocument.documentElement.classList.toggle('dark', isDark)
+	})
+
+	// Reinitialize theme system after Astro page navigation
+	document.addEventListener('astro:page-load', init)
+
+	// OS theme change listener - update theme when system preference changes
 	window
 		.matchMedia('(prefers-color-scheme: dark)')
-		.addEventListener('change', (_e) => {
-			reComputeTheme()
-		})
-
-	// run recomputeTheme when screen crosses 768px
-	window.matchMedia('(min-width: 768px)').addEventListener('change', (_e) => {
-		addThemeEventListeners()
-		reComputeTheme()
-	})
-
-	reComputeTheme()
-
-	// Run on page load
-	window.addEventListener('DOMContentLoaded', () => {
-		addThemeEventListeners()
-		reComputeTheme()
-	})
+		.addEventListener('change', applyTheme)
 </script>
