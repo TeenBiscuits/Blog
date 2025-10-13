@@ -53,7 +53,10 @@ const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 				</div>
 				<div class="grow w-full md:max-w-[75ch]">
 					<div>
-						<h1 class="text-4xl sm:text-5xl leading-snug pt-12 font-bold">
+						<h1
+							class="text-4xl sm:text-5xl leading-snug pt-12 font-bold"
+							transition:name={`blog-title-${slug}`}
+						>
 							{title}
 						</h1>
 						<div class="text-lg flex items-center gap-4 flex-wrap py-8">
@@ -62,6 +65,7 @@ const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 								<Icon
 									name="mdi:calendar-month-outline"
 									class="inline-block text-primary dark:text-primary-dark"
+									transition:name={`blog-date-${slug}`}
 								/>
 								<FormattedDate date={pubDate} />
 							</span>
@@ -96,6 +100,7 @@ const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 										src={blogImages[coverImagePath]()}
 										alt={title}
 										class="rounded-lg"
+										transition:name={`blog-cover-${slug}`}
 									/>
 									{coverImageCredit && (
 										<p class="mt-2 mb-8 opacity-80 italic text-sm">

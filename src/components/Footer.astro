@@ -6,7 +6,7 @@ import { Icon } from 'astro-icon/components'
 const today = new Date()
 ---
 
-<footer>
+<footer transition:persist>
 	<div
 		class="app-container grid md:grid-cols-3 gap-12 py-16 border-t-2 border-foreground/50 dark:border-foreground-dark/50"
 	>
@@ -20,12 +20,7 @@ const today = new Date()
 			<div class="flex flex-wrap gap-4 mt-4">
 				{
 					WebsiteLinks.filter((link) => link.name !== 'Home').map((link) => (
-						<a
-							class="text-lg"
-							href={link.url}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+						<a class="text-lg" href={link.url} rel="noopener noreferrer">
 							{link.name}
 						</a>
 					))
@@ -61,11 +56,7 @@ const today = new Date()
 	</div>
 	<div class="app-container flex justify-between items-center pb-6 text-center">
 		<p class="text-left md:text-center w-full">
-			&copy; {today.getFullYear()} Source code available on <a
-				class="underline"
-				href="https://github.com/yashjawale/saral-theme-astro"
-				target="_blank">GitHub</a
-			>
+			&copy; {today.getFullYear()} Made with ❤️ by Pablo Portas López
 		</p>
 	</div>
 </footer>

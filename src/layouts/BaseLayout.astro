@@ -16,7 +16,7 @@ import '@fontsource-variable/jetbrains-mono'
 ---
 
 <!doctype html>
-<html lang="es">
+<html transition:name="root" transition:animate="none" lang="es">
 	<head>
 		<BaseHead
 			title={title || SITE_TITLE}
@@ -27,7 +27,7 @@ import '@fontsource-variable/jetbrains-mono'
 		class="text-foreground bg-background font-light dark:text-foreground-dark dark:bg-background-dark transition-colors"
 	>
 		<Navbar title={SITE_TITLE} />
-		<slot />
+		<slot transition:animate="slide" />
 		<Footer />
 	</body>
 </html>

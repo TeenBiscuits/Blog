@@ -9,7 +9,7 @@ import LogoSVG from '../assets/logo.svg'
 <header class="fixed top-0 w-full z-40 bg-background dark:bg-background-dark">
 	<nav class="">
 		<div class="app-container flex justify-between items-center py-5">
-			<a href=`${SITE_BASE}/` aria-label="Home">
+			<a href=`${SITE_BASE}/` aria-label="Home" transition:persist>
 				<LogoSVG height={36} width={36} />
 			</a>
 			<div class="gap-8 hidden md:flex items-center">
@@ -24,7 +24,7 @@ import LogoSVG from '../assets/logo.svg'
 						</NavbarLink>
 					))
 				}
-				<ThemeSelector />
+				<ThemeSelector transition:persist />
 			</div>
 			<button
 				class="md:hidden cursor-pointer"
@@ -51,7 +51,10 @@ import LogoSVG from '../assets/logo.svg'
 				<div class="flex flex-col h-full items-start gap-8 pt-16">
 					{
 						WebsiteLinks.map((link) => (
-							<NavbarLink class="text-4xl font-light" href={link.url}>
+							<NavbarLink
+								class="text-4xl font-light"
+								href={`${SITE_BASE}/${link.url}`}
+							>
 								{link.name}
 							</NavbarLink>
 						))
