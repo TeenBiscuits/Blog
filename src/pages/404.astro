@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import { SITE_BASE } from '../consts'
 ---
 
 <BaseLayout>
@@ -15,7 +16,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 			<p class="text-xl text-center max-w-[480px]">
 				The page you're looking for wasn't found. Please check the link again.
 			</p>
-			<a class="btn-primary" href="/">Go to Home Page </a>
+			<a class="btn-primary" href={`${SITE_BASE}/`}>Go to Home Page </a>
 		</main>
 	</div>
 </BaseLayout>
