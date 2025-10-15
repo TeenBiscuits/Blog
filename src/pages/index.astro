@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro'
+import Layout from '@/layouts/Base.astro'
 import { SITE_BASE, SocialLinks } from '@/consts'
 import { Icon } from 'astro-icon/components'
 import BlogCard from '@/components/BlogCard.astro'
@@ -10,7 +10,7 @@ const posts = (await getCollection('blog'))
 	.slice(0, 4)
 ---
 
-<BaseLayout>
+<Layout>
 	<main
 		class="app-container flex flex-col gap-12 justify-center py-36 md:py-48 pt-44 md:pt-56 relative"
 	>
@@ -82,4 +82,4 @@ const posts = (await getCollection('blog'))
 			</div>
 		</div>
 	</section>
-</BaseLayout>
+</Layout>

@@ -1,14 +1,14 @@
 ---
 import { getCollection } from 'astro:content'
 import BlogCard from '@/components/BlogCard.astro'
-import BaseLayout from '@/layouts/BaseLayout.astro'
+import Layout from '@/layouts/Base.astro'
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )
 ---
 
-<BaseLayout>
+<Layout>
 	<main class="app-container pt-36">
 		<h1 class="text-6xl pb-8 font-bold">Blog</h1>
 		<p class="md:w-2/3 text-lg leading-[2rem]">
@@ -28,4 +28,4 @@ const posts = (await getCollection('blog')).sort(
 			}
 		</ul>
 	</section>
-</BaseLayout>
+</Layout>

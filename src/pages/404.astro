@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro'
+import Layout from '@/layouts/Base.astro'
 import { SITE_BASE } from '@/consts'
 ---
 
-<BaseLayout>
+<Layout>
 	<div>
 		<main
 			class="app-container h-[95vh] flex flex-col gap-6 justify-center py-56 items-center"
@@ -19,4 +19,4 @@ import { SITE_BASE } from '@/consts'
 			<a class="btn-primary" href={`${SITE_BASE}/`}>Go to Home Page </a>
 		</main>
 	</div>
-</BaseLayout>
+</Layout>

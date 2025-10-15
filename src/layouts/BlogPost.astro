@@ -25,7 +25,7 @@ const {
 	remarkPluginFrontmatter,
 } = Astro.props
 
-import BaseLayout from './BaseLayout.astro'
+import Layout from './Base.astro'
 import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
 
@@ -40,7 +40,7 @@ const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 	.format('D MMM YYYY')
 ---
 
-<BaseLayout title={title} description={description}>
+<Layout title={title} description={description}>
 	<main>
 		<article>
 			<div
@@ -135,4 +135,4 @@ const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 			</div>
 		</article>
 	</main>
-</BaseLayout>
+</Layout>
