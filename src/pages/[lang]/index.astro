@@ -1,0 +1,151 @@
+---
+import { LOCALES, useTranslations, type Lang } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+import Layout from '@/layouts/Base.astro'
+import { SocialLinks } from '@/consts'
+import { Icon } from 'astro-icon/components'
+import BlogCard from '@/components/BlogCard.astro'
+import { getCollection } from 'astro:content'
+
+const locale = Astro.currentLocale as Lang
+
+export const getStaticPaths = () =>
+	Object.keys(LOCALES).map((lang) => ({
+		params: { lang },
+	}))
+
+const posts = (await getCollection('blog'))
+	.filter((post) => post.id.split('/')[0] === locale)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4)
+---
+
+<Layout>
+	<main
+		class="app-container flex flex-col gap-12 justify-center py-36 md:py-48 pt-44 md:pt-56 relative"
+	>
+		<div>
+			<p class="block text-3xl opacity-70 mt-9 mb-4">
+				{
+					t({
+						es: `Bienvenido al`,
+						gl: `Benvido ao`,
+						en: `Welcome to`,
+					})
+				}
+			</p>
+			<h1 class="text-8xl font-bold leading-none">
+				{
+					t({
+						es: `Blog de Pablo`,
+						gl: `Blog de Pablo`,
+						en: `Pablo's Blog`,
+					})
+				}
+			</h1>
+		</div>
+		<p class="text-2xl max-w-2xl font-light leading-normal">
+			{
+				t({
+					es: `donde hablo de las cosas que aprendo o de las que simplemente me apetece`,
+					gl: `onde falo das cousas que aprendo ou das que simplemente me apetece`,
+					en: `where I talk about the things I learn or the things I just feel like`,
+				})
+			}
+		</p>
+		<div class="flex flex-wrap gap-8">
+			{
+				SocialLinks.map((link) => (
+					<a
+						class="text-xl text-primary dark:text-primary-dark underline hover:underline underline-offset-4"
+						href={link.url}
+						target="_blank"
+					>
+						{link.name}
+					</a>
+				))
+			}
+		</div>
+	</main>
+
+	<!-- Recent Posts Section -->
+	<section class="app-container">
+		<h2 class="section-title">
+			{
+				t({
+					es: 'Artículos Recientes',
+					gl: 'Artigos Recentes',
+					en: 'Recent Posts',
+				})
+			}
+		</h2>
+		<div class="posts-grid-container">
+			{posts.map((post) => <BlogCard post={post} />)}
+		</div>
+		<a class="btn-secondary" href={`${locale}/posts`}
+			>{t({ es: 'Leer Todos', gl: 'Ler Todo', en: 'Read All' })}
+			<Icon size={20} name="mdi:arrow-right" />
+		</a>
+	</section>
+
+	<!-- Recent Posts Section -->
+	<section class="app-container py-42 grid lg:grid-cols-2 gap-28 lg:gap-10">
+		<div class="space-y-6">
+			<h2 class="section-title">
+				{t({ es: 'Acerca de Mí', gl: 'Sobre Min', en: 'About Me' })}
+			</h2>
+			<p class="text-lg max-w-xl pb-4">
+				{
+					t({
+						es: "A brief introduction about yourself. You can include your profession, hobbies, interests, or anything you'd like visitors to know about you.",
+						gl: "A brief introduction about yourself. You can include your profession, hobbies, interests, or anything you'd like visitors to know about you.",
+						en: "A brief introduction about yourself. You can include your profession, hobbies, interests, or anything you'd like visitors to know about you.",
+					})
+				}
+			</p>
+			<a class="btn-secondary" href={`${locale}/about`}
+				>{
+					t({
+						es: 'Ir a Acerca de mí',
+						gl: 'Ir a Sobre Min',
+						en: 'Go to About',
+					})
+				}
+				<Icon size={20} name="mdi:arrow-right" />
+			</a>
+		</div>
+		<div class="space-y-6">
+			<h2 class="section-title">
+				{t({ es: 'Contáctame', gl: 'Contacta comigo', en: 'Get in touch' })}
+			</h2>
+			<p class="text-lg max-w-xl">
+				{
+					t({
+						es: 'Utilice los botones a continuación para ver mi currículum y correo electrónico.',
+						gl: 'Utilice os botóns a continuación para ver o meu currículo e correo electrónico.',
+						en: 'Use the buttons below for my resume & email.',
+					})
+				}
+			</p>
+			<div class="flex flex-wrap mt-auto space-x-4">
+				<a class="btn-primary" href="mailto:pablo.portas@udc.es" target="_blank"
+					>{t({ es: 'Enviar Correo', gl: 'Enviar Correo', en: 'Send Email' })}
+					<Icon height={20} name="mdi:email" />
+				</a>
+				<a
+					class="btn-secondary"
+					href={`https://cv.pablopl.dev/${locale}/`}
+					target="_blank"
+					>{
+						t({
+							es: 'Descargar Curriculum',
+							gl: 'Descargar currículo',
+							en: 'Download Resume',
+						})
+					}
+					<Icon height={20} name="mdi:arrow-collapse-down" />
+				</a>
+			</div>
+		</div>
+	</section>
+</Layout>

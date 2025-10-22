@@ -1,0 +1,21 @@
+---
+import { SITE_BASE } from '@/consts'
+import { Icon } from 'astro-icon/components'
+import { type Lang } from '@/i18n'
+const locale = Astro.currentLocale as Lang
+const { class: className } = Astro.props
+---
+
+<div class="flex justify-center items-center">
+	<a
+		href={`${SITE_BASE}/${locale}/locale`}
+		aria-label="Select Language"
+		class={`hover:text-primary dark:hover:text-primary-dark ${className}`}
+	>
+		<Icon
+			name="mdi:translate"
+			class="duration-0 text-2xl md:text-xl"
+			aria-hidden
+		/>
+	</a>
+</div>

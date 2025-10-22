@@ -1,85 +1,83 @@
 ---
-import Layout from '@/layouts/Base.astro'
-import { SITE_BASE, SocialLinks } from '@/consts'
-import { Icon } from 'astro-icon/components'
-import BlogCard from '@/components/BlogCard.astro'
-import { getCollection } from 'astro:content'
+// Inspired from https://github.com/psephopaiktes/astro-i18n-starter/
+// Redirect to Top page for user's system locale
+// Basically, you don't need to edit this file.
 
-const posts = (await getCollection('blog'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 4)
+import {
+	useTranslations,
+	getLocalePaths,
+	LOCALES,
+	DEFAULT_LOCALE,
+	type Lang,
+} from '@/i18n'
+import { SITE_TITLE, SITE_DESCRIPTION, X_ACCOUNT } from '@/consts'
+
+const t = useTranslations(Astro.currentLocale as Lang)
+const langs = Object.keys(LOCALES)
+const baseUrl = import.meta.env.PROD ? Astro.site : '/'
+const defaultLocale = DEFAULT_LOCALE
 ---
 
-<Layout>
-	<main
-		class="app-container flex flex-col gap-12 justify-center py-36 md:py-48 pt-44 md:pt-56 relative"
-	>
-		<div>
-			<p class="block text-3xl opacity-70 mt-9 mb-4">Bienvenido al</p>
-			<h1 class="text-8xl font-bold leading-none">Blog de Pablo</h1>
-		</div>
-		<p class="text-2xl max-w-2xl font-light leading-normal">
-			en el que hablo de las cosas que aprendo o que simplemente me apetecen
-		</p>
-		<div class="flex flex-wrap gap-8">
-			{
-				SocialLinks.map((link) => (
-					<a
-						class="text-xl text-primary dark:text-primary-dark underline hover:underline underline-offset-4"
-						href={link.url}
-						target="_blank"
-					>
-						{link.name}
-					</a>
-				))
+<html lang={DEFAULT_LOCALE}>
+	<head>
+		<meta charset="UTF-8" />
+		<title>redireccionando...</title>
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<meta name="generator" content={Astro.generator} />
+		{
+			getLocalePaths(Astro.url).map((props) => (
+				<link
+					rel="alternate"
+					hreflang={LOCALES[props.lang]?.lang || props.lang}
+					href={Astro.site?.origin + props.path}
+				/>
+			))
+		}
+
+		<!-- icon -->
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" sizes="192x192" href="/android-chrome.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<meta name="color-scheme" content="light dark" />
+
+		<!-- OGP -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={t(SITE_TITLE)} />
+		<meta property="og:site_name" content={t(SITE_TITLE)} />
+		<meta property="og:description" content={t(SITE_DESCRIPTION)} />
+		<meta property="og:image" content={`${Astro.site}og.png`} />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:locale" content={DEFAULT_LOCALE} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content={t(X_ACCOUNT)} />
+
+		<noscript>
+			<meta
+				http-equiv="refresh"
+				content={`0;url=${baseUrl + DEFAULT_LOCALE}/`}
+			/>
+		</noscript>
+
+		<script is:inline define:vars={{ langs, baseUrl, defaultLocale }}>
+			if (
+				localStorage.selectedLang &&
+				langs.includes(localStorage.selectedLang)
+			) {
+				location.href = `${baseUrl + localStorage.selectedLang}/`
+			} else {
+				const browserLang = navigator.language.toLowerCase()
+
+				if (langs.includes(browserLang)) {
+					location.href = `${baseUrl + browserLang}/`
+				} else if (langs.includes(browserLang.split('-')[0])) {
+					location.href = `${baseUrl + browserLang.split('-')[0]}/`
+				} else {
+					location.href = `${baseUrl + defaultLocale}/`
+				}
 			}
-		</div>
-	</main>
-
-	<!-- Recent Posts Section -->
-	<section class="app-container">
-		<h2 class="section-title">Recent Posts</h2>
-		<div class="posts-grid-container">
-			{posts.map((post) => <BlogCard post={post} />)}
-		</div>
-		<a class="btn-secondary" href="/posts"
-			>Read All
-			<Icon size={20} name="mdi:arrow-right" />
-		</a>
-	</section>
-
-	<!-- Recent Posts Section -->
-	<section class="app-container py-42 grid lg:grid-cols-2 gap-28 lg:gap-10">
-		<div class="space-y-6">
-			<h2 class="section-title">About Me</h2>
-			<p class="text-lg max-w-xl pb-4">
-				A brief introduction about yourself. You can include your profession,
-				hobbies, interests, or anything you'd like visitors to know about you.
-			</p>
-			<a class="btn-secondary" href={`${SITE_BASE}/about`}
-				>Go to About
-				<Icon size={20} name="mdi:arrow-right" />
-			</a>
-		</div>
-		<div class="space-y-6">
-			<h2 class="section-title">Get in touch</h2>
-			<p class="text-lg max-w-xl">
-				Use the buttons below for my resume & email.
-			</p>
-			<div class="flex flex-wrap mt-auto space-x-4">
-				<a
-					class="btn-primary"
-					href="mailto:example@email.com"
-					download
-					target="_blank"
-					>Get in touch
-					<Icon height={20} name="mdi:email" />
-				</a>
-				<a class="btn-secondary" href="https://example.com" target="_blank"
-					>Download Resume
-					<Icon height={20} name="mdi:arrow-collapse-down" />
-				</a>
-			</div>
-		</div>
-	</section>
-</Layout>
+		</script>
+	</head>
+	<body>
+		<h1>redireccionando...</h1>
+	</body>
+</html>

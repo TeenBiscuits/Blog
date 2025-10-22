@@ -1,14 +1,16 @@
 ---
 import BaseHead from '@/components/BaseHead.astro'
-import Navbar from '@/components/Navbar.astro'
+import Header from '@/components/Navbar.astro'
 import Footer from '@/components/Footer.astro'
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts'
+import { SITE_TITLE } from '@/consts'
+import { LOCALES, type Lang } from '@/i18n'
 
 interface Props {
 	title?: string
 	description?: string
 }
 
+const locale = Astro.currentLocale as Lang
 const { title, description } = Astro.props
 
 import '@fontsource-variable/inter'
@@ -16,17 +18,18 @@ import '@fontsource-variable/jetbrains-mono'
 ---
 
 <!doctype html>
-<html transition:name="root" lang="es">
+<html
+	transition:name="root"
+	lang={LOCALES[locale]?.lang || locale}
+	dir={LOCALES[locale]?.dir || null}
+>
 	<head>
-		<BaseHead
-			title={title || SITE_TITLE}
-			description={description || SITE_DESCRIPTION}
-		/>
+		<BaseHead title={title} description={description} />
 	</head>
 	<body
 		class="text-foreground bg-background font-light dark:text-foreground-dark dark:bg-background-dark transition-colors"
 	>
-		<Navbar title={SITE_TITLE} transition:animate="none" />
+		<Header title={SITE_TITLE} transition:animate="none" />
 		<slot transition:animate="slide" />
 		<Footer transition:animate="none" />
 	</body>

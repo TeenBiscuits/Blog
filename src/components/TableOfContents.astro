@@ -1,5 +1,7 @@
 ---
 import type { MarkdownHeading } from 'astro'
+import { type Lang, useTranslations } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
 
 interface Props {
 	headings: MarkdownHeading[]
@@ -26,7 +28,9 @@ for (const heading of headings) {
 {
 	toc.length > 0 ? (
 		<nav class="py-12 rounded">
-			<h2 class="text-2xl mr-2 pb-1 mb-3 font-bold">On This Page</h2>
+			<h2 class="text-2xl mr-2 pb-1 mb-3 font-bold">
+				{t({ es: 'En Esta Página', gl: 'Nesta Páxina', en: 'On This Page' })}
+			</h2>
 			<ul class="space-y-3">
 				{toc.map((h2) => (
 					<li>

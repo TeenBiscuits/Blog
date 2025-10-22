@@ -1,4 +1,6 @@
 ---
+import { type Lang, useTranslations } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
 import type { CollectionEntry } from 'astro:content'
 import FormattedDate from '@/components/FormattedDate.astro'
 import type { MarkdownHeading, ImageMetadata } from 'astro'
@@ -15,6 +17,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 }
 
 const {
+	id,
 	title,
 	description,
 	pubDate,
@@ -29,15 +32,19 @@ import Layout from './Base.astro'
 import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
 
+const locale = Astro.currentLocale as Lang
 const blogImages = import.meta.glob<{ default: ImageMetadata }>(
 	'/src/assets/blogimages/**/*.{jpeg,jpg,png,gif}'
 )
 
-const coverImagePath = `/src/assets/blogimages/${slug}/cover.jpg`
+const coverImagePath = `/src/assets/blogimages/${id}/cover.jpg`
 
 const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 	.utc()
-	.format('D MMM YYYY')
+	.locale(locale)
+	.format('D MMM YY')
+
+const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 ---
 
 <Layout title={title} description={description}>
@@ -89,7 +96,14 @@ const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 									name="mdi:clock-time-four-outline"
 									class="inline-block text-primary dark:text-primary-dark"
 								/>
-								{remarkPluginFrontmatter.minutesRead}
+								{minutesRead}
+								{
+									t({
+										es: 'minutos de lectura',
+										gl: 'minutos de lectura',
+										en: 'min read',
+									})
+								}
 							</span>
 						</div>
 
@@ -120,15 +134,27 @@ const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 					<!-- Suggest edit -->
 					<div class="flex justify-between mt-16 gap-4 flex-wrap italic">
 						<a
-							href={`https://github.com/yashjawale/yashjawale.github.io/edit/main/src/content/blog/${slug}.md`}
+							href={`https://github.com/yashjawale/yashjawale.github.io/edit/main/src/content/blog/${id}.md`}
 							target="_blank"
 							rel="noopener noreferrer"
 							class="hover:underline underline-offset-4 opacity-70 hover:opacity-100"
 							><Icon name="mdi:pencil-outline" class="inline-block" />
-							Suggest an edit
+							{
+								t({
+									es: 'Sugerir un cambio',
+									gl: 'Suxerir un cambio',
+									en: 'Suggest an edit',
+								})
+							}
 						</a>
 						<p class="opacity-70">
-							Last modified: {lastModified}
+							{
+								t({
+									es: 'Última modificación',
+									gl: 'Última modificación',
+									en: 'Last modified',
+								})
+							}: {lastModified}
 						</p>
 					</div>
 				</div>

@@ -3,10 +3,20 @@ interface Props {
 	date: Date
 }
 
+import { type Lang } from '@/i18n'
+const Locale = Astro.currentLocale as Lang
 const { date } = Astro.props
 import dayjs from 'dayjs'
+import 'dayjs/locale/en.js'
+import 'dayjs/locale/es.js'
+import 'dayjs/locale/gl.js'
+/* Limitations of Vite analyze
+Object.keys(LOCALES).forEach((lang) => {
+	import(`dayjs/locale/${lang}.js`)
+})
+*/
 ---
 
 <time datetime={date.toISOString()}>
-	{dayjs(date).format('D MMM YYYY')}
+	{dayjs(date).locale(Locale).format('D MMMM YYYY')}
 </time>

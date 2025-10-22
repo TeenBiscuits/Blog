@@ -1,62 +1,85 @@
 ---
 import { SITE_BASE, SocialLinks, WebsiteLinks } from '@/consts'
-import LogoSVG from '@/assets/logo.svg'
+import Firma from '@/assets/firma.svg'
+import Frase from '@/assets/frase.svg'
 import { Icon } from 'astro-icon/components'
+import { type Lang, useTranslations } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
 
+const locale = Astro.currentLocale as Lang
 const today = new Date()
 ---
 
 <footer transition:persist>
 	<div
-		class="app-container grid md:grid-cols-3 gap-12 py-16 border-t-2 border-foreground/50 dark:border-foreground-dark/50"
+		class="app-container border-t-2 border-foreground/50 dark:border-foreground-dark/50"
 	>
-		<div>
-			<a href={`${SITE_BASE}/`} class="block w-fit" aria-label="Home">
-				<LogoSVG height={36} width={36} />
-			</a>
+		<div class="flex justify-center pt-12 gap-12">
+			<Frase class="w-xl h-auto" />
 		</div>
-		<div>
-			<h3 class="font-semibold text-2xl">Links</h3>
-			<div class="flex flex-wrap gap-4 mt-4">
-				{
-					WebsiteLinks.filter((link) => link.name !== 'Home').map((link) => (
-						<a class="text-lg" href={link.url} rel="noopener noreferrer">
-							{link.name}
-						</a>
-					))
-				}
+		<div class="grid md:grid-cols-3 place-content-center py-12 gap-12">
+			<div>
+				<h3 class="font-semibold text-2xl">
+					{t({ es: 'Enlaces', gl: 'Enlaces', en: 'Links' })}
+				</h3>
+				<div class="flex flex-wrap gap-4 mt-4">
+					{
+						WebsiteLinks.filter((link) => link.name['en'] !== 'Home').map(
+							(link) => (
+								<a
+									class="text-lg"
+									href={`${SITE_BASE}/${locale}/` + link.url}
+									rel="noopener noreferrer"
+								>
+									{link.name[locale]}
+								</a>
+							)
+						)
+					}
+				</div>
+			</div>
+			<div>
+				<h3 class="font-semibold text-2xl">
+					{t({ es: 'Redes Sociales', gl: 'Redes Sociais', en: 'Socials' })}
+				</h3>
+				<div class="flex flex-wrap gap-4 mt-4">
+					{
+						SocialLinks.map((link) => (
+							<a
+								class="text-lg"
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{link.name}
+							</a>
+						))
+					}
+				</div>
+			</div>
+			<div class="flex justify-center md:justify-end">
 				<a
-					href="rss.xml"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="text-lg"
-					aria-label="RSS Feed"
+					href={`${SITE_BASE}/${locale}/`}
+					class="block w-fit"
+					aria-label="Home"
 				>
-					<Icon name="mdi:rss" class="w-6 h-6" />
+					<Firma height={100} width={200} />
 				</a>
 			</div>
 		</div>
-		<div>
-			<h3 class="font-semibold text-2xl">Socials</h3>
-			<div class="flex flex-wrap gap-4 mt-4">
+		<div
+			class="app-container flex justify-between items-center pb-6 text-center"
+		>
+			<p class="text-center w-full">
+				&copy; {today.getFullYear()}
 				{
-					SocialLinks.map((link) => (
-						<a
-							class="text-lg"
-							href={link.url}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							{link.name}
-						</a>
-					))
+					t({
+						es: 'Hecho con ❤️ por Pablo Portas López',
+						gl: 'Feito con ❤️ por Pablo Portas López',
+						en: 'Made with ❤️ by Pablo Portas López',
+					})
 				}
-			</div>
+			</p>
 		</div>
-	</div>
-	<div class="app-container flex justify-between items-center pb-6 text-center">
-		<p class="text-left md:text-center w-full">
-			&copy; {today.getFullYear()} Made with ❤️ by Pablo Portas López
-		</p>
 	</div>
 </footer>

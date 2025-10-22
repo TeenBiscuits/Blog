@@ -1,0 +1,47 @@
+---
+import { LOCALES, useTranslations, type Lang } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+import { getCollection } from 'astro:content'
+import BlogCard from '@/components/BlogCard.astro'
+import Layout from '@/layouts/Base.astro'
+
+export const getStaticPaths = () =>
+	Object.keys(LOCALES).map((lang) => ({
+		params: { lang },
+	}))
+
+const locale = Astro.currentLocale as Lang
+const posts = (await getCollection('blog'))
+	.filter((post) => post.id.split('/')[0] === locale)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+---
+
+<Layout>
+	<main class="app-container pt-36">
+		<h1 class="text-6xl pb-8 font-bold">
+			{t({ es: 'Artículos', gl: 'Artigos', en: 'Posts' })}
+		</h1>
+		<p class="md:w-2/3 text-lg leading-[2rem]">
+			{
+				t({
+					es: 'escribo cosas y las publico, a veces, hasta pienso antes de escribirlas',
+					gl: 'escribo cousas e publícoas, ás veces, ata penso antes de escribilas',
+					en: 'I write things and publish them, sometimes I even think before writing them',
+				})
+			}
+		</p>
+	</main>
+	<section class="app-container py-12">
+		<ul class="posts-grid-container">
+			{
+				posts.map((post) => {
+					return (
+						<li>
+							<BlogCard post={post} />
+						</li>
+					)
+				})
+			}
+		</ul>
+	</section>
+</Layout>

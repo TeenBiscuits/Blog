@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content'
+import { type CollectionEntry, getCollection, render } from 'astro:content'
 import Layout from '@/layouts/BlogPost.astro'
 import type { MarkdownHeading } from 'astro'
 
@@ -7,14 +7,17 @@ export async function getStaticPaths() {
 	const posts = await getCollection('blog')
 	const headings = await Promise.all(
 		posts.map(async (post) => {
-			const data = await post.render()
+			const data = await render(post)
 			return data.headings
 		})
 	)
-	return posts.map((post, index) => ({
-		params: { slug: post.slug },
-		props: { post, headings: headings[index], slug: post.slug },
-	}))
+	return posts.map((post, index) => {
+		const [lang, ...id] = post.id.split('/')
+		return {
+			params: { lang, id: id.join('/') || undefined },
+			props: { post, headings: headings[index] },
+		}
+	})
 }
 
 type Props = {
@@ -24,7 +27,7 @@ type Props = {
 }
 
 const { post, headings, slug } = Astro.props
-const { Content, remarkPluginFrontmatter } = await post.render()
+const { Content, remarkPluginFrontmatter } = await render(post)
 ---
 
 <Layout

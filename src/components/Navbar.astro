@@ -2,28 +2,33 @@
 import NavbarLink from './NavbarLink.astro'
 import { Icon } from 'astro-icon/components'
 import ThemeSelector from './ThemeSelector.astro'
+import LocaleSelector from './LocaleSelector.astro'
 import { SITE_BASE, WebsiteLinks } from '@/consts'
 import LogoSVG from '@/assets/logo.svg'
+import { type Lang } from '@/i18n'
+
+const locale = Astro.currentLocale as Lang
 ---
 
-<header class="fixed top-0 w-full z-40 bg-background dark:bg-background-dark">
-	<nav class="">
+<header class="fixed top-0 w-full z-40 bg-transparent backdrop-blur-sm">
+	<nav>
 		<div class="app-container flex justify-between items-center py-5">
-			<a href={`${SITE_BASE}/`} aria-label="Home" transition:persist>
-				<LogoSVG height={36} width={36} />
+			<a href={`${SITE_BASE}/${locale}`} aria-label="Home" transition:persist>
+				<LogoSVG height={42} width={42} />
 			</a>
 			<div class="gap-8 hidden md:flex items-center">
 				{
 					WebsiteLinks.map((link) => (
 						<NavbarLink
 							class="text-lg"
-							href={`${SITE_BASE}/${link.url}`}
+							href={`${SITE_BASE}/${locale}/${link.url}`}
 							target={link.url.charAt(0) === 'h' ? '_blank' : '_self'}
 						>
-							{link.name}
+							{link.name[locale]}
 						</NavbarLink>
 					))
 				}
+				<LocaleSelector transition:persist />
 				<ThemeSelector transition:persist />
 			</div>
 			<button
@@ -31,7 +36,6 @@ import LogoSVG from '@/assets/logo.svg'
 				id="nav-open-btn"
 				aria-label="Open navigation menu"
 				title="Open navigation menu"
-				transition:persist
 			>
 				<Icon aria-hidden name="mdi:menu" size={32} />
 			</button>
@@ -54,13 +58,16 @@ import LogoSVG from '@/assets/logo.svg'
 						WebsiteLinks.map((link) => (
 							<NavbarLink
 								class="text-4xl font-light"
-								href={`${SITE_BASE}/${link.url}`}
+								href={`${SITE_BASE}/${locale}/${link.url}`}
 							>
-								{link.name}
+								{link.name[locale]}
 							</NavbarLink>
 						))
 					}
-					<ThemeSelector class:list="mt-4" />
+					<div class="mt-4 flex gap-8">
+						<LocaleSelector />
+						<ThemeSelector />
+					</div>
 				</div>
 			</div>
 		</div>

@@ -1,22 +1,52 @@
 ---
-import Layout from '@/layouts/Base.astro'
-import { SITE_BASE } from '@/consts'
+// Inspired from https://github.com/psephopaiktes/astro-i18n-starter/
+// Redirect to 404 page for user's system locale
+// Basically, you don't need to edit this file.
+
+import { LOCALES, DEFAULT_LOCALE } from '@/i18n'
+
+const langs = Object.keys(LOCALES)
+const baseUrl = import.meta.env.PROD ? Astro.site : '/'
+const defaultLocale = DEFAULT_LOCALE
 ---
 
-<Layout>
-	<div>
-		<main
-			class="app-container h-[95vh] flex flex-col gap-6 justify-center py-56 items-center"
-		>
-			<h1
-				class="font-title text-9xl md:text-[128px] text-center leading-none px-4 hero-title z-10"
-			>
-				404
-			</h1>
-			<p class="text-xl text-center max-w-[480px]">
-				The page you're looking for wasn't found. Please check the link again.
-			</p>
-			<a class="btn-primary" href={`${SITE_BASE}/`}>Go to Home Page </a>
-		</main>
-	</div>
-</Layout>
+<html lang={DEFAULT_LOCALE}>
+	<head>
+		<meta charset="UTF-8" />
+		<title>404 PAGE NOT FOUND</title>
+		<link rel="canonical" href={Astro.site} />
+
+		<noscript>
+			<meta
+				http-equiv="refresh"
+				content={`0;url=${baseUrl + DEFAULT_LOCALE}/404/`}
+			/>
+		</noscript>
+
+		<script is:inline define:vars={{ langs, baseUrl, defaultLocale }}>
+			const urlHasLang = langs.includes(location.pathname.split('/')[1])
+			const localStorageHasLang =
+				localStorage.selectedLang && langs.includes(localStorage.selectedLang)
+			const referrerHasLang =
+				document.referrer &&
+				new URL(document.referrer).host == location.host &&
+				langs.includes(new URL(document.referrer).pathname.split('/')[1])
+
+			if (urlHasLang) {
+				localStorage.userAccessPath = location.pathname
+				location.href = `${baseUrl + location.pathname.split('/')[1]}/404/`
+			} else if (localStorageHasLang) {
+				location.href = baseUrl + localStorage.selectedLang + location.pathname
+			} else if (referrerHasLang) {
+				const referrerLang = new URL(document.referrer).pathname.split('/')[1]
+				location.href = baseUrl + referrerLang + location.pathname
+			} else {
+				location.href = baseUrl + defaultLocale + location.pathname
+			}
+		</script>
+	</head>
+	<body>
+		<h1>404 PAGE NOT FOUND</h1>
+		<a href={baseUrl}>TOP PAGE</a>
+	</body>
+</html>
