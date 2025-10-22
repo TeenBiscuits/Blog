@@ -15,7 +15,9 @@ import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from './src/locales'
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://blog.pablopl.dev',
+	site: process.env.VERCEL_URL
+		? `https://${process.env.VERCEL_URL}`
+		: 'https://blog.pablopl.dev',
 
 	i18n: {
 		defaultLocale: DEFAULT_LOCALE_SETTING,
