@@ -2,7 +2,7 @@
 id: 'test'
 title: 'TEST EN GALEGO'
 description: |
-    Este documento está deseñado para exercitar unha ampla gama de funcións de Markdown e axudarche a validar a implementación de Markdown dun sitio web. Inclúe cabeceiras, énfase, listas, ligazóns, imaxes, táboas, código, citas, regras horizontais, notas ao pé, listas de tarefas, listas de definicións, matemáticas e máis. Sigue as regras de formato especificadas para táboas, delimitadores LaTeX de matemáticas e sangría.
+  Este documento está deseñado para exercitar unha ampla gama de funcións de Markdown e axudarche a validar a implementación de Markdown dun sitio web. Inclúe cabeceiras, énfase, listas, ligazóns, imaxes, táboas, código, citas, regras horizontais, notas ao pé, listas de tarefas, listas de definicións, matemáticas e máis. Sigue as regras de formato especificadas para táboas, delimitadores LaTeX de matemáticas e sangría.
 pubDate: 'Jan 16 2025'
 coverImageCredit: 'Foto de Caleb Miller en, Unsplash'
 ---
@@ -14,10 +14,15 @@ Este documento está deseñado para exercitar unha ampla gama de funcións de Ma
 ## Cabeceiras
 
 # Cabeceira Nivel 1
+
 ## Cabeceira Nivel 2
+
 ### Cabeceira Nivel 3
+
 #### Cabeceira Nivel 4
+
 ##### Cabeceira Nivel 5
+
 ###### Cabeceira Nivel 6
 
 ---
@@ -57,7 +62,7 @@ Un novo parágrafo despois dunha liña en branco.
 -     Ligazón con referencia: [Buscador][g]
 -     Ligazón automática: <https://example.com>
 
-[g]: https://google.com "Google"
+[g]: https://google.com 'Google'
 
 ---
 
@@ -70,45 +75,47 @@ Un novo parágrafo despois dunha liña en branco.
 
 ## Táboas
 
-| Función | Soportado | Notas |
-|:---|:---|:---|
-| Cabeceiras | Si | H1–H6 |
-| Énfase | Si | Negriña, cursiva, negriña-cursiva |
-| Ligazóns | Si | En liña e con referencia |
-| Imaxes | Si | Texto alternativo e título |
-| Táboas | Si | Aliñación e cabeceiras |
-| Código | Si | En liña e con bloque cercado |
-| Citas | Si | Soporte aniñado |
-| Listas | Si | Ordenadas e desordenadas |
-| Listas de tarefas | Si | Caixas de verificación |
-| Notas ao pé | Si | Referencias e listado |
-| Matemáticas | Quizais | Depende do soporte do sitio |
+| Función           | Soportado | Notas                             |
+| :---------------- | :-------- | :-------------------------------- |
+| Cabeceiras        | Si        | H1–H6                             |
+| Énfase            | Si        | Negriña, cursiva, negriña-cursiva |
+| Ligazóns          | Si        | En liña e con referencia          |
+| Imaxes            | Si        | Texto alternativo e título        |
+| Táboas            | Si        | Aliñación e cabeceiras            |
+| Código            | Si        | En liña e con bloque cercado      |
+| Citas             | Si        | Soporte aniñado                   |
+| Listas            | Si        | Ordenadas e desordenadas          |
+| Listas de tarefas | Si        | Caixas de verificación            |
+| Notas ao pé       | Si        | Referencias e listado             |
+| Matemáticas       | Quizais   | Depende do soporte do sitio       |
 
 | Centrado | Dereita | Esquerda |
-|:---:|---:|:---|
-| A | 1 | alfa |
-| B | 2 | beta |
-| C | 3 | gamma |
+| :------: | ------: | :------- |
+|    A     |       1 | alfa     |
+|    B     |       2 | beta     |
+|    C     |       3 | gamma    |
 
 ---
 
 ## Listas
 
 -     Lista desordenada
-    -   Elemento aniñado nivel 2
-        -   Elemento aniñado nivel 3
-    -   Volver a nivel 2
+
+  - Elemento aniñado nivel 2
+    - Elemento aniñado nivel 3
+  - Volver a nivel 2
 -     Outro elemento de nivel superior
 
 1. Elemento de lista ordenada un
-    1. Elemento ordenado aniñado 1.1
-        1. Elemento ordenado aniñado 1.1.1
-    2. Elemento ordenado aniñado 1.2
+   1. Elemento ordenado aniñado 1.1
+      1. Elemento ordenado aniñado 1.1.1
+   2. Elemento ordenado aniñado 1.2
 2. Elemento de lista ordenada dous
 
 -     Lista mixta
-    1. Número dentro de viñetas
-    2. Outro máis
+
+  1. Número dentro de viñetas
+  2. Outro máis
 -     Continuar viñetas
 
 ---
@@ -117,8 +124,9 @@ Un novo parágrafo despois dunha liña en branco.
 
 -     [x] Tarefa completada
 -     [ ] Tarefa incompleta
-    -   [x] Subtarefa feita
-    -   [ ] Subtarefa pendente
+
+  - [x] Subtarefa feita
+  - [ ] Subtarefa pendente
 -     [ ] Elemento final
 
 ---
@@ -131,6 +139,7 @@ Un novo parágrafo despois dunha liña en branco.
 > - E outros elementos en liña como `code` e texto en **negriña**
 >
 > Cita aniñada:
+>
 > > Cita de nivel 2
 > >
 > > > Cita de nivel 3
@@ -143,30 +152,30 @@ Un novo parágrafo despois dunha liña en branco.
 
 -     Bloques de código cercados:
 
-    ```javascript
-    // Exemplo en JavaScript
-    function greet(name) {
-        console.log(`Hello, ${name}!`);
-    }
-    greet("World");
-    ```
+  ```javascript
+  // Exemplo en JavaScript
+  function greet(name) {
+  	console.log(`Hello, ${name}!`)
+  }
+  greet('World')
+  ```
 
-    ```python
-    # Exemplo en Python
-    from math import sqrt
+  ```python
+  # Exemplo en Python
+  from math import sqrt
 
-    def hypotenuse(a, b):
-        return sqrt(a*a + b*b)
+  def hypotenuse(a, b):
+      return sqrt(a*a + b*b)
 
-    print(hypotenuse(3, 4))
-    ```
+  print(hypotenuse(3, 4))
+  ```
 
-    ```bash
-    # Exemplo en Bash
-    set -euo pipefail
-    echo "Testing Markdown"
-    mkdir -p build && cd build
-    ```
+  ```bash
+  # Exemplo en Bash
+  set -euo pipefail
+  echo "Testing Markdown"
+  mkdir -p build && cd build
+  ```
 
 -     Bloque de código con sangría (4 espazos):
 
@@ -179,7 +188,9 @@ Un novo parágrafo despois dunha liña en branco.
 ## Regras horizontais
 
 ---
+
 ---
+
 ---
 
 ---
@@ -189,6 +200,7 @@ Un novo parágrafo despois dunha liña en branco.
 Aquí hai unha afirmación cunha referencia de nota ao pé.[^1] E outra aquí.[^nota]
 
 [^1]: Esta é a primeira nota ao pé. Pode conter varias oracións e mesmo ligazóns como [Exemplo](https://example.com).
+
 [^nota]: Segunda nota ao pé con detalles adicionais.
 
 ---
@@ -225,7 +237,7 @@ y = x^2 + 3x + c
 \]
 
 \[
-\int_{0}^{\infty} e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}
+\int\_{0}^{\infty} e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}
 \]
 
 \[
@@ -260,10 +272,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus varius, nisl no
 -     Espazos finais ao final da liña para activar saltos de liña.
 -     Múltiples liñas en branco abaixo:
 
-
 -     Liñas que comezan con números que non son listas:
-1984 é unha novela.
-2025-10-20 é unha data.
+
+  1984 é unha novela.
+  2025-10-20 é unha data.
 
 -     Proba de escapes con barra invertida: \* \_ \` \# \! \> \<
 
@@ -271,12 +283,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus varius, nisl no
 
 ## Táboa de contido mixto
 
-| Elemento | Descrición | Exemplo |
-|:---|:---|:---|
-| Texto | Énfase e ligazóns | **Negriña** e [ligazón](https://example.org) |
-| Código | En liña e bloque | `sum(a,b)` e ver bloque debaixo |
-| Matemáticas | En liña e en bloque | \(x^2\) e \[\sum_{i=1}^{n} i = \frac{n(n+1)}{2}\] |
-| Imaxe | Verificación de renderizado | ![Tiny](https://placehold.co/40?text=Tiny) |
+| Elemento    | Descrición                  | Exemplo                                            |
+| :---------- | :-------------------------- | :------------------------------------------------- |
+| Texto       | Énfase e ligazóns           | **Negriña** e [ligazón](https://example.org)       |
+| Código      | En liña e bloque            | `sum(a,b)` e ver bloque debaixo                    |
+| Matemáticas | En liña e en bloque         | \(x^2\) e \[\sum\_{i=1}^{n} i = \frac{n(n+1)}{2}\] |
+| Imaxe       | Verificación de renderizado | ![Tiny](https://placehold.co/40?text=Tiny)         |
 
 ---
 

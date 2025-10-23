@@ -14,10 +14,15 @@ Este documento está diseñado para ejercitar una amplia gama de funciones de Ma
 ## Encabezados
 
 # Encabezado Nivel 1
+
 ## Encabezado Nivel 2
+
 ### Encabezado Nivel 3
+
 #### Encabezado Nivel 4
+
 ##### Encabezado Nivel 5
+
 ###### Encabezado Nivel 6
 
 ---
@@ -34,92 +39,95 @@ Un nuevo párrafo después de una línea en blanco.
 
 ## Énfasis
 
--    Cursiva: _texto_ o *texto*
--    Negrita: __texto__ o **texto**
--    Negrita cursiva: ___texto___ o ***texto***
--    Combinado: Esto es **negrita**, esto es _cursiva_ y esto es ***ambos***.
+- Cursiva: _texto_ o _texto_
+- Negrita: **texto** o **texto**
+- Negrita cursiva: **_texto_** o **_texto_**
+- Combinado: Esto es **negrita**, esto es _cursiva_ y esto es **_ambos_**.
 
 ---
 
 ## Elementos en línea
 
--    Código en línea: `console.log("Hello, world!")`
--    Caracteres escapados: \*, \_, \`, \|, \\, \[, \], \(, \)
--    Estilo superíndice: E = mc^2^ (acento circunflejo en texto plano)
--    Estilo subíndice: H2O (texto plano)
+- Código en línea: `console.log("Hello, world!")`
+- Caracteres escapados: \*, \_, \`, \|, \\, \[, \], \(, \)
+- Estilo superíndice: E = mc^2^ (acento circunflejo en texto plano)
+- Estilo subíndice: H2O (texto plano)
 
 ---
 
 ## Enlaces
 
--    Enlace en línea: [Raycast](https://www.raycast.com)
--    Enlace en línea con título: [OpenAI](https://www.openai.com "OpenAI Homepage")
--    Enlace con referencia: [Buscador][g]
--    Enlace automático: <https://example.com>
+- Enlace en línea: [Raycast](https://www.raycast.com)
+- Enlace en línea con título: [OpenAI](https://www.openai.com 'OpenAI Homepage')
+- Enlace con referencia: [Buscador][g]
+- Enlace automático: <https://example.com>
 
-[g]: https://google.com "Google"
+[g]: https://google.com 'Google'
 
 ---
 
 ## Imágenes
 
--    Imagen en línea con texto alternativo: ![Texto alternativo que describe la imagen](https://placehold.co/300x120.png?text=Markdown+Test "Placeholder")
--    Imagen como enlace: [![Insignia](https://placehold.co/100x30?text=Badge)](https://example.com)
+- Imagen en línea con texto alternativo: ![Texto alternativo que describe la imagen](https://placehold.co/300x120.png?text=Markdown+Test 'Placeholder')
+- Imagen como enlace: [![Insignia](https://placehold.co/100x30?text=Badge)](https://example.com)
 
 ---
 
 ## Tablas
 
-| Función | Soportado | Notas |
-|:---|:---|:---|
-| Encabezados | Sí | H1–H6 |
-| Énfasis | Sí | Negrita, cursiva, negrita-cursiva |
-| Enlaces | Sí | En línea y con referencia |
-| Imágenes | Sí | Texto alternativo y título |
-| Tablas | Sí | Alineación y encabezados |
-| Código | Sí | En línea y con bloque cercado |
-| Citas | Sí | Soporte anidado |
-| Listas | Sí | Ordenadas y desordenadas |
-| Listas de tareas | Sí | Casillas de verificación |
-| Notas al pie | Sí | Referencias y listado |
-| Matemáticas | Quizá | Depende del soporte del sitio |
+| Función          | Soportado | Notas                             |
+| :--------------- | :-------- | :-------------------------------- |
+| Encabezados      | Sí        | H1–H6                             |
+| Énfasis          | Sí        | Negrita, cursiva, negrita-cursiva |
+| Enlaces          | Sí        | En línea y con referencia         |
+| Imágenes         | Sí        | Texto alternativo y título        |
+| Tablas           | Sí        | Alineación y encabezados          |
+| Código           | Sí        | En línea y con bloque cercado     |
+| Citas            | Sí        | Soporte anidado                   |
+| Listas           | Sí        | Ordenadas y desordenadas          |
+| Listas de tareas | Sí        | Casillas de verificación          |
+| Notas al pie     | Sí        | Referencias y listado             |
+| Matemáticas      | Quizá     | Depende del soporte del sitio     |
 
 | Centrado | Derecha | Izquierda |
-|:---:|---:|:---|
-| A | 1 | alfa |
-| B | 2 | beta |
-| C | 3 | gamma |
+| :------: | ------: | :-------- |
+|    A     |       1 | alfa      |
+|    B     |       2 | beta      |
+|    C     |       3 | gamma     |
 
 ---
 
 ## Listas
 
--    Lista desordenada
-    -   Elemento anidado nivel 2
-        -   Elemento anidado nivel 3
-    -   Volver a nivel 2
--    Otro elemento de nivel superior
+- Lista desordenada
+- Elemento anidado nivel 2
+  - Elemento anidado nivel 3
+- Volver a nivel 2
+- Otro elemento de nivel superior
 
 1. Elemento de lista ordenada uno
-    1. Elemento ordenado anidado 1.1
-        1. Elemento ordenado anidado 1.1.1
-    2. Elemento ordenado anidado 1.2
+   1. Elemento ordenado anidado 1.1
+      1. Elemento ordenado anidado 1.1.1
+   2. Elemento ordenado anidado 1.2
 2. Elemento de lista ordenada dos
 
--    Lista mixta
+- Lista mixta
+
+
     1. Número dentro de viñetas
     2. Otro más
--    Continuar viñetas
+
+- Continuar viñetas
 
 ---
 
 ## Listas de tareas
 
--    [x] Tarea completada
--    [ ] Tarea incompleta
-    -   [x] Subtarea hecha
-    -   [ ] Subtarea pendiente
--    [ ] Elemento final
+- [x] Tarea completada
+- [ ] Tarea incompleta
+- [x] Subtarea hecha
+- [ ] Subtarea pendiente
+- [ ] Elemento final
 
 ---
 
@@ -131,6 +139,7 @@ Un nuevo párrafo después de una línea en blanco.
 > - Y otros elementos en línea como `code` y texto en **negrita**
 >
 > Cita anidada:
+>
 > > Cita de nivel 2
 > >
 > > > Cita de nivel 3
@@ -139,9 +148,10 @@ Un nuevo párrafo después de una línea en blanco.
 
 ## Código
 
--    En línea: `let x = 42;`
+- En línea: `let x = 42;`
 
--    Bloques de código cercados:
+- Bloques de código cercados:
+
 
     ```javascript
     // Ejemplo en JavaScript
@@ -168,18 +178,20 @@ Un nuevo párrafo después de una línea en blanco.
     mkdir -p build && cd build
     ```
 
--    Bloque de código con sangría (4 espacios):
+- Bloque de código con sangría (4 espacios):
 
-        if (true) {
-            return "Indented code block";
-        }
+  if (true) {
+  return "Indented code block";
+  }
 
 ---
 
 ## Reglas horizontales
 
 ---
+
 ---
+
 ---
 
 ---
@@ -189,6 +201,7 @@ Un nuevo párrafo después de una línea en blanco.
 Aquí hay una afirmación con una referencia de nota al pie.[^1] Y otra aquí.[^nota]
 
 [^1]: Esta es la primera nota al pie. Puede contener varias oraciones e incluso enlaces como [Ejemplo](https://example.com).
+
 [^nota]: Segunda nota al pie con detalles adicionales.
 
 ---
@@ -206,23 +219,23 @@ Término más largo
 
 ## Caracteres especiales y escapes
 
--    Tubos en tablas: usa \| dentro de celdas.
--    Comillas invertidas en código: `` Usa `así` o tres comillas invertidas para bloques ``.
--    Corchetes: \[escapado\] \(escapado\) \{escapado\}
--    Rayas: — (em dash) y – (en dash) en texto plano
--    Comillas: "dobles", 'simples'
+- Tubos en tablas: usa \| dentro de celdas.
+- Comillas invertidas en código: ``Usa `así` o tres comillas invertidas para bloques``.
+- Corchetes: \[escapado\] \(escapado\) \{escapado\}
+- Rayas: — (em dash) y – (en dash) en texto plano
+- Comillas: "dobles", 'simples'
 
 ---
 
 ## Matemáticas (LaTeX)
 
--    Matemáticas en línea: \(E = mc^2\), \(a^2 + b^2 = c^2\), \(\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}\)
+- Matemáticas en línea: \(E = mc^2\), \(a^2 + b^2 = c^2\), \(\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}\)
 
--    Matemáticas en bloque:
+- Matemáticas en bloque:
 
 \[y = x^2 + 3x + c\]
 
-\[\int_{0}^{\infty} e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}\]
+\[\int\_{0}^{\infty} e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}\]
 
 \[\begin{aligned}
 \nabla \cdot \vec{E} &= \frac{\rho}{\varepsilon_0} \\
@@ -251,26 +264,25 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus varius, nisl no
 
 ## Casos límite
 
--    Espacios finales al final de la línea para activar saltos de línea.
--    Múltiples líneas en blanco abajo:
+- Espacios finales al final de la línea para activar saltos de línea.
+- Múltiples líneas en blanco abajo:
 
+- Líneas que comienzan con números que no son listas:
+  1984 es una novela.
+  2025-10-20 es una fecha.
 
--    Líneas que comienzan con números que no son listas:
-1984 es una novela.
-2025-10-20 es una fecha.
-
--    Prueba de escapes con barra invertida: \* \_ \` \# \! \> \<
+- Prueba de escapes con barra invertida: \* \_ \` \# \! \> \<
 
 ---
 
 ## Tabla de contenido mixto
 
-| Elemento | Descripción | Ejemplo |
-|:---|:---|:---|
-| Texto | Énfasis y enlaces | **Negrita** y [enlace](https://example.org) |
-| Código | En línea y bloque | `sum(a,b)` y ver bloque abajo |
-| Matemáticas | En línea y en bloque | \(x^2\) y \[\sum_{i=1}^{n} i = \frac{n(n+1)}{2}\] |
-| Imagen | Verificación de renderizado | ![Tiny](https://placehold.co/40?text=Tiny) |
+| Elemento    | Descripción                 | Ejemplo                                            |
+| :---------- | :-------------------------- | :------------------------------------------------- |
+| Texto       | Énfasis y enlaces           | **Negrita** y [enlace](https://example.org)        |
+| Código      | En línea y bloque           | `sum(a,b)` y ver bloque abajo                      |
+| Matemáticas | En línea y en bloque        | \(x^2\) y \[\sum\_{i=1}^{n} i = \frac{n(n+1)}{2}\] |
+| Imagen      | Verificación de renderizado | ![Tiny](https://placehold.co/40?text=Tiny)         |
 
 ---
 
@@ -286,20 +298,20 @@ https://example.com/this/is/a/very/long/url/that/might/not/wrap/well/in/some/ren
 
 ## Lista de verificación final
 
--    Encabezados H1–H6 se renderizan correctamente
--    Se respetan párrafos y saltos de línea
--    Los estilos de énfasis funcionan
--    Los enlaces e imágenes cargan
--    Las tablas se renderizan con alineación
--    Las listas y listas anidadas aparecen con la sangría adecuada
--    Las listas de tareas muestran casillas
--    Las citas y citas anidadas se renderizan
--    Cercas de código con resaltado por lenguaje
--    Las reglas horizontales aparecen como separadores
--    Las notas al pie funcionan con referencias
--    Las listas de definiciones se renderizan si son compatibles
--    Las matemáticas se renderizan en línea y en bloque si son compatibles
--    El HTML sin procesar se maneja según la política
--    Los caracteres especiales y escapes se muestran correctamente
+- Encabezados H1–H6 se renderizan correctamente
+- Se respetan párrafos y saltos de línea
+- Los estilos de énfasis funcionan
+- Los enlaces e imágenes cargan
+- Las tablas se renderizan con alineación
+- Las listas y listas anidadas aparecen con la sangría adecuada
+- Las listas de tareas muestran casillas
+- Las citas y citas anidadas se renderizan
+- Cercas de código con resaltado por lenguaje
+- Las reglas horizontales aparecen como separadores
+- Las notas al pie funcionan con referencias
+- Las listas de definiciones se renderizan si son compatibles
+- Las matemáticas se renderizan en línea y en bloque si son compatibles
+- El HTML sin procesar se maneja según la política
+- Los caracteres especiales y escapes se muestran correctamente
 
 Fin del archivo de prueba de Markdown.
