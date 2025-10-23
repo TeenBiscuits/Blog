@@ -77,6 +77,7 @@ export default [
 	{
 		ignores: [
 			'dist/',
+			'.vercel/',
 			'node_modules/',
 			'.astro/',
 			'public/',
