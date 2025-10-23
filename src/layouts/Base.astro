@@ -2,6 +2,7 @@
 import BaseHead from '@/components/BaseHead.astro'
 import Header from '@/components/Navbar.astro'
 import Footer from '@/components/Footer.astro'
+import LocaleSuggest from '@/components/LocaleSuggest.astro'
 import { SITE_TITLE } from '@/consts'
 import { LOCALES, type Lang } from '@/i18n'
 
@@ -30,6 +31,7 @@ import '@fontsource-variable/jetbrains-mono'
 		class="text-foreground bg-background font-light dark:text-foreground-dark dark:bg-background-dark transition-colors"
 	>
 		<Header title={SITE_TITLE} transition:animate="none" />
+		<LocaleSuggest />
 		<slot transition:animate="slide" />
 		<Footer transition:animate="none" />
 	</body>

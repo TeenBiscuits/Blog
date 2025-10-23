@@ -54,3 +54,9 @@ export const WebsiteLinks: WebLinks = [
 		url: 'about',
 	},
 ]
+
+export const LOCALE_SUGGEST_TEXT: string | Multilingual = {
+	es: 'Ir a la versión en',
+	gl: 'Ir á versión en',
+	en: 'Go to the version in',
+}

@@ -1,0 +1,96 @@
+---
+// Based on https://astro-i18n-starter.pages.dev/
+// Displays a link to the user's system language page
+// if the language being viewed is different
+
+import { LOCALES, type Lang } from '@/i18n'
+import { LOCALE_SUGGEST_TEXT } from '@/consts'
+import { Icon } from 'astro-icon/components'
+const currentLocale = Astro.currentLocale as Lang
+---
+
+<div
+	id="js-languageSuggest"
+	class="fixed top-0 w-full z-50 text-foreground-dark dark:text-foreground-dark bg-primary dark:bg-primary-dark"
+>
+	<div class="app-container flex justify-center items-center py-3 relative">
+		<a id="js-link" href="#" class="flex items-center gap-2">
+			<div>
+				<span id="js-linkMsg"></span>
+				<span id="js-linkText"></span>
+			</div>
+			<Icon name="mdi:arrow-right" />
+		</a>
+		<button id="js-close" class="absolute right-12 cursor-pointer">
+			<Icon name="mdi:close-circle-outline" />
+		</button>
+	</div>
+</div>
+
+<script is:inline define:vars={{ currentLocale, LOCALES, LOCALE_SUGGEST_TEXT }}>
+	const browserLang = navigator.language.toLowerCase()
+	const suggest = document.getElementById('js-languageSuggest')
+
+	const showSuggest = (lang) => {
+		//const pathnames = location.pathname.split('/')
+		const link = document.getElementById('js-link')
+		const linkText = document.getElementById('js-linkText')
+		const linkMsg = document.getElementById('js-linkMsg')
+
+		// OLD Update the link to point to the user's language
+		//pathnames[1] = lang
+		//link.href = pathnames.join('/')
+		link.href = `/${lang}/`
+		linkMsg.innerText =
+			(LOCALE_SUGGEST_TEXT[lang] || LOCALE_SUGGEST_TEXT['en']) + ' '
+		linkText.innerText = linkText.innerText =
+			LOCALES[lang].emogi + ' ' + LOCALES[lang].label
+		suggest.style.display = 'block'
+
+		// Push down the navbar when suggest is shown
+		const navbar = document.querySelector('header:not(#js-languageSuggest)')
+		if (navbar) {
+			navbar.style.top = suggest.offsetHeight + 'px'
+		}
+	}
+
+	if (
+		currentLocale === browserLang ||
+		currentLocale === browserLang.split('-')[0] ||
+		localStorage.languageSuggestDenied ||
+		localStorage.selectedLang
+	) {
+		return
+	} else if (Object.keys(LOCALES).includes(browserLang)) {
+		showSuggest(browserLang)
+	} else if (Object.keys(LOCALES).includes(browserLang.split('-')[0])) {
+		showSuggest(browserLang.split('-')[0])
+	}
+
+	document.getElementById('js-close').addEventListener('click', () => {
+		suggest.style.display = 'none'
+		localStorage.languageSuggestDenied = true
+
+		// Reset navbar position
+		const navbar = document.querySelector('header:not(#js-languageSuggest)')
+		if (navbar) {
+			navbar.style.top = '0'
+		}
+	})
+</script>
+
+<style>
+	#js-languageSuggest {
+		display: none;
+	}
+	#js-link {
+		text-decoration: none;
+	}
+	#js-close {
+		opacity: 0.7;
+		transition: opacity 0.2s;
+	}
+	#js-close:hover {
+		opacity: 1;
+	}
+</style>
