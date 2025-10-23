@@ -34,13 +34,11 @@ const posts = (await getCollection('blog'))
 	<section class="app-container py-12">
 		<ul class="posts-grid-container">
 			{
-				posts.map((post) => {
-					return (
-						<li>
-							<BlogCard post={post} />
-						</li>
-					)
-				})
+				posts.map((post) => (
+					<li>
+						<BlogCard post={post} />
+					</li>
+				))
 			}
 		</ul>
 	</section>

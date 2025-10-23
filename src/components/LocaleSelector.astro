@@ -10,7 +10,10 @@ const { class: className } = Astro.props
 	<a
 		href={`${SITE_BASE}/${locale}/locale`}
 		aria-label="Select Language"
-		class={`hover:text-primary dark:hover:text-primary-dark ${className}`}
+		class:list={[
+			`hover:text-primary dark:hover:text-primary-dark`,
+			`${className}`,
+		]}
 	>
 		<Icon
 			name="mdi:translate"

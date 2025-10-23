@@ -29,7 +29,7 @@ const defaultLocale = DEFAULT_LOCALE
 				localStorage.selectedLang && langs.includes(localStorage.selectedLang)
 			const referrerHasLang =
 				document.referrer &&
-				new URL(document.referrer).host == location.host &&
+				new URL(document.referrer).host === location.host &&
 				langs.includes(new URL(document.referrer).pathname.split('/')[1])
 
 			if (urlHasLang) {

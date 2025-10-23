@@ -11,7 +11,7 @@ interface Props {
 	image?: string
 }
 
-const siteUrl = Astro.site!
+const siteUrl = Astro.site
 const canonicalURL = new URL(Astro.url.pathname, siteUrl)
 const { title, description, image = `${SITE_BASE}/og.jpg` } = Astro.props
 const locale = Astro.currentLocale as Lang

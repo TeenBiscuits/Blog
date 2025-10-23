@@ -54,15 +54,10 @@ export function useTranslations(lang: Lang) {
  * @returns - The list of locale paths
  */
 export function getLocalePaths(url: URL): LocalePath[] {
-	return Object.keys(LOCALES).map((lang) => {
-		return {
-			lang: lang as Lang,
-			path: getRelativeLocaleUrl(
-				lang,
-				url.pathname.replace(/^\/[a-zA-Z-]+/, '')
-			),
-		}
-	})
+	return Object.keys(LOCALES).map((lang) => ({
+		lang: lang as Lang,
+		path: getRelativeLocaleUrl(lang, url.pathname.replace(/^\/[a-zA-Z-]+/, '')),
+	}))
 }
 type LocalePath = {
 	lang: Lang

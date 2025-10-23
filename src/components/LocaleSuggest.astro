@@ -41,16 +41,15 @@ const currentLocale = Astro.currentLocale as Lang
 		//pathnames[1] = lang
 		//link.href = pathnames.join('/')
 		link.href = `/${lang}/`
-		linkMsg.innerText =
-			(LOCALE_SUGGEST_TEXT[lang] || LOCALE_SUGGEST_TEXT['en']) + ' '
-		linkText.innerText = linkText.innerText =
-			LOCALES[lang].emogi + ' ' + LOCALES[lang].label
+		linkMsg.innerText = `${LOCALE_SUGGEST_TEXT[lang] || LOCALE_SUGGEST_TEXT['en']} `
+		linkText.innerText =
+			linkText.innerText = `${LOCALES[lang].emogi} ${LOCALES[lang].label}`
 		suggest.style.display = 'block'
 
 		// Push down the navbar when suggest is shown
 		const navbar = document.querySelector('header:not(#js-languageSuggest)')
 		if (navbar) {
-			navbar.style.top = suggest.offsetHeight + 'px'
+			navbar.style.top = `${suggest.offsetHeight}px`
 		}
 	}
 
