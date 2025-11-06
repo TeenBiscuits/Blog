@@ -63,7 +63,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 					<div>
 						<h1
 							class="text-4xl sm:text-5xl leading-snug pt-12 font-bold"
-							transition:name={`blog-title-${slug}`}
+							transition:name={`blog-title-${id}`}
 						>
 							{title}
 						</h1>
@@ -73,7 +73,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 								<Icon
 									name="mdi:calendar-month-outline"
 									class="inline-block text-primary dark:text-primary-dark"
-									transition:name={`blog-date-${slug}`}
+									transition:name={`blog-date-${id}`}
 								/>
 								<FormattedDate date={pubDate} />
 							</span>
@@ -115,7 +115,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 										src={blogImages[coverImagePath]()}
 										alt={title}
 										class="rounded-lg"
-										transition:name={`blog-cover-${slug}`}
+										transition:name={`blog-cover-${id}`}
 									/>
 									{coverImageCredit && (
 										<p class="mt-2 mb-8 opacity-80 italic text-sm">
@@ -135,7 +135,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 					<!-- Suggest edit -->
 					<div class="flex justify-between mt-16 gap-4 flex-wrap italic">
 						<a
-							href={`https://github.com/yashjawale/yashjawale.github.io/edit/main/src/content/blog/${id}.md`}
+							href={`https://github.com/TeenBiscuits/Blog/edit/main/src/content/blog/${slug}/index.md`}
 							target="_blank"
 							rel="noopener noreferrer"
 							class="hover:underline underline-offset-4 opacity-70 hover:opacity-100"
