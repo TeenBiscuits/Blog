@@ -68,7 +68,23 @@ const localeDescription = description || t(SITE_DESCRIPTION)
 <meta property="og:locale" content={LOCALES[locale]?.lang || locale} />
 <meta name="twitter:site" content={t(X_ACCOUNT)} />
 
-<!-- OGP -->
+<!-- Self Hosted Umami -->
+<script
+	is:inline
+	defer
+	src="https://analytics.pablopl.dev/script.js"
+	data-website-id="22e6e276-eba7-4919-9174-5a3b9787afc0"
+	data-domains="blog.pablopl.dev"></script>
+
+<!-- Track browser language in Umami -->
+<script is:inline>
+	const trackLanguage = () => {
+		window.umami?.track((props) => ({ ...props, language: navigator.language }))
+	}
+
+	window.addEventListener('load', trackLanguage)
+	document.addEventListener('astro:page-load', trackLanguage)
+</script>
 
 <!-- Auto-discovery -->
 <link rel="sitemap" href="/sitemap-index.xml" />
