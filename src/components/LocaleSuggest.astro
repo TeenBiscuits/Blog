@@ -14,7 +14,12 @@ const currentLocale = Astro.currentLocale as Lang
 	class="fixed top-0 w-full z-50 text-foreground-dark dark:text-foreground-dark bg-primary dark:bg-primary-dark"
 >
 	<div class="app-container flex justify-center items-center py-3 relative">
-		<a id="js-link" href="#" class="flex items-center gap-2">
+		<a
+			id="js-link"
+			href="#"
+			class="flex items-center gap-2"
+			data-umami-event={`Locale Suggest Link`}
+		>
 			<div>
 				<span id="js-linkMsg"></span>
 				<span id="js-linkText"></span>
