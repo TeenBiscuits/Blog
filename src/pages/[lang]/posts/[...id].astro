@@ -26,14 +26,14 @@ type Props = {
 	slug: string
 }
 
-const { post, headings, slug } = Astro.props
+const { post, headings } = Astro.props
 const { Content, remarkPluginFrontmatter } = await render(post)
 ---
 
 <Layout
 	{...post.data}
 	headings={headings}
-	slug={slug}
+	slug={post.id}
 	remarkPluginFrontmatter={remarkPluginFrontmatter}
 >
 	<Content />
