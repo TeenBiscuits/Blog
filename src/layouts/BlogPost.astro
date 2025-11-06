@@ -5,6 +5,7 @@ import type { CollectionEntry } from 'astro:content'
 import FormattedDate from '@/components/FormattedDate.astro'
 import type { MarkdownHeading, ImageMetadata } from 'astro'
 import TableOfContents from '@/components/TableOfContents.astro'
+import CommentSection from '@/components/CommentSection.astro'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
@@ -157,6 +158,8 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 							}: {lastModified}
 						</p>
 					</div>
+
+					<CommentSection title={title} />
 				</div>
 			</div>
 		</article>
