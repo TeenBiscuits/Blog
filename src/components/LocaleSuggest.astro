@@ -32,15 +32,30 @@ const currentLocale = Astro.currentLocale as Lang
 	const suggest = document.getElementById('js-languageSuggest')
 
 	const showSuggest = (lang) => {
-		//const pathnames = location.pathname.split('/')
 		const link = document.getElementById('js-link')
 		const linkText = document.getElementById('js-linkText')
 		const linkMsg = document.getElementById('js-linkMsg')
 
-		// OLD Update the link to point to the user's language
-		//pathnames[1] = lang
-		//link.href = pathnames.join('/')
-		link.href = `/${lang}/`
+		// Determine the target path based on current location
+		const pathnames = location.pathname.split('/')
+		// pathnames structure: ['', 'lang', 'section', 'subsection', ...]
+
+		let targetPath
+		if (
+			pathnames[2] === 'posts' &&
+			pathnames.length > 3 &&
+			pathnames[3] !== ''
+		) {
+			// On /lang/posts/xxx -> redirect to /lang/posts
+			targetPath = `/${lang}/posts`
+		} else {
+			// Default: redirect to the same page structure in the suggested language
+			// Replace the current language with the suggested one
+			pathnames[1] = lang
+			targetPath = pathnames.join('/')
+		}
+
+		link.href = targetPath
 		linkMsg.innerText = `${LOCALE_SUGGEST_TEXT[lang] || LOCALE_SUGGEST_TEXT['en']} `
 		linkText.innerText =
 			linkText.innerText = `${LOCALES[lang].emogi} ${LOCALES[lang].label}`
