@@ -31,7 +31,11 @@ export const getStaticPaths = () =>
 					})
 				}
 			</p>
-			<a class="btn-primary" href={`${SITE_BASE}/${locale}/`}>
+			<a
+				class="btn-primary"
+				href={`${SITE_BASE}/${locale}/`}
+				data-umami-event="404 Home Button"
+			>
 				{
 					t({
 						es: 'Ir a la página principal',

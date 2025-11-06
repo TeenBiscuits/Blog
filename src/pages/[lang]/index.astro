@@ -52,6 +52,7 @@ const posts = (await getCollection('blog'))
 					<a
 						class="text-xl text-primary dark:text-primary-dark underline hover:underline underline-offset-4"
 						href={link.url}
+						data-umami-event={`${link.name} Hero Link`}
 						target="_blank"
 					>
 						{link.name}
@@ -75,7 +76,10 @@ const posts = (await getCollection('blog'))
 		<div class="posts-grid-container">
 			{posts.map((post) => <BlogCard post={post} />)}
 		</div>
-		<a class="btn-secondary" href={`${locale}/posts`}
+		<a
+			class="btn-secondary"
+			href={`${locale}/posts`}
+			data-umami-event="Read All Link"
 			>{t({ es: 'Leer Todos', gl: 'Ler Todo', en: 'Read All' })}
 			<Icon size={20} name="mdi:arrow-right" />
 		</a>
@@ -96,7 +100,10 @@ const posts = (await getCollection('blog'))
 					})
 				}
 			</p>
-			<a class="btn-secondary" href={`${locale}/about`}
+			<a
+				class="btn-secondary"
+				href={`${locale}/about`}
+				data-umami-event="About Me Hero Link"
 				>{
 					t({
 						es: 'Ir a Acerca de mí',
@@ -121,12 +128,17 @@ const posts = (await getCollection('blog'))
 				}
 			</p>
 			<div class="flex flex-wrap mt-auto space-x-4">
-				<a class="btn-primary" href="mailto:pablo.portas@udc.es" target="_blank"
+				<a
+					class="btn-primary"
+					href="mailto:pablo.portas@udc.es"
+					data-umami-event="Send Email Hero Link"
+					target="_blank"
 					>{t({ es: 'Enviar Correo', gl: 'Enviar Correo', en: 'Send Email' })}
 					<Icon height={20} name="mdi:email" />
 				</a>
 				<a
 					class="btn-secondary"
+					data-umami-event="Download Resume Hero Link"
 					href={`https://cv.pablopl.dev/${locale}/`}
 					target="_blank"
 					>{

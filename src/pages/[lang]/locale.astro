@@ -20,7 +20,11 @@ export const getStaticPaths = () =>
 		<div class="flex flex-wrap gap-4">
 			{
 				Object.entries(LOCALES).map(([lang, config]) => (
-					<a class="btn-primary" href={`${SITE_BASE}/${lang}/`}>
+					<a
+						class="btn-primary"
+						href={`${SITE_BASE}/${lang}/`}
+						data-umami-event={`${config.label} Locale Change`}
+					>
 						{config.emogi} {config.label}
 					</a>
 				))

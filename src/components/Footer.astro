@@ -23,17 +23,15 @@ const today = new Date()
 				</h3>
 				<div class="flex flex-wrap gap-4 mt-4">
 					{
-						WebsiteLinks.filter((link) => link.name['en'] !== 'Home').map(
-							(link) => (
-								<a
-									class="text-lg"
-									href={`${SITE_BASE}/${locale}/${link.url}`}
-									rel="noopener noreferrer"
-								>
-									{link.name[locale]}
-								</a>
-							)
-						)
+						WebsiteLinks.map((link) => (
+							<a
+								class="text-lg"
+								href={`${SITE_BASE}/${locale}/${link.url}`}
+								data-umami-event={`${link.name['es']} Footer Link`}
+							>
+								{link.name[locale]}
+							</a>
+						))
 					}
 				</div>
 			</div>
@@ -48,7 +46,8 @@ const today = new Date()
 								class="text-lg"
 								href={link.url}
 								target="_blank"
-								rel="noopener noreferrer"
+								rel="nofollow"
+								data-umami-event={`${link.name} Footer Link`}
 							>
 								{link.name}
 							</a>

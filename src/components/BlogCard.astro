@@ -17,6 +17,7 @@ const coverImagePath = `/src/assets/blogimages/${post.data.id}/cover.jpg`
 ---
 
 <a
+	data-umami-event={`${id} Blog Card`}
 	href={`${SITE_BASE}/${locale}/posts/${id}/`}
 	class="flex flex-col gap-4 pb-8 h-full group transition-colors"
 >
