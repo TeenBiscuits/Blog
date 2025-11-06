@@ -5,6 +5,7 @@ import Layout from '@/layouts/Base.astro'
 import { SocialLinks } from '@/consts'
 import { Icon } from 'astro-icon/components'
 import BlogCard from '@/components/BlogCard.astro'
+import Title from '@/components/Title.astro'
 import { getCollection } from 'astro:content'
 
 const locale = Astro.currentLocale as Lang
@@ -34,15 +35,7 @@ const posts = (await getCollection('blog'))
 					})
 				}
 			</p>
-			<h1 class="text-8xl font-bold leading-none">
-				{
-					t({
-						es: `Blog de Pablo`,
-						gl: `Blog de Pablo`,
-						en: `Pablo's Blog`,
-					})
-				}
-			</h1>
+			<Title />
 		</div>
 		<p class="text-2xl max-w-2xl font-light leading-normal">
 			{
