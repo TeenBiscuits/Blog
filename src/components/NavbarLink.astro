@@ -1,15 +1,17 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
+import { type Lang } from '@/i18n'
 
 type Props = HTMLAttributes<'a'>
 
+const locale = Astro.currentLocale as Lang
 const { href, class: className, ...props } = Astro.props
 
 const { pathname } = Astro.url
 const isActive =
 	href === pathname ||
 	href === pathname.replace(/\/$/, '') ||
-	(pathname.startsWith('/blog') && href === '/blog')
+	(pathname.startsWith(`/${locale}/posts`) && href === `/${locale}/posts`)
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>
