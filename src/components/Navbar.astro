@@ -14,12 +14,16 @@ const locale = Astro.currentLocale as Lang
 	<nav>
 		<div class="app-container flex justify-between items-center py-5">
 			<a
-				href={`${SITE_BASE}/${locale}`}
+				href={`${SITE_BASE}/${locale}/`}
 				aria-label="Home"
 				transition:persist
 				data-umami-event="Logo Home Link"
 			>
-				<LogoSVG height={42} width={42} />
+				<LogoSVG
+					height={42}
+					width={42}
+					class="hover:text-accent dark:hover:text-accent-dark"
+				/>
 			</a>
 			<div class="gap-8 hidden md:flex items-center">
 				{

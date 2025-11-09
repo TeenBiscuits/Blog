@@ -26,7 +26,7 @@ const today = new Date()
 					{
 						WebsiteLinks.map((link) => (
 							<a
-								class="text-lg"
+								class="text-lg hover:text-secondary dark:hover:text-secondary-dark"
 								href={`${SITE_BASE}/${locale}/${link.url}`}
 								data-umami-event={`${link.name['es']} Footer Link`}
 							>
@@ -44,11 +44,12 @@ const today = new Date()
 					{
 						SocialLinks.map((link) => (
 							<a
-								class="text-lg"
+								class="text-lg hover:text-secondary dark:hover:text-secondary-dark"
 								href={link.url}
 								target="_blank"
 								rel="nofollow"
-								data-umami-event={`${link.name} Footer Link`}
+								data-umami-event="Social Footer Link"
+								data-umami-event-url={link.url}
 							>
 								{link.name}
 							</a>

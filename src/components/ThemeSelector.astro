@@ -6,7 +6,7 @@ const { class: className } = Astro.props
 <div
 	class:list={[
 		className,
-		'border-[1px] border-foreground dark:border-foreground-dark rounded-full flex justify-center items-center text-foreground dark:text-foreground-dark [&>*:hover]:brightness-75 md:opacity-80 [&>*]:cursor-pointer',
+		'border-[1px] border-text dark:border-text-dark rounded-full flex justify-center items-center [&>*:hover]:text-accent dark:[&>*:hover]:text-accent-dark md:opacity-80 [&>*]:cursor-pointer',
 	]}
 >
 	<button
@@ -57,6 +57,6 @@ const { class: className } = Astro.props
 		@apply p-1 rounded-full duration-0;
 	}
 	:global(button.active) {
-		@apply text-background bg-foreground/90 dark:text-background-dark dark:bg-foreground-dark/90;
+		@apply text-background bg-text dark:text-background-dark dark:bg-text-dark;
 	}
 </style>

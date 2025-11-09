@@ -5,6 +5,11 @@ description: |
   Este documento está diseñado para ejercitar una amplia gama de funciones de Markdown y ayudarte a validar la implementación de Markdown de un sitio web. Incluye encabezados, énfasis, listas, enlaces, imágenes, tablas, código, citas, reglas horizontales, notas al pie, listas de tareas, listas de definiciones, matemáticas y más. Sigue las reglas de formato especificadas para tablas, delimitadores LaTeX de matemáticas y sangría.
 pubDate: 'Aug 16 2025'
 coverImageCredit: 'Foto de Caleb Miller en, Unsplash'
+tags:
+  - test
+  - markdown
+  - features
+  - validation
 ---
 
 Este documento está diseñado para ejercitar una amplia gama de funciones de Markdown y ayudarte a validar la implementación de Markdown de un sitio web. Incluye encabezados, énfasis, listas, enlaces, imágenes, tablas, código, citas, reglas horizontales, notas al pie, listas de tareas, listas de definiciones, matemáticas y más. Sigue las reglas de formato especificadas para tablas, delimitadores LaTeX de matemáticas y sangría.
@@ -112,10 +117,8 @@ Un nuevo párrafo después de una línea en blanco.
 2. Elemento de lista ordenada dos
 
 - Lista mixta
-
-
-    1. Número dentro de viñetas
-    2. Otro más
+  1. Número dentro de viñetas
+  2. Otro más
 
 - Continuar viñetas
 
@@ -152,31 +155,30 @@ Un nuevo párrafo después de una línea en blanco.
 
 - Bloques de código cercados:
 
+  ```javascript
+  // Ejemplo en JavaScript
+  function greet(name) {
+  	console.log(`Hello, ${name}!`)
+  }
+  greet('World')
+  ```
 
-    ```javascript
-    // Ejemplo en JavaScript
-    function greet(name) {
-        console.log(`Hello, ${name}!`);
-    }
-    greet("World");
-    ```
+  ```python
+  # Ejemplo en Python
+  from math import sqrt
 
-    ```python
-    # Ejemplo en Python
-    from math import sqrt
+  def hypotenuse(a, b):
+      return sqrt(a*a + b*b)
 
-    def hypotenuse(a, b):
-        return sqrt(a*a + b*b)
+  print(hypotenuse(3, 4))
+  ```
 
-    print(hypotenuse(3, 4))
-    ```
-
-    ```bash
-    # Ejemplo en Bash
-    set -euo pipefail
-    echo "Testing Markdown"
-    mkdir -p build && cd build
-    ```
+  ```bash
+  # Ejemplo en Bash
+  set -euo pipefail
+  echo "Testing Markdown"
+  mkdir -p build && cd build
+  ```
 
 - Bloque de código con sangría (4 espacios):
 

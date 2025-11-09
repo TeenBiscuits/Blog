@@ -22,18 +22,22 @@ export const SITE_BASE = ''
 
 export const SocialLinks = [
 	{
+		icon: 'github',
 		name: 'GitHub',
 		url: 'https://github.com/TeenBiscuits',
 	},
 	{
+		icon: 'linkedin',
 		name: 'LinkedIn',
 		url: 'https://www.linkedin.com/in/pabloportaslopez/',
 	},
 	{
+		icon: 'twitter',
 		name: 'X / Twitter',
 		url: 'https://twitter.com/pabloportasl',
 	},
 	{
+		icon: 'instagram',
 		name: 'Instagram',
 		url: 'https://instagram.com/pabloportasl',
 	},
@@ -50,7 +54,7 @@ export const WebsiteLinks: WebLinks = [
 	{ name: { es: 'Principal', gl: 'Principal', en: 'Home' }, url: '' },
 	{ name: { es: 'Artículos', gl: 'Artigos', en: 'Posts' }, url: 'posts' },
 	{
-		name: { es: 'Acerca de Mí', gl: 'Sobre Min', en: 'About Me' },
+		name: { es: 'Acerca de Mí', gl: 'Eu', en: 'About Me' },
 		url: 'about',
 	},
 ]

@@ -4,15 +4,23 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-	--font-sans: 'Georgia', 'Times New Roman', serif;
-	--font-mono: 'JetBrains Mono Variable', monospace;
+	--font-sans: 'Rubik', sans-serif;
+	--font-serif: 'Merriweather Variable', serif;
+	--font-mono: 'Cascadia Code', monospace;
 
-	--color-foreground: #1a1a1a;
-	--color-foreground-dark: #e8e6e3;
-	--color-background: #f4f1ea;
-	--color-background-dark: #2e2721;
-	--color-primary: #8b6f47;
-	--color-primary-dark: #c9a167;
+	--color-text: #120f07;
+	--color-foreground: var(--color-text);
+	--color-background: #f4f1eb;
+	--color-primary: #cfc7ab;
+	--color-secondary: #a5cac7;
+	--color-accent: #97a5bf;
+
+	--color-text-dark: #f8f5ed;
+	--color-foreground-dark: var(--color-text-dark);
+	--color-background-dark: #14110b;
+	--color-primary-dark: #544c30;
+	--color-secondary-dark: #355a57;
+	--color-accent-dark: #404e68;
 }
 
 html {
@@ -29,11 +37,11 @@ html {
 }
 
 .btn-primary {
-	@apply w-fit flex gap-2 bg-foreground text-background dark:bg-foreground-dark dark:text-background-dark px-5 py-3 md:px-4 md:py-2 rounded-lg items-center mt-4 hover:opacity-75 transition-opacity;
+	@apply w-fit flex gap-2 bg-primary dark:bg-primary-dark px-5 py-3 md:px-4 md:py-2 rounded-lg items-center mt-4 hover:opacity-75 transition-opacity;
 }
 
 .btn-secondary {
-	@apply w-fit flex gap-2 bg-foreground/10 text-foreground dark:bg-foreground-dark/10 dark:text-foreground-dark px-5 py-3 md:px-4 md:py-2 rounded-lg items-center mt-4 hover:opacity-75 transition-opacity;
+	@apply w-fit flex gap-2 bg-secondary dark:bg-secondary-dark px-5 py-3 md:px-4 md:py-2 rounded-lg items-center mt-4 hover:opacity-75 transition-opacity;
 }
 
 .section-title {
@@ -47,4 +55,16 @@ html {
 /* Post content */
 .prose iframe {
 	@apply my-16 mx-auto w-11/12 aspect-video rounded-xl;
+}
+
+.prose a {
+	@apply text-primary no-underline dark:text-primary-dark hover:underline hover:decoration-2 hover:underline-offset-2;
+}
+
+.prose blockquote {
+	@apply border-primary;
+}
+
+.prose ::marker {
+	@apply text-primary dark:text-primary-dark;
 }

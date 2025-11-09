@@ -11,7 +11,14 @@ const blog = defineCollection({
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		coverImageCredit: z.string().optional(),
+		tags: z.array(z.string()).optional(),
 	}),
 })
 
-export const collections = { blog }
+const about = defineCollection({
+	// Type-check frontmatter using a schema
+	loader: glob({ pattern: '**/[^_]*.md', base: './src/content/about' }),
+	schema: z.object({}).optional(),
+})
+
+export const collections = { blog, about }

@@ -50,12 +50,18 @@ const posts = (await getCollection('blog'))
 			{
 				SocialLinks.map((link) => (
 					<a
-						class="text-xl text-primary dark:text-primary-dark underline hover:underline underline-offset-4"
+						class="text-primary dark:text-primary-dark hover:animate-pulse"
 						href={link.url}
-						data-umami-event={`${link.name} Hero Link`}
+						aria-label={link.name}
+						data-umami-event={`Social Hero Link`}
+						data-umami-event-url={link.url}
 						target="_blank"
 					>
-						{link.name}
+						<Icon
+							size={35}
+							name={`mdi:${link.icon}`}
+							class="inline-block mr-2 mb-1"
+						/>
 					</a>
 				))
 			}
@@ -78,9 +84,9 @@ const posts = (await getCollection('blog'))
 		</div>
 		<a
 			class="btn-secondary"
-			href={`${locale}/posts`}
+			href={`/${locale}/posts`}
 			data-umami-event="Read All Link"
-			>{t({ es: 'Leer Todos', gl: 'Ler Todo', en: 'Read All' })}
+			>{t({ es: 'Ver Más', gl: 'Ver Mais', en: 'See More' })}
 			<Icon size={20} name="mdi:arrow-right" />
 		</a>
 	</section>
@@ -101,7 +107,7 @@ const posts = (await getCollection('blog'))
 				}
 			</p>
 			<a
-				class="btn-secondary"
+				class="btn-primary"
 				href={`${locale}/about`}
 				data-umami-event="About Me Hero Link"
 				>{

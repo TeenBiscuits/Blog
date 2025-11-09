@@ -34,15 +34,18 @@ for (const heading of headings) {
 			<ul class="space-y-3">
 				{toc.map((h2) => (
 					<li>
-						<a class="hover:underline underline-offset-4" href={`#${h2.slug}`}>
+						<a
+							class="hover:text-secondary hover:font-semibold underline-offset-4"
+							href={`#${h2.slug}`}
+						>
 							{h2.text}
 						</a>
 						{h2.children.length > 0 && (
-							<ul class="ml-4 mt-2 space-y-2 border-l border-gray-300 dark:border-gray-700 pl-4">
+							<ul class="ml-4 mt-2 space-y-2 pl-4">
 								{h2.children.map((h3) => (
 									<li>
 										<a
-											class="hover:underline underline-offset-4 text-sm opacity-80"
+											class="hover:text-secondary hover:font-medium underline-offset-4 text-sm opacity-80"
 											href={`#${h3.slug}`}
 										>
 											{h3.text}

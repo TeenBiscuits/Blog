@@ -5,11 +5,6 @@ const t = useTranslations(Astro.currentLocale as Lang)
 // Animation texts for each language
 const animationTexts = JSON.stringify([
 	t({
-		es: 'Portfolio',
-		gl: 'Portafolio',
-		en: 'Portfolio',
-	}),
-	t({
 		es: 'Cuaderno',
 		gl: 'Caderno',
 		en: 'Notebook',
@@ -43,7 +38,7 @@ const animationTexts = JSON.stringify([
 ---
 
 <h1
-	class="text-8xl font-bold leading-none blog-title"
+	class="text-8xl font-bold leading-none blog-title font-serif"
 	data-animation-texts={animationTexts}
 >
 	{
@@ -70,13 +65,17 @@ const animationTexts = JSON.stringify([
 	}
 </style>
 <script>
-	document.addEventListener('DOMContentLoaded', function () {
+	document.addEventListener('DOMContentLoaded', () => {
 		// Get the h1 element and read animation texts from data attribute
 		const h1Element = document.querySelector('h1.blog-title')
-		if (!h1Element) return
+		if (!h1Element) {
+			return
+		}
 
 		const animationTextsAttr = h1Element.getAttribute('data-animation-texts')
-		if (!animationTextsAttr) return
+		if (!animationTextsAttr) {
+			return
+		}
 
 		// Parse the JSON array of translated texts
 		const dataText: string[] = JSON.parse(animationTextsAttr)
@@ -93,25 +92,28 @@ const animationTexts = JSON.stringify([
 			if (i < text.length) {
 				// add next character to h1
 				if (h1Element) {
-					h1Element.innerHTML =
-						text.substring(0, i + 1) +
-						'<span class="cursor" aria-hidden="true">|</span>'
+					h1Element.innerHTML = `${text.substring(
+						0,
+						i + 1
+					)}<span class="cursor" aria-hidden="true">|</span>`
 				}
 
 				// wait for a while and call this function again for next character
-				setTimeout(function () {
+				setTimeout(() => {
 					typeWriter(text, i + 1, fnCallback, isLastText)
 				}, 150)
 			}
 			// text finished, call callback if there is a callback function
-			else if (typeof fnCallback == 'function') {
+			else if (typeof fnCallback === 'function') {
 				// if it's the last text, remove the cursor after a short delay
 				if (isLastText && h1Element) {
-					setTimeout(function () {
+					setTimeout(() => {
 						if (h1Element) {
 							h1Element.innerHTML = text
 						}
-						if (fnCallback) fnCallback()
+						if (fnCallback) {
+							fnCallback()
+						}
 					}, 700)
 				} else {
 					// call callback after timeout
@@ -121,8 +123,8 @@ const animationTexts = JSON.stringify([
 		}
 		// start a typewriter animation for a text in the dataText array
 		function StartTextAnimation(i: number) {
-			if (typeof dataText[i] == 'undefined') {
-				setTimeout(function () {
+			if (typeof dataText[i] === 'undefined') {
+				setTimeout(() => {
 					StartTextAnimation(0)
 				}, 20000)
 			}
@@ -134,7 +136,7 @@ const animationTexts = JSON.stringify([
 				typeWriter(
 					dataText[i],
 					0,
-					function () {
+					() => {
 						// after callback (and whole text has been animated), start next text
 						StartTextAnimation(i + 1)
 					},

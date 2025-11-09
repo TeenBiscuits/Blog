@@ -4,16 +4,14 @@ import { Icon } from 'astro-icon/components'
 import { type Lang } from '@/i18n'
 const locale = Astro.currentLocale as Lang
 const { class: className } = Astro.props
+const isActive = Astro.url.pathname.startsWith(`/${locale}/locale`)
 ---
 
 <div class="flex justify-center items-center">
 	<a
 		href={`${SITE_BASE}/${locale}/locale`}
 		aria-label="Select Language"
-		class:list={[
-			`hover:text-primary dark:hover:text-primary-dark`,
-			`${className}`,
-		]}
+		class:list={[`${className}`, { active: isActive }]}
 	>
 		<Icon
 			name="mdi:translate"
@@ -22,3 +20,13 @@ const { class: className } = Astro.props
 		/>
 	</a>
 </div>
+<style>
+	@reference "@/styles/global.css";
+
+	a {
+		@apply hover:text-accent dark:hover:text-accent-dark;
+	}
+	a.active {
+		@apply text-accent dark:text-accent-dark;
+	}
+</style>

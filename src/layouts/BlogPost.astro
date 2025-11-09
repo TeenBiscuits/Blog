@@ -25,6 +25,7 @@ const {
 	updatedDate,
 	coverImageCredit,
 	headings,
+	tags,
 	slug,
 	remarkPluginFrontmatter,
 } = Astro.props
@@ -62,7 +63,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 				<div class="grow w-full md:max-w-[75ch]">
 					<div>
 						<h1
-							class="text-4xl sm:text-5xl leading-snug pt-12 font-bold"
+							class="text-4xl sm:text-5xl leading-snug pt-12 font-serif font-bold"
 							transition:name={`blog-title-${id}`}
 						>
 							{title}
@@ -72,7 +73,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 							<span>
 								<Icon
 									name="mdi:calendar-month-outline"
-									class="inline-block text-primary dark:text-primary-dark"
+									class="inline-block text-accent dark:text-accent-dark"
 									transition:name={`blog-date-${id}`}
 								/>
 								<FormattedDate date={pubDate} />
@@ -84,7 +85,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 									<span>
 										<Icon
 											name="mdi:calendar-refresh-outline"
-											class="inline-block text-primary dark:text-primary-dark"
+											class="inline-block text-secondary dark:text-accent-dark"
 										/>
 										Last updated on <FormattedDate date={updatedDate} />
 									</span>
@@ -95,7 +96,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 							<span>
 								<Icon
 									name="mdi:clock-time-four-outline"
-									class="inline-block text-primary dark:text-primary-dark"
+									class="inline-block text-accent dark:text-accent-dark"
 								/>
 								{minutesRead}
 								{
@@ -114,11 +115,11 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 									<Image
 										src={blogImages[coverImagePath]()}
 										alt={title}
-										class="rounded-lg"
+										class="rounded-xl"
 										transition:name={`blog-cover-${id}`}
 									/>
 									{coverImageCredit && (
-										<p class="mt-2 mb-8 opacity-80 italic text-sm">
+										<p class="mt-2 mb-6 opacity-80 italic text-sm">
 											Image Credit: {coverImageCredit}
 										</p>
 									)}
@@ -126,14 +127,24 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 							)
 						}
 					</div>
+					<div class="flex flex-wrap gap-4 mb-8">
+						{
+							tags &&
+								tags.map((tag) => (
+									<a class="font-medium italic rounded-xl bg-secondary dark:bg-secondary-dark px-5 py-3 md:px-4 md:py-2">
+										#{tag}
+									</a>
+								))
+						}
+					</div>
 					<div
-						class="prose prose-neutral prose-lg md:prose-xl dark:prose-invert prose-img:rounded-xl prose-figure:text-center prose-img:mx-auto"
+						class="prose prose-neutral prose-lg md:prose-xl dark:prose-invert prose-img:rounded-xl prose-figure:text-center prose-img:mx-auto prose-style"
 					>
 						<slot />
 					</div>
 
 					<!-- Suggest edit -->
-					<div class="flex justify-between mt-16 gap-4 flex-wrap italic">
+					<div class="flex justify-between mt-16 mb-8 gap-4 flex-wrap italic">
 						<a
 							href={`https://github.com/TeenBiscuits/Blog/edit/main/src/content/blog/${slug}/index.md`}
 							data-umami-event="Suggest edit"

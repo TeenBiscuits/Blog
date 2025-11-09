@@ -104,6 +104,7 @@ Un novo parágrafo despois dunha liña en branco.
   - Elemento aniñado nivel 2
     - Elemento aniñado nivel 3
   - Volver a nivel 2
+
 -     Outro elemento de nivel superior
 
 1. Elemento de lista ordenada un
@@ -116,6 +117,7 @@ Un novo parágrafo despois dunha liña en branco.
 
   1. Número dentro de viñetas
   2. Outro máis
+
 -     Continuar viñetas
 
 ---
@@ -127,6 +129,7 @@ Un novo parágrafo despois dunha liña en branco.
 
   - [x] Subtarefa feita
   - [ ] Subtarefa pendente
+
 -     [ ] Elemento final
 
 ---

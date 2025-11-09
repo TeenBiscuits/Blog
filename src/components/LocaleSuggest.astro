@@ -11,7 +11,7 @@ const currentLocale = Astro.currentLocale as Lang
 
 <div
 	id="js-languageSuggest"
-	class="fixed top-0 w-full z-50 text-foreground-dark dark:text-foreground-dark bg-primary dark:bg-primary-dark"
+	class="fixed top-0 w-full z-50 text-lg hidden bg-accent dark:bg-accent-dark"
 >
 	<div class="app-container flex justify-center items-center py-3 relative">
 		<a
@@ -26,7 +26,11 @@ const currentLocale = Astro.currentLocale as Lang
 			</div>
 			<Icon name="mdi:arrow-right" />
 		</a>
-		<button id="js-close" class="absolute right-12 cursor-pointer">
+		<button
+			id="js-close"
+			class="absolute right-12 cursor-pointer opacity-70 hover:opacity-100"
+			aria-label="Close language suggestion"
+		>
 			<Icon name="mdi:close-circle-outline" />
 		</button>
 	</div>
@@ -97,19 +101,3 @@ const currentLocale = Astro.currentLocale as Lang
 		}
 	})
 </script>
-
-<style>
-	#js-languageSuggest {
-		display: none;
-	}
-	#js-link {
-		text-decoration: none;
-	}
-	#js-close {
-		opacity: 0.7;
-		transition: opacity 0.2s;
-	}
-	#js-close:hover {
-		opacity: 1;
-	}
-</style>
