@@ -17,7 +17,9 @@ export default defineConfig({
 	site:
 		process.env.VERCEL_ENV === 'production'
 			? 'https://blog.pablopl.dev'
-			: `https://${process.env.VERCEL_URL}`,
+			: process.env.VERCEL_URL
+				? `https://${process.env.VERCEL_URL}`
+				: 'http://localhost:4321',
 
 	i18n: {
 		defaultLocale: DEFAULT_LOCALE_SETTING,
