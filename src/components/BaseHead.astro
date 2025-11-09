@@ -87,6 +87,12 @@ const localeDescription = description || t(SITE_DESCRIPTION)
 
 <!-- Auto-discovery -->
 <link rel="sitemap" href="/sitemap-index.xml" />
+<link
+	rel="alternate"
+	type="application/rss+xml"
+	title={`${t(SITE_TITLE)} RSS`}
+	href={new URL(`${locale}/rss.xml`, Astro.site)}
+/>
 
 <!-- View Transitions -->
 <ClientRouter />

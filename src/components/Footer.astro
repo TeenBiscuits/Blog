@@ -2,6 +2,7 @@
 import { SITE_BASE, SocialLinks, WebsiteLinks } from '@/consts'
 import Firma from '@/components/Firma.astro'
 import Frase from '@/assets/frase.svg'
+import { Icon } from 'astro-icon/components'
 import { type Lang, useTranslations } from '@/i18n'
 const t = useTranslations(Astro.currentLocale as Lang)
 
@@ -53,6 +54,15 @@ const today = new Date()
 							</a>
 						))
 					}
+					<a
+						href={`${SITE_BASE}/${locale}/rss.xml`}
+						data-umami-event="RSS Feed Footer Link"
+						target="_blank"
+						class="text-lg hover:text-secondary dark:hover:text-secondary-dark"
+						aria-label="RSS Feed"
+					>
+						<Icon name="mdi:rss" class="w-6 h-6" />
+					</a>
 				</div>
 			</div>
 			<div class="flex justify-center md:justify-end">
