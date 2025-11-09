@@ -71,7 +71,9 @@ const { title } = Astro.props
 
 		// Find the giscus script tag
 		const script = document.querySelector('script[src*="giscus"]')
-		if (!script) return
+		if (!script) {
+			return
+		}
 
 		// Get the current theme
 		const theme = getGiscusTheme()
@@ -138,13 +140,19 @@ const { title } = Astro.props
 	// Track Giscus events with Umami
 	function handleGiscusMessage(event: MessageEvent) {
 		// Verify the message is from Giscus
-		if (event.origin !== 'https://giscus.pablopl.dev') return
-		if (!(typeof event.data === 'object' && event.data.giscus)) return
+		if (event.origin !== 'https://giscus.pablopl.dev') {
+			return
+		}
+		if (!(typeof event.data === 'object' && event.data.giscus)) {
+			return
+		}
 
 		const giscusData = event.data.giscus
 
 		// Check if umami is available
-		if (typeof window.umami === 'undefined') return
+		if (typeof window.umami === 'undefined') {
+			return
+		}
 
 		// Handle error messages
 		if ('error' in giscusData) {
