@@ -3,6 +3,7 @@ import NavbarLink from './NavbarLink.astro'
 import { Icon } from 'astro-icon/components'
 import ThemeSelector from './ThemeSelector.astro'
 import LocaleSelector from './LocaleSelector.astro'
+import ProgressBar from './ProgressBar.astro'
 import { SITE_BASE, WebsiteLinks } from '@/consts'
 import LogoSVG from '@/assets/logo.svg'
 import { type Lang } from '@/i18n'
@@ -84,6 +85,7 @@ const locale = Astro.currentLocale as Lang
 				</div>
 			</div>
 		</div>
+		<ProgressBar />
 	</nav>
 
 	<script>
