@@ -5,7 +5,11 @@
 	"tabWidth": 2,
 	"trailingComma": "es5",
 	"printWidth": 80,
-	"plugins": ["prettier-plugin-astro"],
+	"plugins": [
+		"prettier-plugin-organize-imports",
+		"prettier-plugin-astro",
+		"prettier-plugin-tailwindcss"
+	],
 	"overrides": [
 		{
 			"files": "*.astro",

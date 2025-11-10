@@ -52,6 +52,8 @@
 		"eslint-plugin-jsx-a11y": "^6.10.2",
 		"prettier": "^3.6.2",
 		"prettier-plugin-astro": "^0.14.1",
+		"prettier-plugin-organize-imports": "^4.3.0",
+		"prettier-plugin-tailwindcss": "^0.7.1",
 		"rehype-accessible-emojis": "^0.3.2",
 		"typescript-eslint": "^8.46.0"
 	}
