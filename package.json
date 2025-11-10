@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "bunx --bun astro dev",
 		"start": "bunx --bun astro dev",
-		"build": "bunx --bun astro check && astro build",
+		"build": "bunx --bun astro check && bunx --bun astro build",
 		"preview": "bunx --bun astro preview",
 		"astro": "bunx --bun astro",
 		"lint": "bunx --bun eslint . --ext .js,.jsx,.ts,.tsx,.astro",
