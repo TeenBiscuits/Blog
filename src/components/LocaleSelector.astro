@@ -7,7 +7,7 @@ const { class: className } = Astro.props
 const isActive = Astro.url.pathname.startsWith(`/${locale}/locale`)
 ---
 
-<div class="flex justify-center items-center">
+<div class="flex items-center justify-center">
 	<a
 		href={`${SITE_BASE}/${locale}/locale`}
 		aria-label="Select Language"
@@ -15,7 +15,7 @@ const isActive = Astro.url.pathname.startsWith(`/${locale}/locale`)
 	>
 		<Icon
 			name="mdi:translate"
-			class="duration-0 text-2xl md:text-xl"
+			class="text-2xl duration-0 md:text-xl"
 			aria-hidden
 		/>
 	</a>

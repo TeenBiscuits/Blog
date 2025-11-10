@@ -53,27 +53,27 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 	<main>
 		<article>
 			<div
-				class="app-container flex flex-col lg:flex-row-reverse justify-between gap-8 py-24 relative"
+				class="app-container relative flex flex-col justify-between gap-8 py-24 lg:flex-row-reverse"
 			>
-				<div class="md:w-1/4 relative">
-					<div class="sticky top-0 md:top-28 hidden lg:block">
+				<div class="relative md:w-1/4">
+					<div class="sticky top-0 hidden md:top-28 lg:block">
 						<TableOfContents headings={headings} />
 					</div>
 				</div>
-				<div class="grow w-full md:max-w-[75ch]">
+				<div class="w-full grow md:max-w-[75ch]">
 					<div>
 						<h1
-							class="text-4xl sm:text-5xl leading-snug pt-12 font-serif font-bold"
+							class="pt-12 font-serif text-4xl leading-snug font-bold sm:text-5xl"
 							transition:name={`blog-title-${id}`}
 						>
 							{title}
 						</h1>
-						<div class="text-lg flex items-center gap-4 flex-wrap py-8">
+						<div class="flex flex-wrap items-center gap-4 py-8 text-lg">
 							<!-- Publish date -->
 							<span>
 								<Icon
 									name="mdi:calendar-month-outline"
-									class="inline-block text-accent dark:text-accent-dark"
+									class="text-accent dark:text-accent-dark inline-block"
 									transition:name={`blog-date-${id}`}
 								/>
 								<FormattedDate date={pubDate} />
@@ -85,7 +85,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 									<span>
 										<Icon
 											name="mdi:calendar-refresh-outline"
-											class="inline-block text-secondary dark:text-accent-dark"
+											class="text-secondary dark:text-accent-dark inline-block"
 										/>
 										Last updated on <FormattedDate date={updatedDate} />
 									</span>
@@ -96,7 +96,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 							<span>
 								<Icon
 									name="mdi:clock-time-four-outline"
-									class="inline-block text-accent dark:text-accent-dark"
+									class="text-accent dark:text-accent-dark inline-block"
 								/>
 								{minutesRead}
 								{
@@ -119,7 +119,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 										transition:name={`blog-cover-${id}`}
 									/>
 									{coverImageCredit && (
-										<p class="mt-2 mb-6 opacity-80 italic text-sm">
+										<p class="mt-2 mb-6 text-sm italic opacity-80">
 											Image Credit: {coverImageCredit}
 										</p>
 									)}
@@ -127,13 +127,13 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 							)
 						}
 					</div>
-					<div class="flex flex-wrap gap-4 mb-8">
+					<div class="mb-8 flex flex-wrap gap-4">
 						{
 							tags &&
 								tags.map((tag) => (
-									<a class="font-medium italic rounded-xl bg-secondary dark:bg-secondary-dark px-5 py-3 md:px-4 md:py-2">
+									<div class="bg-secondary dark:bg-secondary-dark rounded-xl px-5 py-3 font-medium italic md:px-4 md:py-2">
 										#{tag}
-									</a>
+									</div>
 								))
 						}
 					</div>
@@ -144,12 +144,12 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 					</div>
 
 					<!-- Suggest edit -->
-					<div class="flex justify-between mt-16 mb-8 gap-4 flex-wrap italic">
+					<div class="mt-16 mb-8 flex flex-wrap justify-between gap-4 italic">
 						<a
 							href={`https://github.com/TeenBiscuits/Blog/edit/main/src/content/blog/${slug}/index.md`}
 							data-umami-event="Suggest edit"
 							target="_blank"
-							class="hover:underline underline-offset-4 opacity-70 hover:opacity-100"
+							class="underline-offset-4 opacity-70 hover:underline hover:opacity-100"
 							><Icon name="mdi:pencil-outline" class="inline-block" />
 							{
 								t({

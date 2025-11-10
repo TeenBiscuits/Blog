@@ -12,21 +12,21 @@ const today = new Date()
 
 <footer transition:persist>
 	<div
-		class="app-container border-t-2 border-foreground/50 dark:border-foreground-dark/50"
+		class="app-container border-foreground/50 dark:border-foreground-dark/50 border-t-2"
 	>
-		<div class="flex justify-center pt-12 gap-12">
-			<Frase class="w-xl h-auto" />
+		<div class="flex justify-center gap-12 pt-12">
+			<Frase class="h-auto w-xl" />
 		</div>
-		<div class="grid md:grid-cols-3 place-content-center py-12 gap-12">
+		<div class="grid place-content-center gap-12 py-12 md:grid-cols-3">
 			<div>
-				<h3 class="font-semibold text-2xl">
+				<h3 class="text-2xl font-semibold">
 					{t({ es: 'Enlaces', gl: 'Enlaces', en: 'Links' })}
 				</h3>
-				<div class="flex flex-wrap gap-4 mt-4">
+				<div class="mt-4 flex flex-wrap gap-4">
 					{
 						WebsiteLinks.map((link) => (
 							<a
-								class="text-lg hover:text-secondary dark:hover:text-secondary-dark"
+								class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
 								href={`${SITE_BASE}/${locale}/${link.url}`}
 								data-umami-event={`${link.name['es']} Footer Link`}
 							>
@@ -37,16 +37,17 @@ const today = new Date()
 				</div>
 			</div>
 			<div>
-				<h3 class="font-semibold text-2xl">
+				<h3 class="text-2xl font-semibold">
 					{t({ es: 'Redes Sociales', gl: 'Redes Sociais', en: 'Socials' })}
 				</h3>
-				<div class="flex flex-wrap gap-4 mt-4">
+				<div class="mt-4 flex flex-wrap gap-4">
 					{
 						SocialLinks.map((link) => (
 							<a
-								class="text-lg hover:text-secondary dark:hover:text-secondary-dark"
+								class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
 								href={link.url}
 								target="_blank"
+								rel="noopener noreferrer me"
 								rel="nofollow"
 								data-umami-event="Social Footer Link"
 								data-umami-event-url={link.url}
@@ -59,10 +60,10 @@ const today = new Date()
 						href={`${SITE_BASE}/${locale}/rss.xml`}
 						data-umami-event="RSS Feed Footer Link"
 						target="_blank"
-						class="text-lg hover:text-secondary dark:hover:text-secondary-dark"
+						class="hover:text-secondary dark:hover:text-secondary-dark text-lg"
 						aria-label="RSS Feed"
 					>
-						<Icon name="mdi:rss" class="w-6 h-6" />
+						<Icon name="mdi:rss" class="h-6 w-6" />
 					</a>
 				</div>
 			</div>
@@ -71,9 +72,9 @@ const today = new Date()
 			</div>
 		</div>
 		<div
-			class="app-container flex justify-between items-center pb-6 text-center"
+			class="app-container flex items-center justify-between pb-6 text-center"
 		>
-			<p class="text-center w-full">
+			<p class="w-full text-center">
 				&copy; {today.getFullYear()}
 				{
 					t({

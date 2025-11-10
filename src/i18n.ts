@@ -1,5 +1,5 @@
-import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from './locales'
 import { getRelativeLocaleUrl } from 'astro:i18n'
+import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from './locales'
 
 /**
  * User-defined locales list

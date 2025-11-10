@@ -11,9 +11,9 @@ import { type Lang } from '@/i18n'
 const locale = Astro.currentLocale as Lang
 ---
 
-<header class="fixed top-0 w-full z-40 bg-transparent backdrop-blur-sm">
+<header class="fixed top-0 z-40 w-full bg-transparent backdrop-blur-sm">
 	<nav>
-		<div class="app-container flex justify-between items-center py-5">
+		<div class="app-container flex items-center justify-between py-5">
 			<a
 				href={`${SITE_BASE}/${locale}/`}
 				aria-label="Home"
@@ -26,7 +26,7 @@ const locale = Astro.currentLocale as Lang
 					class="hover:text-accent dark:hover:text-accent-dark"
 				/>
 			</a>
-			<div class="gap-8 hidden md:flex items-center">
+			<div class="hidden items-center gap-8 md:flex">
 				{
 					WebsiteLinks.map((link) => (
 						<NavbarLink
@@ -43,7 +43,7 @@ const locale = Astro.currentLocale as Lang
 				<ThemeSelector transition:persist />
 			</div>
 			<button
-				class="md:hidden cursor-pointer"
+				class="cursor-pointer md:hidden"
 				id="nav-open-btn"
 				aria-label="Open navigation menu"
 				title="Open navigation menu"
@@ -53,7 +53,7 @@ const locale = Astro.currentLocale as Lang
 
 			<!-- Mobile nav -->
 			<div
-				class="translate-x-full md:hidden fixed top-0 right-0 bg-background dark:bg-background-dark h-screen w-5/6 px-8 py-6 transition-transform z-40 border-l-[1px] border-background"
+				class="bg-background dark:bg-background-dark border-background fixed top-0 right-0 z-40 h-screen w-5/6 translate-x-full border-l-[1px] px-8 py-6 transition-transform md:hidden"
 				id="mobile-menu"
 				data-umami-event="Open Mobile nav"
 			>
@@ -66,7 +66,7 @@ const locale = Astro.currentLocale as Lang
 				>
 					<Icon aria-hidden name="mdi:close" size={32} />
 				</button>
-				<div class="flex flex-col h-full items-start gap-8 pt-16">
+				<div class="flex h-full flex-col items-start gap-8 pt-16">
 					{
 						WebsiteLinks.map((link) => (
 							<NavbarLink

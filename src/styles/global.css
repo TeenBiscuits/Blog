@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@plugin "@tailwindcss/typography";
+@plugin '@tailwindcss/typography';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -37,28 +37,28 @@ html {
 }
 
 .btn-primary {
-	@apply w-fit flex gap-2 bg-primary dark:bg-primary-dark px-5 py-3 md:px-4 md:py-2 rounded-lg items-center mt-4 hover:opacity-75 transition-opacity;
+	@apply bg-primary dark:bg-primary-dark mt-4 flex w-fit items-center gap-2 rounded-lg px-5 py-3 transition-opacity hover:opacity-75 md:px-4 md:py-2;
 }
 
 .btn-secondary {
-	@apply w-fit flex gap-2 bg-secondary dark:bg-secondary-dark px-5 py-3 md:px-4 md:py-2 rounded-lg items-center mt-4 hover:opacity-75 transition-opacity;
+	@apply bg-secondary dark:bg-secondary-dark mt-4 flex w-fit items-center gap-2 rounded-lg px-5 py-3 transition-opacity hover:opacity-75 md:px-4 md:py-2;
 }
 
 .section-title {
-	@apply text-4xl font-semibold pb-3;
+	@apply pb-3 text-4xl font-semibold;
 }
 
 .posts-grid-container {
-	@apply grid my-6 md:grid-cols-2 xl:grid-cols-4 gap-6;
+	@apply my-6 grid gap-6 md:grid-cols-2 xl:grid-cols-4;
 }
 
 /* Post content */
 .prose iframe {
-	@apply my-16 mx-auto w-11/12 aspect-video rounded-xl;
+	@apply mx-auto my-16 aspect-video w-11/12 rounded-xl;
 }
 
 .prose a {
-	@apply text-primary no-underline dark:text-primary-dark hover:underline hover:decoration-2 hover:underline-offset-2;
+	@apply text-primary dark:text-primary-dark no-underline hover:underline hover:decoration-2 hover:underline-offset-2;
 }
 
 .prose blockquote {

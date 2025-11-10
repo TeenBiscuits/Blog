@@ -23,10 +23,10 @@ const posts = (await getCollection('blog'))
 
 <Layout>
 	<main
-		class="app-container flex flex-col gap-12 justify-center py-36 md:py-48 pt-44 md:pt-56 relative"
+		class="app-container relative flex flex-col justify-center gap-12 py-36 pt-44 md:py-48 md:pt-56"
 	>
 		<div>
-			<p class="block text-3xl opacity-70 mt-9 mb-4">
+			<p class="mt-9 mb-4 block text-3xl opacity-70">
 				{
 					t({
 						es: `Bienvenido al`,
@@ -37,7 +37,7 @@ const posts = (await getCollection('blog'))
 			</p>
 			<Title />
 		</div>
-		<p class="text-2xl max-w-2xl font-light leading-normal">
+		<p class="max-w-2xl text-2xl leading-normal font-light">
 			{
 				t({
 					es: `donde hablo de las cosas que aprendo o de las que simplemente me apetecen`,
@@ -55,12 +55,13 @@ const posts = (await getCollection('blog'))
 						aria-label={link.name}
 						data-umami-event={`Social Hero Link`}
 						data-umami-event-url={link.url}
+						rel="noopener noreferrer me"
 						target="_blank"
 					>
 						<Icon
 							size={35}
 							name={`mdi:${link.icon}`}
-							class="inline-block mr-2 mb-1"
+							class="mr-2 mb-1 inline-block"
 						/>
 					</a>
 				))
@@ -92,12 +93,12 @@ const posts = (await getCollection('blog'))
 	</section>
 
 	<!-- Recent Posts Section -->
-	<section class="app-container py-42 grid lg:grid-cols-2 gap-28 lg:gap-10">
+	<section class="app-container grid gap-28 py-42 lg:grid-cols-2 lg:gap-10">
 		<div class="space-y-6">
 			<h2 class="section-title">
 				{t({ es: 'Acerca de Mí', gl: 'Sobre Min', en: 'About Me' })}
 			</h2>
-			<p class="text-lg max-w-xl pb-4">
+			<p class="max-w-xl pb-4 text-lg">
 				{
 					t({
 						es: "A brief introduction about yourself. You can include your profession, hobbies, interests, or anything you'd like visitors to know about you.",
@@ -108,7 +109,7 @@ const posts = (await getCollection('blog'))
 			</p>
 			<a
 				class="btn-primary"
-				href={`${locale}/about`}
+				href={`/${locale}/about`}
 				data-umami-event="About Me Hero Link"
 				>{
 					t({
@@ -124,7 +125,7 @@ const posts = (await getCollection('blog'))
 			<h2 class="section-title">
 				{t({ es: 'Contáctame', gl: 'Contacta comigo', en: 'Get in touch' })}
 			</h2>
-			<p class="text-lg max-w-xl">
+			<p class="max-w-xl text-lg">
 				{
 					t({
 						es: 'Utilice los botones a continuación para ver mi currículum y correo electrónico.',
@@ -133,7 +134,7 @@ const posts = (await getCollection('blog'))
 					})
 				}
 			</p>
-			<div class="flex flex-wrap mt-auto space-x-4">
+			<div class="mt-auto flex flex-wrap space-x-4">
 				<a
 					class="btn-primary"
 					href="mailto:pablo.portas@udc.es"

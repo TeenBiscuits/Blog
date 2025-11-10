@@ -1,5 +1,4 @@
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts'
-import { useTranslations, localeParams } from '@/i18n'
+import { localeParams, useTranslations } from '@/i18n'
 
 export const getStaticPaths = () => localeParams
 

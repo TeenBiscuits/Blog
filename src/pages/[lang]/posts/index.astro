@@ -27,10 +27,10 @@ const tags = [
 
 <Layout>
 	<main class="app-container pt-36">
-		<h1 class="text-6xl pb-8 font-serif font-bold">
+		<h1 class="pb-8 font-serif text-6xl font-bold">
 			{t({ es: 'Artículos', gl: 'Artigos', en: 'Posts' })}
 		</h1>
-		<p class="md:w-2/3 text-lg leading-[2rem]">
+		<p class="text-lg leading-[2rem] md:w-2/3">
 			{
 				t({
 					es: 'escribo cosas y las publico, a veces, hasta pienso antes de escribirlas',
@@ -41,7 +41,7 @@ const tags = [
 		</p>
 	</main>
 	<section class="app-container py-12">
-		<h2 class="text-3xl flex flex-row">
+		<h2 class="flex flex-row text-3xl">
 			<div class="flex flex-wrap gap-4">
 				<a class="font-bold" href={`/${locale}/posts`}>
 					{t({ es: 'Todos', gl: 'Todos', en: 'All' })}

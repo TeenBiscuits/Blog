@@ -15,14 +15,14 @@ export const getStaticPaths = () =>
 <Layout>
 	<div>
 		<main
-			class="app-container h-[95vh] flex flex-col gap-6 justify-center py-56 items-center"
+			class="app-container flex h-[95vh] flex-col items-center justify-center gap-6 py-56"
 		>
 			<h1
-				class="font-title text-9xl md:text-[128px] text-center leading-none px-4 hero-title z-10"
+				class="font-title hero-title z-10 px-4 text-center text-9xl leading-none md:text-[128px]"
 			>
 				404
 			</h1>
-			<p class="text-xl text-center max-w-[480px]">
+			<p class="max-w-[480px] text-center text-xl">
 				{
 					t({
 						es: `La página que estás buscando no fue encontrada. Por favor revise el enlace de nuevo.`,

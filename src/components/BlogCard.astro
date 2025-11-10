@@ -19,14 +19,14 @@ const coverImagePath = `/src/assets/blogimages/${post.data.id}/cover.jpg`
 <a
 	data-umami-event={`${id} Blog Card`}
 	href={`${SITE_BASE}/${locale}/posts/${id}/`}
-	class="flex flex-col gap-4 p-3 pb-8 h-full group transition-colors rounded-3xl hover:bg-secondary dark:hover:bg-secondary-dark"
+	class="group hover:bg-secondary dark:hover:bg-secondary-dark flex h-full flex-col gap-4 rounded-3xl p-3 pb-8 transition-colors"
 >
 	{
 		blogImages[coverImagePath] && (
 			<Image
 				src={blogImages[coverImagePath]()}
 				alt={post.data.title}
-				class="object-cover rounded-xl aspect-video"
+				class="aspect-video rounded-xl object-cover"
 				transition:name={`blog-cover-${post.data.id}`}
 			/>
 		)
@@ -44,7 +44,7 @@ const coverImagePath = `/src/assets/blogimages/${post.data.id}/cover.jpg`
 		{post.data.description}
 	</p>
 	<p
-		class="uppercase text-sm mt-auto tracking-tight"
+		class="mt-auto text-sm tracking-tight uppercase"
 		transition:name={`blog-date-${post.data.id}`}
 	>
 		<FormattedDate date={post.data.pubDate} />

@@ -1,8 +1,8 @@
 import js from '@eslint/js'
-import astro from 'eslint-plugin-astro'
-import tseslint from 'typescript-eslint'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
 import prettierConfig from 'eslint-config-prettier'
+import astro from 'eslint-plugin-astro'
+import jsxA11y from 'eslint-plugin-jsx-a11y'
+import tseslint from 'typescript-eslint'
 
 export default [
 	js.configs.recommended,

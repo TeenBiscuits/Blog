@@ -1,7 +1,7 @@
-import rss from '@astrojs/rss'
-import { getCollection } from 'astro:content'
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts'
 import { localeParams } from '@/i18n'
+import rss from '@astrojs/rss'
+import { getCollection } from 'astro:content'
 
 export const getStaticPaths = () => localeParams
 

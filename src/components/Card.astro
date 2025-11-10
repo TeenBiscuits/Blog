@@ -4,7 +4,7 @@ const { class: className } = Astro.props
 ---
 
 <div class:list={['rounded-lg p-6 py-12 pt-16 md:p-14', className]}>
-	<h2 class="font-title text-[42px] leading-tight pb-5 z-10">{title}</h2>
+	<h2 class="font-title z-10 pb-5 text-[42px] leading-tight">{title}</h2>
 	<div class="flex flex-col gap-4">
 		<slot />
 	</div>

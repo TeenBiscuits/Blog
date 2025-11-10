@@ -12,17 +12,17 @@ export const getStaticPaths = () =>
 
 <Layout>
 	<main class="app-container pt-36">
-		<h1 class="text-6xl pb-2 font-serif font-bold">
+		<h1 class="pb-2 font-serif text-6xl font-bold">
 			{t({ es: 'Elige Idioma', gl: 'Escolle Idioma', en: 'Choose Language' })}
 		</h1>
 	</main>
 	<section class="app-container py-24">
-		<div class="flex flex-col md:flex-row justify-center gap-12 md:gap-30">
+		<div class="flex flex-col justify-center gap-12 md:flex-row md:gap-30">
 			{
 				Object.entries(LOCALES).map(([lang, config]) => (
 					<div>
 						<a
-							class="text-4xl item-center hover:text-primary dark:text-primary-dark"
+							class="item-center decoration-primary dark:decoration-primary-dark text-4xl decoration-wavy underline-offset-4 hover:underline"
 							href={`${SITE_BASE}/${lang}/`}
 							data-umami-event={`${config.label} Locale Change`}
 						>

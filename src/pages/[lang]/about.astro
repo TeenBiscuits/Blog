@@ -5,6 +5,7 @@ import Layout from '@/layouts/Base.astro'
 import { SocialLinks } from '@/consts'
 import { Icon } from 'astro-icon/components'
 import { getEntry, render } from 'astro:content'
+import { Image } from 'astro:assets'
 
 export const getStaticPaths = () =>
 	Object.keys(LOCALES).map((lang) => ({
@@ -20,17 +21,17 @@ const { Content } = await render(aboutContent!)
 <Layout>
 	<main>
 		<article
-			class="app-container flex flex-col lg:flex-row-reverse justify-between gap-8 pt-36 py-24 relative"
+			class="app-container relative flex flex-col justify-between gap-8 py-24 pt-36 lg:flex-row-reverse"
 		>
 			<!-- Sidebar Image -->
-			<div class="md:w-1/4 relative">
+			<div class="relative md:w-1/4">
 				<div class="sticky top-0 hidden md:top-28 lg:block">
-					<img
-						src={profilePicture.src}
+					<Image
+						src={profilePicture}
 						alt="About Me"
 						class="w-full rounded-lg"
 					/>
-					<p class="mt-2 mb-4 opacity-80 italic text-sm">
+					<p class="mt-2 mb-4 text-sm italic opacity-80">
 						{
 							t({
 								es: 'Este joven apuesto soy yo',
@@ -47,12 +48,13 @@ const { Content } = await render(aboutContent!)
 								aria-label={link.name}
 								data-umami-event="Social About Link"
 								data-umami-event-url={link.url}
+								rel="noopener noreferrer me"
 								target="_blank"
 							>
 								<Icon
 									size={35}
 									name={`mdi:${link.icon}`}
-									class="inline-block mr-2 mb-1"
+									class="mr-2 mb-1 inline-block"
 								/>
 							</a>
 						))
@@ -60,18 +62,18 @@ const { Content } = await render(aboutContent!)
 				</div>
 			</div>
 			<!-- Main Content -->
-			<div class="grow w-full md:max-w-[75ch]">
-				<h1 class="text-6xl pb-8 font-serif font-bold">
+			<div class="w-full grow md:max-w-[75ch]">
+				<h1 class="pb-8 font-serif text-6xl font-bold">
 					{t({ es: 'Acerca de Mí', gl: 'Eu', en: 'About Me' })}
 				</h1>
 				<!-- Top Image (only on smaler and medium screen) -->
-				<div class="lg:hidden mb-8">
-					<img
-						src={profilePicture.src}
+				<div class="mb-8 lg:hidden">
+					<Image
+						src={profilePicture}
 						alt="About Me"
 						class="w-full rounded-lg"
 					/>
-					<p class="mt-2 mb-4 opacity-80 italic text-sm">
+					<p class="mt-2 mb-4 text-sm italic opacity-80">
 						{
 							t({
 								es: 'Este joven apuesto soy yo',
@@ -88,12 +90,13 @@ const { Content } = await render(aboutContent!)
 								aria-label={link.name}
 								data-umami-event="Social About Link"
 								data-umami-event-url={link.url}
+								rel="noopener noreferrer me"
 								target="_blank"
 							>
 								<Icon
 									size={35}
 									name={`mdi:${link.icon}`}
-									class="inline-block mr-2 mb-1"
+									class="mr-2 mb-1 inline-block"
 								/>
 							</a>
 						))
