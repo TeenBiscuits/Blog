@@ -55,7 +55,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 	description={description}
 	keywords={tags ? tags.join(', ') : ''}
 	og={slug}
-	lastModified={pubDate.toISOString()}
+	lastModified={dayjs(remarkPluginFrontmatter.lastModified).utc().toISOString()}
 >
 	<main>
 		<article>
