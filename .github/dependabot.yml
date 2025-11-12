@@ -1,0 +1,61 @@
+# Dependabot configuration for dependency updates
+
+version: 2
+updates:
+  # Minor, patch and security updates (grouped into single PRs)
+  - package-ecosystem: 'bun'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'saturday'
+      time: '09:00'
+    open-pull-requests-limit: 10
+    groups:
+      minor-and-security:
+        patterns:
+          - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
+    labels:
+      - 'dependencies'
+      - 'minor-update'
+      - 'automerge'
+    commit-message:
+      prefix: 'chore:'
+      include: 'scope'
+    pull-request-branch-name:
+      separator: '-'
+
+  # Major updates (separate PRs per dependency)
+  - package-ecosystem: 'bun'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+      day: 'saturday'
+      time: '09:00'
+    open-pull-requests-limit: 5
+    # No groups defined - each major update gets its own PR
+    ignore:
+      - update-types: ['version-update:semver-minor']
+      - update-types: ['version-update:semver-patch']
+    labels:
+      - 'dependencies'
+      - 'major-update'
+      - 'breaking-change'
+    commit-message:
+      prefix: 'feat:'
+      include: 'scope'
+    pull-request-branch-name:
+      separator: '-'
+
+  # GitHub Actions updates
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    labels:
+      - 'dependencies'
+      - 'github-actions'
+    commit-message:
+      prefix: 'ci:'
