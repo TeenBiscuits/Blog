@@ -1,6 +1,7 @@
 # build output
 dist/
 .vercel/output
+.unlighthouse/
 
 # generated types
 .astro/
@@ -14,9 +15,15 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# vercel
+.vercel
+
 # environment variables
 .env
 .env.production
+.env*.local
+# index now key
+public/*3.txt
 
 # macOS-specific files
 .DS_Store
