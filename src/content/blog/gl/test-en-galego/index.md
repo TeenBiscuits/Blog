@@ -1,5 +1,5 @@
 ---
-id: 'test'
+pubId: 'test'
 title: 'TEST EN GALEGO'
 description: |
   Este documento está deseñado para exercitar unha ampla gama de funcións de Markdown e axudarche a validar a implementación de Markdown dun sitio web. Inclúe cabeceiras, énfase, listas, ligazóns, imaxes, táboas, código, citas, regras horizontais, notas ao pé, listas de tarefas, listas de definicións, matemáticas e máis. Sigue as regras de formato especificadas para táboas, delimitadores LaTeX de matemáticas e sangría.

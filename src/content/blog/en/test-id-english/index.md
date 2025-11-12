@@ -1,5 +1,5 @@
 ---
-id: 'test'
+pubId: 'test'
 title: 'TEST IN ENGLISH'
 description: |
   This document is designed to exercise a wide range of Markdown features to help you validate a website’s Markdown implementation. It includes headings, emphasis, lists, links, images, tables, code, blockquotes, horizontal rules, footnotes, task lists, definition lists, math, and more. It follows the specified formatting rules for tables, math LaTeX delimiters, and indentation.

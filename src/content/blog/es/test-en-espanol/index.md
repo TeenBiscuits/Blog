@@ -1,5 +1,5 @@
 ---
-id: 'test'
+pubId: 'test'
 title: 'TEST EN ESPAÑOL'
 description: |
   Este documento está diseñado para ejercitar una amplia gama de funciones de Markdown y ayudarte a validar la implementación de Markdown de un sitio web. Incluye encabezados, énfasis, listas, enlaces, imágenes, tablas, código, citas, reglas horizontales, notas al pie, listas de tareas, listas de definiciones, matemáticas y más. Sigue las reglas de formato especificadas para tablas, delimitadores LaTeX de matemáticas y sangría.
