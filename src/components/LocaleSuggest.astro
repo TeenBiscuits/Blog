@@ -6,7 +6,27 @@
 import { LOCALES, type Lang } from '@/i18n'
 import { LOCALE_SUGGEST_TEXT } from '@/consts'
 import { Icon } from 'astro-icon/components'
+import { getCollection } from 'astro:content'
 const currentLocale = Astro.currentLocale as Lang
+const currentUrl = Astro.url.pathname
+const inArticle = currentUrl.startsWith(`/${currentLocale}/posts/`)
+const translationMap: Record<string, string> = {}
+if (inArticle) {
+	const pub = `${currentUrl.split('/')[1]}/${currentUrl.split('/')[3]}`
+	const blog = await getCollection('blog')
+	// Find the current post's pubId
+	const currentPost = blog.find((post) => post.id === pub)
+	const pubId = currentPost?.data.pubId
+
+	// Find all posts with the same pubId and create a lang -> id mapping
+	if (pubId) {
+		const relatedPosts = blog.filter((post) => post.data.pubId === pubId)
+		for (const post of relatedPosts) {
+			const postLang = post.id.split('/')[0]!.toString()
+			translationMap[postLang] = post.id.split('/')[1]!
+		}
+	}
+}
 ---
 
 <div
@@ -17,8 +37,11 @@ const currentLocale = Astro.currentLocale as Lang
 		<a
 			id="js-link"
 			href="#"
-			class="flex items-center gap-2"
-			data-umami-event={`Locale Suggest Link`}
+			class="flex items-center gap-2 decoration-wavy underline-offset-2 hover:underline"
+			data-umami-event={`Locale Change`}
+			data-umami-event-lang-to=""
+			data-umami-event-lang-from={Astro.currentLocale}
+			data-umami-event-source="locale-suggest"
 		>
 			<div>
 				<span id="js-linkMsg"></span>
@@ -36,7 +59,16 @@ const currentLocale = Astro.currentLocale as Lang
 	</div>
 </div>
 
-<script is:inline define:vars={{ currentLocale, LOCALES, LOCALE_SUGGEST_TEXT }}>
+<script
+	is:inline
+	define:vars={{
+		currentLocale,
+		currentUrl,
+		translationMap,
+		LOCALES,
+		LOCALE_SUGGEST_TEXT,
+	}}
+>
 	const browserLang = navigator.language.toLowerCase()
 	const suggest = document.getElementById('js-languageSuggest')
 
@@ -46,7 +78,7 @@ const currentLocale = Astro.currentLocale as Lang
 		const linkMsg = document.getElementById('js-linkMsg')
 
 		// Determine the target path based on current location
-		const pathnames = location.pathname.split('/')
+		const pathnames = currentUrl.split('/')
 		// pathnames structure: ['', 'lang', 'section', 'subsection', ...]
 
 		let targetPath
@@ -55,8 +87,8 @@ const currentLocale = Astro.currentLocale as Lang
 			pathnames.length > 3 &&
 			pathnames[3] !== ''
 		) {
-			// On /lang/posts/xxx -> redirect to /lang/posts
-			targetPath = `/${lang}/posts`
+			// On /lang/posts/xxx -> redirect to /lang/posts/xxx in the suggested language
+			targetPath = `/${lang}/posts/${translationMap[lang]}`
 		} else {
 			// Default: redirect to the same page structure in the suggested language
 			// Replace the current language with the suggested one
@@ -65,6 +97,7 @@ const currentLocale = Astro.currentLocale as Lang
 		}
 
 		link.href = targetPath
+		link.setAttribute('data-umami-event-lang-to', lang)
 		linkMsg.innerText = `${LOCALE_SUGGEST_TEXT[lang] || LOCALE_SUGGEST_TEXT['en']} `
 		linkText.innerText =
 			linkText.innerText = `${LOCALES[lang].emogi} ${LOCALES[lang].label}`
