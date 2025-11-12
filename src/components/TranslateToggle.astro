@@ -1,0 +1,84 @@
+---
+import { Icon } from 'astro-icon/components'
+import { getCollection } from 'astro:content'
+import { LOCALES, type Lang, useTranslations } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+interface Props {
+	pubId?: string
+}
+const { pubId } = Astro.props
+---
+
+<>
+	<button
+		class="group flex cursor-pointer items-center gap-1"
+		id="translate-toggle"
+	>
+		<Icon
+			name="mdi:translate"
+			class="text-accent dark:text-accent-dark inline-block transition-transform duration-300"
+		/>
+		<p
+			class="decoration-accent dark:decoration-accent-dark inline-block decoration-wavy transition-all duration-300 group-hover:underline"
+		>
+			{t({ es: 'Traducir', gl: 'Traducir', en: 'Translate' })}
+		</p>
+	</button>
+	<span
+		id="language-links"
+		class="hidden gap-2 opacity-0 transition-opacity duration-300"
+	>
+		{
+			Object.entries(LOCALES).map(async ([lang, config]) => {
+				const posts = await getCollection('blog')
+				const post = posts.find(
+					(p) => p.id.startsWith(lang) && p.data.pubId === pubId
+				)
+				const [_, ...postPath] = post?.id.split('/') || []
+
+				return (
+					<span>
+						<a
+							class="group item-center flex gap-1"
+							href={`/${lang}/posts/${postPath}`}
+							data-umami-event={`Locale Change`}
+							data-umami-event-lang-to={lang}
+							data-umami-event-lang-from={Astro.currentLocale}
+							data-umami-event-source={pubId}
+						>
+							<span>{config.emogi}</span>
+							<span class="decoration-accent dark:decoration-accent-dark decoration-wavy group-hover:underline">
+								{config.label}
+							</span>
+						</a>
+					</span>
+				)
+			})
+		}
+	</span>
+</>
+<script>
+	function setupTranslateToggle() {
+		document
+			.getElementById('translate-toggle')
+			?.addEventListener('click', () => {
+				const links = document.getElementById('language-links')
+				const toggle = document.getElementById('translate-toggle')
+				if (links && toggle) {
+					links.classList.toggle('hidden')
+					links.classList.toggle('flex')
+					setTimeout(() => {
+						links.classList.toggle('opacity-0')
+						links.classList.toggle('opacity-100')
+					}, 10)
+					toggle.classList.toggle('hidden')
+				}
+			})
+	}
+
+	setupTranslateToggle()
+
+	document.addEventListener('astro:after-swap', () => {
+		setupTranslateToggle()
+	})
+</script>

@@ -9,10 +9,13 @@ import { LOCALES, type Lang } from '@/i18n'
 interface Props {
 	title?: string
 	description?: string
+	keywords?: string
+	og?: string
+	lastModified?: string | undefined
 }
 
 const locale = Astro.currentLocale as Lang
-const { title, description } = Astro.props
+const { title, description, keywords, og, lastModified } = Astro.props
 
 import '@fontsource-variable/merriweather'
 import '@fontsource-variable/rubik'
@@ -26,10 +29,16 @@ import '@fontsource-variable/cascadia-code'
 	dir={LOCALES[locale]?.dir || null}
 >
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead
+			title={title}
+			description={description}
+			keywords={keywords}
+			image={og}
+		/>
 	</head>
 	<body
 		class="text-foreground bg-background dark:text-foreground-dark dark:bg-background-dark font-light transition-colors"
+		data-last-update={lastModified}
 	>
 		<Header title={SITE_TITLE} transition:animate="none" />
 		<LocaleSuggest />

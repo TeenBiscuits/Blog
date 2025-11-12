@@ -18,7 +18,7 @@ const aboutContent = await getEntry('about', currentLang)
 const { Content } = await render(aboutContent!)
 ---
 
-<Layout>
+<Layout lastModified={aboutContent?.data.pubDate.toISOString()}>
 	<main>
 		<article
 			class="app-container relative flex flex-col justify-between gap-8 py-24 pt-36 lg:flex-row-reverse"

@@ -15,6 +15,12 @@ export const SITE_DESCRIPTION: string | Multilingual = {
 	en: 'my personal blog in which I talk about the things I learn or the things I just feel like',
 }
 
+export const SITE_KEYWORDS: string | Multilingual = {
+	es: 'blog personal, artículos, tecnología, programación, tutoriales',
+	gl: 'blog persoal, artigos, tecnoloxía, desenvolvemento web, programación, tutoriais',
+	en: 'personal blog, articles, technology, programming, tutorials',
+}
+
 export const X_ACCOUNT: string | Multilingual = '@PabloPortasL'
 
 // Deprecated const from original blog theme https://github.com/yashjawale/saral-theme-astro/

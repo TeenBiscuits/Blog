@@ -11,9 +11,16 @@ export const getStaticPaths = () =>
 	}))
 
 const locale = Astro.currentLocale as Lang
-const posts = (await getCollection('blog'))
+const blog = await getCollection('blog')
+// Get the all posts in the current locale
+const posts = blog
 	.filter((post) => post.id.split('/')[0] === locale)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+// Date for newest article
+const newArtDate = blog.reduce(
+	(newest, post) => (post.data.pubDate > newest ? post.data.pubDate : newest),
+	new Date(0)
+)
 /* tags filter - to be implemented
 const tags = [
 	...new Set(
@@ -25,7 +32,7 @@ const tags = [
 */
 ---
 
-<Layout>
+<Layout lastModified={newArtDate.toISOString()}>
 	<main class="app-container pt-36">
 		<h1 class="pb-8 font-serif text-6xl font-bold">
 			{t({ es: 'Artículos', gl: 'Artigos', en: 'Posts' })}

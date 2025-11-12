@@ -6,6 +6,7 @@ import FormattedDate from '@/components/FormattedDate.astro'
 import type { MarkdownHeading, ImageMetadata } from 'astro'
 import TableOfContents from '@/components/TableOfContents.astro'
 import CommentSection from '@/components/CommentSection.astro'
+import TranslateToggle from '@/components/TranslateToggle.astro'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
@@ -18,7 +19,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 }
 
 const {
-	id,
+	pubId,
 	title,
 	description,
 	pubDate,
@@ -39,7 +40,7 @@ const blogImages = import.meta.glob<{ default: ImageMetadata }>(
 	'/src/assets/blogimages/**/*.{jpeg,jpg,png,gif}'
 )
 
-const coverImagePath = `/src/assets/blogimages/${id}/cover.jpg`
+const coverImagePath = `/src/assets/blogimages/${pubId}/cover.jpg`
 
 const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 	.utc()
@@ -49,7 +50,13 @@ const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 ---
 
-<Layout title={title} description={description}>
+<Layout
+	title={title}
+	description={description}
+	keywords={tags ? tags.join(', ') : ''}
+	og={slug}
+	lastModified={pubDate.toISOString()}
+>
 	<main>
 		<article>
 			<div
@@ -64,7 +71,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 					<div>
 						<h1
 							class="pt-12 font-serif text-4xl leading-snug font-bold sm:text-5xl"
-							transition:name={`blog-title-${id}`}
+							transition:name={`blog-title-${pubId}`}
 						>
 							{title}
 						</h1>
@@ -74,7 +81,6 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 								<Icon
 									name="mdi:calendar-month-outline"
 									class="text-accent dark:text-accent-dark inline-block"
-									transition:name={`blog-date-${id}`}
 								/>
 								<FormattedDate date={pubDate} />
 							</span>
@@ -107,6 +113,10 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 									})
 								}
 							</span>
+							<span class="grow"></span>
+							<span>
+								<TranslateToggle pubId={pubId} />
+							</span>
 						</div>
 
 						{
@@ -116,7 +126,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 										src={blogImages[coverImagePath]()}
 										alt={title}
 										class="rounded-xl"
-										transition:name={`blog-cover-${id}`}
+										transition:name={`blog-cover-${pubId}`}
 									/>
 									{coverImageCredit && (
 										<p class="mt-2 mb-6 text-sm italic opacity-80">

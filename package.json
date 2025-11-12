@@ -5,11 +5,12 @@
 	"scripts": {
 		"dev": "bunx --bun astro dev",
 		"start": "bunx --bun astro dev",
+		"prebuild": "bun src/plugins/indexnow.ts",
 		"build": "bunx --bun astro check && bunx --bun astro build",
 		"preview": "bunx --bun astro preview",
 		"astro": "bunx --bun astro",
-		"lint": "bunx --bun eslint . --ext .js,.jsx,.ts,.tsx,.astro",
-		"lint:fix": "bunx --bun eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix",
+		"lint": "bunx --bun eslint . --ext .js,.mjs,.jsx,.ts,.tsx,.astro",
+		"lint:fix": "bunx --bun eslint . --ext .js,.mjs,.jsx,.ts,.tsx,.astro --fix",
 		"format": "bunx --bun prettier --write .",
 		"format:check": "bunx --bun prettier --check ."
 	},
@@ -33,6 +34,7 @@
 		"astro-icon": "^1.1.5",
 		"astro-og-canvas": "^0.7.2",
 		"dayjs": "^1.11.18",
+		"dotenv": "^17.2.3",
 		"mdast-util-to-string": "^4.0.0",
 		"reading-time": "^1.5.0",
 		"rehype-figure-title": "^1.0.0",

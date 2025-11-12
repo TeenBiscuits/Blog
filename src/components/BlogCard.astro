@@ -13,11 +13,12 @@ const blogImages = import.meta.glob<{ default: ImageMetadata }>(
 
 const locale = Astro.currentLocale as Lang
 const [, ...id] = post.id.split('/')
-const coverImagePath = `/src/assets/blogimages/${post.data.id}/cover.jpg`
+const coverImagePath = `/src/assets/blogimages/${post.data.pubId}/cover.jpg`
 ---
 
 <a
 	data-umami-event={`${id} Blog Card`}
+	transition:name={`blog-card-${post.data.pubId}`}
 	href={`${SITE_BASE}/${locale}/posts/${id}/`}
 	class="group hover:bg-secondary dark:hover:bg-secondary-dark flex h-full flex-col gap-4 rounded-3xl p-3 pb-8 transition-colors"
 >
@@ -27,26 +28,20 @@ const coverImagePath = `/src/assets/blogimages/${post.data.id}/cover.jpg`
 				src={blogImages[coverImagePath]()}
 				alt={post.data.title}
 				class="aspect-video rounded-xl object-cover"
-				transition:name={`blog-cover-${post.data.id}`}
+				transition:name={`blog-cover-${post.data.pubId}`}
 			/>
 		)
 	}
 	<h3
 		class="text-2xl font-semibold transition-colors"
-		transition:name={`blog-title-${post.data.id}`}
+		transition:name={`blog-title-${post.data.pubId}`}
 	>
 		{post.data.title}
 	</h3>
-	<p
-		class="line-clamp-3 opacity-80"
-		transition:name={`blog-description-${post.data.id}`}
-	>
+	<p class="line-clamp-3 opacity-80">
 		{post.data.description}
 	</p>
-	<p
-		class="mt-auto text-sm tracking-tight uppercase"
-		transition:name={`blog-date-${post.data.id}`}
-	>
+	<p class="mt-auto text-sm tracking-tight uppercase">
 		<FormattedDate date={post.data.pubDate} />
 	</p>
 </a>

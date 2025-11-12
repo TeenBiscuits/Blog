@@ -15,13 +15,20 @@ export const getStaticPaths = () =>
 		params: { lang },
 	}))
 
-const posts = (await getCollection('blog'))
+const blog = await getCollection('blog')
+// Get the 4 most recent posts in the current locale
+const posts = blog
 	.filter((post) => post.id.split('/')[0] === locale)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 4)
+// Date for newest article
+const newArtDate = blog.reduce(
+	(newest, post) => (post.data.pubDate > newest ? post.data.pubDate : newest),
+	new Date(0)
+)
 ---
 
-<Layout>
+<Layout lastModified={newArtDate.toISOString()}>
 	<main
 		class="app-container relative flex flex-col justify-center gap-12 py-36 pt-44 md:py-48 md:pt-56"
 	>
