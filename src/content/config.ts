@@ -5,7 +5,7 @@ const blog = defineCollection({
 	// Type-check frontmatter using a schema
 	loader: glob({ pattern: '**/[^_]*.md', base: './src/content/blog' }),
 	schema: z.object({
-		id: z.string(),
+		pubId: z.string(),
 		title: z.string(),
 		description: z.string(),
 		pubDate: z.coerce.date(),
@@ -18,7 +18,9 @@ const blog = defineCollection({
 const about = defineCollection({
 	// Type-check frontmatter using a schema
 	loader: glob({ pattern: '**/[^_]*.md', base: './src/content/about' }),
-	schema: z.object({}).optional(),
+	schema: z.object({
+		pubDate: z.coerce.date(),
+	}),
 })
 
 export const collections = { blog, about }
