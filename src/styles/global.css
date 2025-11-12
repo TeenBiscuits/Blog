@@ -58,7 +58,7 @@ html {
 }
 
 .prose a {
-	@apply text-primary dark:text-primary-dark no-underline hover:underline hover:decoration-2 hover:underline-offset-2;
+	@apply decoration-primary dark:decoration-primary-dark underline decoration-2 underline-offset-2 hover:decoration-wavy;
 }
 
 .prose blockquote {
