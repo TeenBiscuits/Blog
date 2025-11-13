@@ -1,0 +1,53 @@
+---
+import { Picture } from 'astro:assets'
+const { title, pubId, imageSrc, coverImageCredit } = Astro.props
+---
+
+<>
+	<div class="relative">
+		{/* Skeleton Loader */}
+		<div
+			class="skeleton-loader absolute inset-0 animate-pulse rounded-xl opacity-0 transition-opacity duration-300"
+		>
+			<div class="grid grid-cols-2 gap-4 p-24 lg:px-48">
+				<div class="dark:bg-primary-dark bg-primary h-22 rounded-md"></div>
+				<div class="dark:bg-primary-dark bg-primary h-22 rounded-full"></div>
+				<div class="dark:bg-primary-dark bg-primary h-22 rounded-lg"></div>
+				<div class="dark:bg-primary-dark bg-primary h-22 rounded-md"></div>
+			</div>
+		</div>
+
+		{/* Image */}
+		<Picture
+			src={imageSrc}
+			alt={title}
+			widths={[280, 400, 667]}
+			formats={['avif', 'webp', 'jpg']}
+			priority
+			class="relative rounded-xl"
+			layout="constrained"
+			transition:name={`blog-cover-${pubId}`}
+			onload="this.previousElementSibling.style.display='none'; clearTimeout(this.dataset.timer)"
+		/>
+	</div>
+
+	<script is:inline>
+		document.querySelectorAll('.skeleton-loader').forEach((skeleton) => {
+			const img = skeleton.nextElementSibling
+			const timer = setTimeout(() => {
+				if (!img.complete) {
+					skeleton.classList.remove('opacity-0')
+				}
+			}, 1000)
+			img.dataset.timer = timer
+		})
+	</script>
+
+	{
+		coverImageCredit && (
+			<p class="mt-2 mb-6 text-sm italic opacity-80">
+				Image Credit: {coverImageCredit}
+			</p>
+		)
+	}
+</>

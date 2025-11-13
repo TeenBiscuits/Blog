@@ -7,6 +7,9 @@ import type { MarkdownHeading, ImageMetadata } from 'astro'
 import TableOfContents from '@/components/TableOfContents.astro'
 import CommentSection from '@/components/CommentSection.astro'
 import TranslateToggle from '@/components/TranslateToggle.astro'
+import BlogPostImage from '@/components/BlogPostImage.astro'
+import Layout from './Base.astro'
+import { Icon } from 'astro-icon/components'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
@@ -30,10 +33,6 @@ const {
 	slug,
 	remarkPluginFrontmatter,
 } = Astro.props
-
-import Layout from './Base.astro'
-import { Image } from 'astro:assets'
-import { Icon } from 'astro-icon/components'
 
 const locale = Astro.currentLocale as Lang
 const blogImages = import.meta.glob<{ default: ImageMetadata }>(
@@ -121,19 +120,12 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 
 						{
 							blogImages[coverImagePath] && (
-								<>
-									<Image
-										src={blogImages[coverImagePath]()}
-										alt={title}
-										class="rounded-xl"
-										transition:name={`blog-cover-${pubId}`}
-									/>
-									{coverImageCredit && (
-										<p class="mt-2 mb-6 text-sm italic opacity-80">
-											Image Credit: {coverImageCredit}
-										</p>
-									)}
-								</>
+								<BlogPostImage
+									title={title}
+									pubId={pubId}
+									imageSrc={blogImages[coverImagePath]()}
+									coverImageCredit={coverImageCredit}
+								/>
 							)
 						}
 					</div>

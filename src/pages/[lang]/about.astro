@@ -5,7 +5,7 @@ import Layout from '@/layouts/Base.astro'
 import { SocialLinks } from '@/consts'
 import { Icon } from 'astro-icon/components'
 import { getEntry, render } from 'astro:content'
-import { Image } from 'astro:assets'
+import { Picture } from 'astro:assets'
 
 export const getStaticPaths = () =>
 	Object.keys(LOCALES).map((lang) => ({
@@ -26,11 +26,17 @@ const { Content } = await render(aboutContent!)
 			<!-- Sidebar Image -->
 			<div class="relative md:w-1/4">
 				<div class="sticky top-0 hidden md:top-28 lg:block">
-					<Image
-						src={profilePicture}
-						alt="About Me"
-						class="w-full rounded-lg"
-					/>
+					<div class="relative">
+						<Picture
+							src={profilePicture}
+							alt="About Me"
+							class="relative rounded-lg object-cover"
+							widths={[352]}
+							priority
+							formats={['avif', 'webp', 'jpg']}
+							layout="fixed"
+						/>
+					</div>
 					<p class="mt-2 mb-4 text-sm italic opacity-80">
 						{
 							t({
@@ -68,11 +74,17 @@ const { Content } = await render(aboutContent!)
 				</h1>
 				<!-- Top Image (only on smaler and medium screen) -->
 				<div class="mb-8 lg:hidden">
-					<Image
-						src={profilePicture}
-						alt="About Me"
-						class="w-full rounded-lg"
-					/>
+					<div class="relative">
+						<Picture
+							src={profilePicture}
+							alt="About Me"
+							widths={[280, 400, 750]}
+							priority
+							formats={['avif', 'webp', 'jpg']}
+							class="relative rounded-lg"
+							layout="constrained"
+						/>
+					</div>
 					<p class="mt-2 mb-4 text-sm italic opacity-80">
 						{
 							t({
