@@ -8,6 +8,7 @@ import TableOfContents from '@/components/TableOfContents.astro'
 import CommentSection from '@/components/CommentSection.astro'
 import TranslateToggle from '@/components/TranslateToggle.astro'
 import BlogPostImage from '@/components/BlogPostImage.astro'
+import KatexHead from '@/components/KatexHead.astro'
 import Layout from './Base.astro'
 import { Icon } from 'astro-icon/components'
 import dayjs from 'dayjs'
@@ -177,4 +178,5 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 			</div>
 		</article>
 	</main>
+	<KatexHead />
 </Layout>

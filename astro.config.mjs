@@ -1,15 +1,20 @@
+import { defineConfig, fontProviders } from 'astro/config'
+
 import mdx from '@astrojs/mdx'
 import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
 import icon from 'astro-icon'
-import { defineConfig } from 'astro/config'
+
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import rehypeFigureTitle from 'rehype-figure-title'
+import remarkMath from 'remark-math'
+
 import customSitemap from './src/plugins/custom-sitemap.mjs'
 import { rehypeLocalizedFootnotes } from './src/plugins/rehype-localized-footnotes.mjs'
 import { remarkModifiedTime } from './src/plugins/remark-modified-time.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
+import rehypeKatex from 'rehype-katex'
 import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from './src/locales'
 
 // Oldest date for lastmod of all website
@@ -46,8 +51,9 @@ export default defineConfig({
 	},
 
 	markdown: {
-		remarkPlugins: [remarkReadingTime, remarkModifiedTime],
+		remarkPlugins: [remarkMath, remarkReadingTime, remarkModifiedTime],
 		rehypePlugins: [
+			rehypeKatex,
 			rehypeFigureTitle,
 			rehypeAccessibleEmojis,
 			rehypeLocalizedFootnotes,
