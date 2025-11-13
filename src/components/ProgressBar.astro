@@ -1,18 +1,14 @@
 ---
-const currentPath = Astro.url.pathname
-const isPost = /^\/[^/]+\/posts\//.test(currentPath)
+
 ---
 
-{
-	isPost && (
-		<div id="progress-container">
-			<div
-				id="progress-bar"
-				class="bg-primary dark:bg-primary-dark h-[4px] w-[0%] transition"
-			/>
-		</div>
-	)
-}
+<div id="progress-container">
+	<div
+		id="progress-bar"
+		class="bg-primary dark:bg-primary-dark h-1 w-[0%] transition"
+	>
+	</div>
+</div>
 
 <script>
 	// Update progress bar on scroll
