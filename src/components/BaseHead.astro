@@ -9,6 +9,7 @@ import {
 import { useTranslations, LOCALES, getLocalePaths, type Lang } from '@/i18n'
 const t = useTranslations(Astro.currentLocale as Lang)
 import '@/styles/global.css'
+import { Font } from 'astro:assets'
 import { ClientRouter } from 'astro:transitions'
 
 interface Props {
@@ -109,6 +110,20 @@ const ogImage = image
 	type="application/rss+xml"
 	title={`${t(SITE_TITLE)} RSS`}
 	href={new URL(`${locale}/rss.xml`, Astro.site)}
+/>
+
+<!-- Fonts -->
+<Font
+	cssVariable="--font-merriweather"
+	preload={[{ subset: 'latin', style: 'normal' }, { weight: '700' }]}
+/>
+<Font
+	cssVariable="--font-rubik"
+	preload={[{ subset: 'latin', style: 'normal' }, { weight: '300' }]}
+/>
+<Font
+	cssVariable="--font-cascadia"
+	preload={[{ subset: 'latin', style: 'normal' }, { weight: '400' }]}
 />
 
 <!-- View Transitions -->

@@ -4,10 +4,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-	--font-sans: 'Rubik', sans-serif;
-	--font-serif: 'Merriweather Variable', serif;
-	--font-mono: 'Cascadia Code', monospace;
-
 	--color-text: #120f07;
 	--color-foreground: var(--color-text);
 	--color-background: #f4f1eb;
@@ -21,6 +17,12 @@
 	--color-primary-dark: #544c30;
 	--color-secondary-dark: #355a57;
 	--color-accent-dark: #404e68;
+}
+
+@theme inline {
+	--font-sans: var(--font-rubik), system-ui, sans-serif;
+	--font-serif: var(--font-merriweather), Georgia, serif;
+	--font-mono: var(--font-cascadia), ui-monospace, monospace;
 }
 
 html {
