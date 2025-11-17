@@ -1,0 +1,49 @@
+---
+import { LOCALES, useTranslations, type Lang } from '@/i18n'
+import { SITE_BASE } from '@/consts'
+import Layout from '@/layouts/Base.astro'
+const t = useTranslations(Astro.currentLocale as Lang)
+
+const locale = Astro.currentLocale as Lang
+
+export const getStaticPaths = () =>
+	Object.keys(LOCALES).map((lang) => ({
+		params: { lang },
+	}))
+---
+
+<Layout>
+	<div>
+		<main
+			class="app-container flex h-[95vh] flex-col items-center justify-center gap-6 py-56"
+		>
+			<h1
+				class="font-title hero-title z-10 px-4 text-center text-9xl leading-none md:text-[128px]"
+			>
+				404
+			</h1>
+			<p class="max-w-[480px] text-center text-xl">
+				{
+					t({
+						es: `La página que estás buscando no fue encontrada. Por favor revise el enlace de nuevo.`,
+						gl: `A páxina que buscas non foi atopada. Por favor, comproba o enlace de novo.`,
+						en: `The page you're looking for wasn't found. Please check the link again.`,
+					})
+				}
+			</p>
+			<a
+				class="btn-primary"
+				href={`${SITE_BASE}/${locale}/`}
+				data-umami-event="404 Home Button"
+			>
+				{
+					t({
+						es: 'Ir a la página principal',
+						gl: 'Ir á páxina principal',
+						en: 'Go to Home Page',
+					})
+				}
+			</a>
+		</main>
+	</div>
+</Layout>

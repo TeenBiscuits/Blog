@@ -1,0 +1,64 @@
+---
+import type { MarkdownHeading } from 'astro'
+import { type Lang, useTranslations } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+
+interface Props {
+	headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+
+// Group headings: h2 as top-level, h3 as nested under previous h2
+interface TOCHeading extends MarkdownHeading {
+	children: MarkdownHeading[]
+}
+const toc: TOCHeading[] = []
+let lastH2: TOCHeading | null = null
+for (const heading of headings) {
+	if (heading.depth === 2) {
+		lastH2 = { ...heading, children: [] }
+		toc.push(lastH2)
+	} else if (heading.depth === 3 && lastH2) {
+		lastH2.children.push(heading)
+	}
+}
+---
+
+{
+	toc.length > 0 ? (
+		<nav class="rounded py-12">
+			<h2 class="mr-2 mb-3 pb-1 text-2xl font-bold">
+				{t({ es: 'En Esta Página', gl: 'Nesta Páxina', en: 'On This Page' })}
+			</h2>
+			<ul class="space-y-3">
+				{toc.map((h2) => (
+					<li>
+						<a
+							class="hover:text-secondary underline-offset-4 hover:font-semibold"
+							href={`#${h2.slug}`}
+						>
+							{h2.text}
+						</a>
+						{h2.children.length > 0 && (
+							<ul class="mt-2 ml-4 space-y-2 pl-4">
+								{h2.children.map((h3) => (
+									<li>
+										<a
+											class="hover:text-secondary text-sm underline-offset-4 opacity-80 hover:font-medium"
+											href={`#${h3.slug}`}
+										>
+											{h3.text}
+										</a>
+									</li>
+								))}
+							</ul>
+						)}
+					</li>
+				))}
+			</ul>
+		</nav>
+	) : (
+		<div />
+	)
+}

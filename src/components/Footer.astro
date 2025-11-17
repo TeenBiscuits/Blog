@@ -1,0 +1,89 @@
+---
+import { SITE_BASE, SocialLinks, WebsiteLinks } from '@/consts'
+import Firma from '@/components/Firma.astro'
+import Frase from '@/assets/frase.svg'
+import { Icon } from 'astro-icon/components'
+import { type Lang, useTranslations } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+
+const locale = Astro.currentLocale as Lang
+const today = new Date()
+---
+
+<footer transition:persist>
+	<div
+		class="app-container border-foreground/50 dark:border-foreground-dark/50 border-t-2"
+	>
+		<div class="flex justify-center gap-12 pt-12">
+			<Frase class="h-auto w-xl" />
+		</div>
+		<div class="grid place-content-center gap-12 py-12 md:grid-cols-3">
+			<div>
+				<h3 class="text-2xl font-semibold">
+					{t({ es: 'Enlaces', gl: 'Enlaces', en: 'Links' })}
+				</h3>
+				<div class="mt-4 flex flex-wrap gap-4">
+					{
+						WebsiteLinks.map((link) => (
+							<a
+								class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
+								href={`${SITE_BASE}/${locale}/${link.url}`}
+								data-umami-event={`${link.name['es']} Footer Link`}
+							>
+								{link.name[locale]}
+							</a>
+						))
+					}
+				</div>
+			</div>
+			<div>
+				<h3 class="text-2xl font-semibold">
+					{t({ es: 'Redes Sociales', gl: 'Redes Sociais', en: 'Socials' })}
+				</h3>
+				<div class="mt-4 flex flex-wrap gap-4">
+					{
+						SocialLinks.map((link) => (
+							<a
+								class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer me"
+								rel="nofollow"
+								data-umami-event="Social Footer Link"
+								data-umami-event-url={link.url}
+							>
+								{link.name}
+							</a>
+						))
+					}
+					<a
+						href={`${SITE_BASE}/${locale}/rss.xml`}
+						data-umami-event="RSS Feed Footer Link"
+						target="_blank"
+						class="hover:text-secondary dark:hover:text-secondary-dark text-lg"
+						aria-label="RSS Feed"
+					>
+						<Icon name="mdi:rss" class="h-6 w-6" />
+					</a>
+				</div>
+			</div>
+			<div class="flex justify-center md:justify-end">
+				<Firma />
+			</div>
+		</div>
+		<div
+			class="app-container flex items-center justify-between pb-6 text-center"
+		>
+			<p class="w-full text-center">
+				&copy; {today.getFullYear()}
+				{
+					t({
+						es: 'Hecho con ❤️ por Pablo Portas López',
+						gl: 'Feito con ❤️ por Pablo Portas López',
+						en: 'Made with ❤️ by Pablo Portas López',
+					})
+				}
+			</p>
+		</div>
+	</div>
+</footer>

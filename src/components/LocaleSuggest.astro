@@ -1,0 +1,136 @@
+---
+// Based on https://astro-i18n-starter.pages.dev/
+// Displays a link to the user's system language page
+// if the language being viewed is different
+
+import { LOCALES, type Lang } from '@/i18n'
+import { LOCALE_SUGGEST_TEXT } from '@/consts'
+import { Icon } from 'astro-icon/components'
+import { getCollection } from 'astro:content'
+const currentLocale = Astro.currentLocale as Lang
+const currentUrl = Astro.url.pathname
+const inArticle = currentUrl.startsWith(`/${currentLocale}/posts/`)
+const translationMap: Record<string, string> = {}
+if (inArticle) {
+	const pub = `${currentUrl.split('/')[1]}/${currentUrl.split('/')[3]}`
+	const blog = await getCollection('blog')
+	// Find the current post's pubId
+	const currentPost = blog.find((post) => post.id === pub)
+	const pubId = currentPost?.data.pubId
+
+	// Find all posts with the same pubId and create a lang -> id mapping
+	if (pubId) {
+		const relatedPosts = blog.filter((post) => post.data.pubId === pubId)
+		for (const post of relatedPosts) {
+			const postLang = post.id.split('/')[0]!.toString()
+			translationMap[postLang] = post.id.split('/')[1]!
+		}
+	}
+}
+---
+
+<div
+	id="js-languageSuggest"
+	class="bg-accent dark:bg-accent-dark fixed top-0 z-50 hidden w-full text-lg"
+>
+	<div class="app-container relative flex items-center justify-center py-3">
+		<a
+			id="js-link"
+			href="#"
+			class="flex items-center gap-2 decoration-wavy underline-offset-2 hover:underline"
+			data-umami-event={`Locale Change`}
+			data-umami-event-lang-to=""
+			data-umami-event-lang-from={Astro.currentLocale}
+			data-umami-event-source="locale-suggest"
+		>
+			<div>
+				<span id="js-linkMsg"></span>
+				<span id="js-linkText"></span>
+			</div>
+			<Icon name="mdi:arrow-right" />
+		</a>
+		<button
+			id="js-close"
+			class="absolute right-12 cursor-pointer opacity-70 hover:opacity-100"
+			aria-label="Close language suggestion"
+		>
+			<Icon name="mdi:close-circle-outline" />
+		</button>
+	</div>
+</div>
+
+<script
+	is:inline
+	define:vars={{
+		currentLocale,
+		currentUrl,
+		translationMap,
+		LOCALES,
+		LOCALE_SUGGEST_TEXT,
+	}}
+>
+	const browserLang = navigator.language.toLowerCase()
+	const suggest = document.getElementById('js-languageSuggest')
+
+	const showSuggest = (lang) => {
+		const link = document.getElementById('js-link')
+		const linkText = document.getElementById('js-linkText')
+		const linkMsg = document.getElementById('js-linkMsg')
+
+		// Determine the target path based on current location
+		const pathnames = currentUrl.split('/')
+		// pathnames structure: ['', 'lang', 'section', 'subsection', ...]
+
+		let targetPath
+		if (
+			pathnames[2] === 'posts' &&
+			pathnames.length > 3 &&
+			pathnames[3] !== ''
+		) {
+			// On /lang/posts/xxx -> redirect to /lang/posts/xxx in the suggested language
+			targetPath = `/${lang}/posts/${translationMap[lang]}`
+		} else {
+			// Default: redirect to the same page structure in the suggested language
+			// Replace the current language with the suggested one
+			pathnames[1] = lang
+			targetPath = pathnames.join('/')
+		}
+
+		link.href = targetPath
+		link.setAttribute('data-umami-event-lang-to', lang)
+		linkMsg.innerText = `${LOCALE_SUGGEST_TEXT[lang] || LOCALE_SUGGEST_TEXT['en']} `
+		linkText.innerText =
+			linkText.innerText = `${LOCALES[lang].emogi} ${LOCALES[lang].label}`
+		suggest.style.display = 'block'
+
+		// Push down the navbar when suggest is shown
+		const navbar = document.querySelector('header:not(#js-languageSuggest)')
+		if (navbar) {
+			navbar.style.top = `${suggest.offsetHeight}px`
+		}
+	}
+
+	if (
+		currentLocale === browserLang ||
+		currentLocale === browserLang.split('-')[0] ||
+		localStorage.languageSuggestDenied ||
+		localStorage.selectedLang
+	) {
+		return
+	} else if (Object.keys(LOCALES).includes(browserLang)) {
+		showSuggest(browserLang)
+	} else if (Object.keys(LOCALES).includes(browserLang.split('-')[0])) {
+		showSuggest(browserLang.split('-')[0])
+	}
+
+	document.getElementById('js-close').addEventListener('click', () => {
+		suggest.style.display = 'none'
+		localStorage.languageSuggestDenied = true
+
+		// Reset navbar position
+		const navbar = document.querySelector('header:not(#js-languageSuggest)')
+		if (navbar) {
+			navbar.style.top = '0'
+		}
+	})
+</script>

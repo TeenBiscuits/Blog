@@ -1,33 +1,83 @@
 ---
-import Obrero from "../components/Obrero.astro";
-import WorkInProgress from "../components/WorkInProgress.astro";
-import Background from "../components/Background.astro";
-import Layout from "../layouts/Layout.astro";
+// Inspired from https://github.com/psephopaiktes/astro-i18n-starter/
+// Redirect to Top page for user's system locale
+// Basically, you don't need to edit this file.
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import {
+	useTranslations,
+	getLocalePaths,
+	LOCALES,
+	DEFAULT_LOCALE,
+	type Lang,
+} from '@/i18n'
+import { SITE_TITLE, SITE_DESCRIPTION, X_ACCOUNT } from '@/consts'
+
+const t = useTranslations(Astro.currentLocale as Lang)
+const langs = Object.keys(LOCALES)
+const baseUrl = import.meta.env.PROD ? Astro.site : '/'
+const defaultLocale = DEFAULT_LOCALE
 ---
 
-<Layout>
-    <Background />
-    <WorkInProgress />
-    <Obrero />
-</Layout>
+<html lang={DEFAULT_LOCALE}>
+	<head>
+		<meta charset="UTF-8" />
+		<title>redireccionando...</title>
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<meta name="generator" content={Astro.generator} />
+		{
+			getLocalePaths(Astro.url).map((props) => (
+				<link
+					rel="alternate"
+					hreflang={LOCALES[props.lang]?.lang || props.lang}
+					href={Astro.site?.origin + props.path}
+				/>
+			))
+		}
 
-<style>
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #ffffff;
-    }
-    @media (prefers-color-scheme: dark) {
-        html,
-        body {
-            background: #0f172a;
-        }
-    }
-</style>
+		<!-- icon -->
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" sizes="192x192" href="/android-chrome.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<meta name="color-scheme" content="light dark" />
+
+		<!-- OGP -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={t(SITE_TITLE)} />
+		<meta property="og:site_name" content={t(SITE_TITLE)} />
+		<meta property="og:description" content={t(SITE_DESCRIPTION)} />
+		<meta property="og:image" content={`${Astro.site}og.png`} />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:locale" content={DEFAULT_LOCALE} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content={t(X_ACCOUNT)} />
+
+		<noscript>
+			<meta
+				http-equiv="refresh"
+				content={`0;url=${baseUrl + DEFAULT_LOCALE}/`}
+			/>
+		</noscript>
+
+		<script is:inline define:vars={{ langs, baseUrl, defaultLocale }}>
+			if (
+				localStorage.selectedLang &&
+				langs.includes(localStorage.selectedLang)
+			) {
+				location.href = `${baseUrl + localStorage.selectedLang}/`
+			} else {
+				const browserLang = navigator.language.toLowerCase()
+
+				if (langs.includes(browserLang)) {
+					location.href = `${baseUrl + browserLang}/`
+				} else if (langs.includes(browserLang.split('-')[0])) {
+					location.href = `${baseUrl + browserLang.split('-')[0]}/`
+				} else {
+					location.href = `${baseUrl + defaultLocale}/`
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<h1>redireccionando...</h1>
+	</body>
+</html>

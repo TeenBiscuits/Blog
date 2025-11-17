@@ -1,0 +1,56 @@
+name: 🔎 Indexación en motores de búsqueda
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+jobs:
+  wait-for-vercel-deployment:
+    name: 🔼 Esperar el deploy en Vercel
+    if: github.repository == 'TeenBiscuits/Pasame-Codigo'
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⌛ Esperar deploy
+        # tj-actions
+        # MIT
+        # https://github.com/tj-actions/vercel-wait
+        uses: tj-actions/vercel-wait@v1.2.2
+        with:
+          delay: 10
+          project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          token: ${{ secrets.VERCEL_TOKEN }}
+          sha: ${{ github.sha }}
+
+  indexnow:
+    name: 🔎 Bing IndexNow
+    if: github.repository == 'TeenBiscuits/Pasame-Codigo'
+    needs: [wait-for-vercel-deployment]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬆️ Subir Sitemap
+        # Bojie Yang
+        # MIT
+        # https://github.com/bojieyang/indexnow-action
+        uses: bojieyang/indexnow-action@v2.1.0
+        with:
+          sitemap-location: 'https://blog.pablopl.dev/sitemap-index.xml'
+          key: ${{ secrets.INDEXNOW_KEY }}
+          #lastmod-required: 'true'
+          endpoint: www.bing.com
+          failure-strategy: error
+
+  google-indexing:
+    name: 🔎 Google Index
+    if: github.repository == 'TeenBiscuits/Pasame-Codigo'
+    needs: [wait-for-vercel-deployment]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬆️ Subir Urls
+        # Robin Genz
+        # MIT
+        # https://github.com/robingenz/google-indexing-action
+        uses: robingenz/action-google-indexing@v1.0.2
+        with:
+          siteUrl: 'blog.pablopl.dev'
+          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}

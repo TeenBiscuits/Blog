@@ -1,0 +1,86 @@
+---
+import { LOCALES, useTranslations, type Lang } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+import { getCollection } from 'astro:content'
+import BlogCard from '@/components/BlogCard.astro'
+import Layout from '@/layouts/Base.astro'
+
+export const getStaticPaths = () =>
+	Object.keys(LOCALES).map((lang) => ({
+		params: { lang },
+	}))
+
+const locale = Astro.currentLocale as Lang
+const blog = await getCollection('blog')
+// Get the all posts in the current locale
+const posts = blog
+	.filter((post) => post.id.split('/')[0] === locale)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+// Date for newest article
+const newArtDate = blog.reduce(
+	(newest, post) => (post.data.pubDate > newest ? post.data.pubDate : newest),
+	new Date(0)
+)
+/* tags filter - to be implemented
+const tags = [
+	...new Set(
+		posts
+			.filter((post) => post.id.split('/')[0] === locale)
+			.flatMap((post) => post.data.tags || [])
+	),
+]
+*/
+---
+
+<Layout lastModified={newArtDate.toISOString()}>
+	<main class="app-container pt-36">
+		<h1 class="pb-8 font-serif text-6xl font-bold">
+			{t({ es: 'Artículos', gl: 'Artigos', en: 'Posts' })}
+		</h1>
+		<p class="text-lg leading-[2rem] md:w-2/3">
+			{
+				t({
+					es: 'escribo cosas y las publico, a veces, hasta pienso antes de escribirlas',
+					gl: 'escribo cousas e publícoas, ás veces, ata penso antes de escribilas',
+					en: 'I write things and publish them, sometimes I even think before writing them',
+				})
+			}
+		</p>
+	</main>
+	<section class="app-container py-12">
+		<h2 class="flex flex-row text-3xl">
+			<div class="flex flex-wrap gap-4">
+				<a class="font-bold" href={`/${locale}/posts`}>
+					{t({ es: 'Todos', gl: 'Todos', en: 'All' })}
+				</a>
+				<!-- tags filter - to be implemented
+				{
+					tags.map((tag) => (
+						<a class="hover:underline" href={`/${locale}/tags/${tag}`}>
+							{tag}
+						</a>
+					))
+				}
+				-->
+			</div>
+			<div class="flex-grow"></div>
+			<div>
+				{posts.length}
+				{
+					posts.length !== 1
+						? t({ es: 'artículos', gl: 'artigos', en: 'posts' })
+						: t({ es: 'artículo', gl: 'artigo', en: 'post' })
+				}
+			</div>
+		</h2>
+		<ul class="posts-grid-container">
+			{
+				posts.map((post) => (
+					<li>
+						<BlogCard post={post} />
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</Layout>

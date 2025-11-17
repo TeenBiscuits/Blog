@@ -1,0 +1,76 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+	--color-text: #120f07;
+	--color-foreground: var(--color-text);
+	--color-background: #f4f1eb;
+	--color-primary: #cfc7ab;
+	--color-secondary: #a5cac7;
+	--color-accent: #97a5bf;
+
+	--color-text-dark: #f8f5ed;
+	--color-foreground-dark: var(--color-text-dark);
+	--color-background-dark: #14110b;
+	--color-primary-dark: #544c30;
+	--color-secondary-dark: #355a57;
+	--color-accent-dark: #404e68;
+}
+
+@theme inline {
+	--font-sans: var(--font-rubik), system-ui, sans-serif;
+	--font-serif: var(--font-merriweather), Georgia, serif;
+	--font-mono: var(--font-cascadia), ui-monospace, monospace;
+}
+
+html {
+	scroll-padding-top: 6.5rem;
+	scroll-behavior: smooth;
+}
+
+.app-container {
+	@apply container mx-auto px-6 sm:px-12 2xl:px-16;
+}
+
+#mobile-menu.mobile-nav-open {
+	@apply translate-x-0 shadow-xl/30;
+}
+
+.btn-primary {
+	@apply bg-primary dark:bg-primary-dark mt-4 flex w-fit items-center gap-2 rounded-lg px-5 py-3 transition-opacity hover:opacity-75 md:px-4 md:py-2;
+}
+
+.btn-secondary {
+	@apply bg-secondary dark:bg-secondary-dark mt-4 flex w-fit items-center gap-2 rounded-lg px-5 py-3 transition-opacity hover:opacity-75 md:px-4 md:py-2;
+}
+
+.section-title {
+	@apply pb-3 text-4xl font-semibold;
+}
+
+.posts-grid-container {
+	@apply my-6 grid gap-6 md:grid-cols-2 xl:grid-cols-4;
+}
+
+/* Post content */
+.prose iframe {
+	@apply mx-auto my-16 aspect-video w-11/12 rounded-xl;
+}
+
+.prose a {
+	@apply decoration-primary dark:decoration-primary-dark underline decoration-2 underline-offset-2 hover:decoration-wavy;
+}
+
+.prose blockquote {
+	@apply border-primary;
+}
+
+.prose ::marker {
+	@apply text-primary dark:text-primary-dark;
+}
+
+.katex {
+	font: var(--font-sans) !important;
+}

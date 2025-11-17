@@ -1,0 +1,44 @@
+---
+import BaseHead from '@/components/BaseHead.astro'
+import Header from '@/components/Navbar.astro'
+import Footer from '@/components/Footer.astro'
+import LocaleSuggest from '@/components/LocaleSuggest.astro'
+import { SITE_TITLE } from '@/consts'
+import { LOCALES, type Lang } from '@/i18n'
+
+interface Props {
+	title?: string
+	description?: string
+	keywords?: string
+	og?: string
+	lastModified?: string | undefined
+}
+
+const locale = Astro.currentLocale as Lang
+const { title, description, keywords, og, lastModified } = Astro.props
+---
+
+<!doctype html>
+<html
+	transition:name="root"
+	lang={LOCALES[locale]?.lang || locale}
+	dir={LOCALES[locale]?.dir || null}
+>
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			keywords={keywords}
+			image={og}
+		/>
+	</head>
+	<body
+		class="text-foreground bg-background dark:text-foreground-dark dark:bg-background-dark font-light transition-colors"
+		data-last-update={lastModified}
+	>
+		<Header title={SITE_TITLE} transition:animate="none" />
+		<LocaleSuggest />
+		<slot transition:animate="slide" />
+		<Footer transition:animate="none" />
+	</body>
+</html>

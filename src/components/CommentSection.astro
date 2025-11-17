@@ -1,0 +1,190 @@
+---
+import { DEFAULT_LOCALE, type Lang } from '@/i18n'
+const locale = (Astro.currentLocale as Lang) || DEFAULT_LOCALE
+
+interface Props {
+	title?: string
+}
+interface data_type {
+	[key: Lowercase<string> | Lang]: {
+		category: string
+		category_id: string
+	}
+}
+const data: data_type = {
+	es: {
+		category: 'Comentarios Español',
+		category_id: 'DIC_kwDOQBB9ks4CxNXE',
+	},
+	gl: {
+		category: 'Comentarios Galego',
+		category_id: 'DIC_kwDOQBB9ks4CxNXk',
+	},
+	en: {
+		category: 'Comments English',
+		category_id: 'DIC_kwDOQBB9ks4CxNXL',
+	},
+}
+
+const localeData = data[locale]!
+const { title } = Astro.props
+---
+
+<div>
+	<script
+		is:inline
+		src="https://giscus.pablopl.dev/client.js"
+		data-repo="TeenBiscuits/Blog"
+		data-repo-id="R_kgDOQBB9kg"
+		data-category={localeData.category}
+		data-category-id={localeData.category_id}
+		data-mapping="specific"
+		data-term={title}
+		data-strict="0"
+		data-reactions-enabled="1"
+		data-emit-metadata="1"
+		data-input-position="top"
+		data-theme="preferred_color_scheme"
+		data-lang={locale}
+		data-loading="lazy"
+		crossorigin="anonymous"
+		async></script>
+</div>
+
+<script>
+	function getGiscusTheme(): string {
+		// Determine if dark mode should be active based on localStorage or OS preference
+		const isDark =
+			localStorage.theme === 'dark' ||
+			(!('theme' in localStorage) &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+		return isDark ? 'dark' : 'light'
+	}
+
+	function loadGiscus() {
+		// Remove existing giscus iframe if present
+		const existingFrame = document.querySelector('.giscus')
+		if (existingFrame) {
+			existingFrame.remove()
+		}
+
+		// Find the giscus script tag
+		const script = document.querySelector('script[src*="giscus"]')
+		if (!script) {
+			return
+		}
+
+		// Get the current theme
+		const theme = getGiscusTheme()
+
+		// Create a new script element with the same attributes
+		const newScript = document.createElement('script')
+		Array.from(script.attributes).forEach((attr) => {
+			if (attr.name !== 'is:inline') {
+				// Override the data-theme attribute with the current theme
+				if (attr.name === 'data-theme') {
+					newScript.setAttribute(attr.name, theme)
+				} else {
+					newScript.setAttribute(attr.name, attr.value)
+				}
+			}
+		})
+
+		script.parentNode!.appendChild(newScript)
+	}
+
+	function setupGiscus() {
+		loadGiscus()
+
+		// Listen for theme changes via MutationObserver on the 'dark' class
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (
+					mutation.type === 'attributes' &&
+					mutation.attributeName === 'class'
+				) {
+					loadGiscus()
+				}
+			})
+		})
+
+		observer.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ['class'],
+		})
+
+		// Listen for OS theme preference changes
+		window
+			.matchMedia('(prefers-color-scheme: dark)')
+			.addEventListener('change', () => {
+				// Only reload if in auto mode
+				if (!('theme' in localStorage)) {
+					loadGiscus()
+				}
+			})
+	}
+
+	// Initialize on page load
+	document.addEventListener('astro:page-load', setupGiscus)
+
+	// Handle theme during view transitions
+	document.addEventListener('astro:before-swap', () => {
+		// Remove observer and listener before swap to avoid memory leaks
+		const existingFrame = document.querySelector('.giscus')
+		if (existingFrame) {
+			existingFrame.remove()
+		}
+	})
+
+	// Track Giscus events with Umami
+	function handleGiscusMessage(event: MessageEvent) {
+		// Verify the message is from Giscus
+		if (event.origin !== 'https://giscus.pablopl.dev') {
+			return
+		}
+		if (!(typeof event.data === 'object' && event.data.giscus)) {
+			return
+		}
+
+		const giscusData = event.data.giscus
+
+		// Check if umami is available
+		if (typeof window.umami === 'undefined') {
+			return
+		}
+
+		// Handle error messages
+		if ('error' in giscusData) {
+			window.umami.track('giscus-error', {
+				error: giscusData.error,
+			})
+			return
+		}
+
+		// Handle metadata messages (discussion loaded)
+		if ('discussion' in giscusData) {
+			const { discussion } = giscusData
+
+			window.umami.track('giscus-discussion-loaded', {
+				discussionId: discussion.id || 'unknown',
+				reactionCount: discussion.reactionCount || 0,
+				totalCommentCount: discussion.totalCommentCount || 0,
+				totalReplyCount: discussion.totalReplyCount || 0,
+			})
+		}
+	}
+
+	// Set up Giscus message listener
+	function setupGiscusTracking() {
+		window.addEventListener('message', handleGiscusMessage)
+	}
+
+	// Initialize tracking on page load
+	document.addEventListener('astro:page-load', setupGiscusTracking)
+
+	// Clean up listener during view transitions
+	document.addEventListener('astro:before-swap', () => {
+		window.removeEventListener('message', handleGiscusMessage)
+	})
+</script>

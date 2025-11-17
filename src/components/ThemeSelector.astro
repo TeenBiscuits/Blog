@@ -1,0 +1,62 @@
+---
+import { Icon } from 'astro-icon/components'
+const { class: className } = Astro.props
+---
+
+<div
+	class:list={[
+		className,
+		'border-text dark:border-text-dark [&>*:hover]:text-accent dark:[&>*:hover]:text-accent-dark flex items-center justify-center rounded-full border-[1px] md:opacity-80 [&>*]:cursor-pointer',
+	]}
+>
+	<button
+		data-theme="theme-auto"
+		aria-label="Auto Theme"
+		title="Set theme to follow system preference"
+		class="theme-button theme-auto"
+		data-umami-event="Change Theme Auto"
+	>
+		<Icon
+			name="mdi:brightness-auto"
+			class:list="duration-0 text-2xl md:text-xl"
+			aria-hidden
+		/>
+	</button>
+	<button
+		data-theme="theme-light"
+		aria-label="Light Theme"
+		title="Set theme to light"
+		class="theme-button theme-light"
+		data-umami-event="Change Theme Light"
+	>
+		<Icon
+			name="mdi:white-balance-sunny"
+			class:list="duration-0 text-2xl md:text-xl"
+			aria-hidden
+		/>
+	</button>
+	<button
+		data-theme="theme-dark"
+		aria-label="Dark Theme"
+		title="Set theme to dark"
+		class="theme-button theme-dark"
+		data-umami-event="Change Theme Dark"
+	>
+		<Icon
+			name="mdi:moon-and-stars"
+			class:list="duration-0 text-2xl md:text-xl"
+			aria-hidden
+		/>
+	</button>
+</div>
+
+<style>
+	@reference "@/styles/global.css";
+
+	button.theme-button {
+		@apply rounded-full p-1 duration-0;
+	}
+	:global(button.active) {
+		@apply text-background bg-text dark:text-background-dark dark:bg-text-dark;
+	}
+</style>

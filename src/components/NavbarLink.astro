@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { type Lang } from '@/i18n'
+
+type Props = HTMLAttributes<'a'>
+
+const locale = Astro.currentLocale as Lang
+const { href, class: className, ...props } = Astro.props
+
+const { pathname } = Astro.url
+const isActive =
+	href === pathname ||
+	href === pathname.replace(/\/$/, '') ||
+	(pathname.startsWith(`/${locale}/posts`) && href === `/${locale}/posts`)
+---
+
+<a href={href} class:list={[className, { active: isActive }]} {...props}>
+	<slot />
+</a>
+<style>
+	@reference "@/styles/global.css";
+
+	a {
+		@apply decoration-accent dark:decoration-accent-dark relative decoration-wavy decoration-2 underline-offset-4 hover:underline;
+	}
+	a.active {
+		@apply decoration-accent dark:decoration-accent-dark underline;
+	}
+</style>

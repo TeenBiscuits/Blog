@@ -1,0 +1,121 @@
+---
+import { LOCALES, useTranslations, type Lang } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+import Layout from '@/layouts/Base.astro'
+import { SocialLinks } from '@/consts'
+import { Icon } from 'astro-icon/components'
+import { getEntry, render } from 'astro:content'
+import { Picture } from 'astro:assets'
+
+export const getStaticPaths = () =>
+	Object.keys(LOCALES).map((lang) => ({
+		params: { lang },
+	}))
+
+import profilePicture from '/src/assets/about-me.jpg'
+const currentLang = Astro.currentLocale as Lang
+const aboutContent = await getEntry('about', currentLang)
+const { Content } = await render(aboutContent!)
+---
+
+<Layout lastModified={aboutContent?.data.pubDate.toISOString()}>
+	<main>
+		<article
+			class="app-container relative flex flex-col justify-between gap-8 py-24 pt-36 lg:flex-row-reverse"
+		>
+			<!-- Sidebar Image -->
+			<div class="relative md:w-1/4">
+				<div class="sticky top-0 hidden md:top-28 lg:block">
+					<Picture
+						src={profilePicture}
+						alt="About Me"
+						class="relative rounded-lg object-cover"
+						widths={[352]}
+						priority
+						formats={['avif', 'webp', 'jpg']}
+						layout="fixed"
+					/>
+					<p class="mt-2 mb-4 text-sm italic opacity-80">
+						{
+							t({
+								es: 'Este joven apuesto soy yo',
+								gl: 'Este mozo guapo son eu',
+								en: 'This handsome young man is me',
+							})
+						}
+					</p>
+					{
+						SocialLinks.map((link) => (
+							<a
+								class="text-primary dark:text-primary-dark hover:animate-pulse"
+								href={link.url}
+								aria-label={link.name}
+								data-umami-event="Social About Link"
+								data-umami-event-url={link.url}
+								rel="noopener noreferrer me"
+								target="_blank"
+							>
+								<Icon
+									size={35}
+									name={`mdi:${link.icon}`}
+									class="mr-2 mb-1 inline-block"
+								/>
+							</a>
+						))
+					}
+				</div>
+			</div>
+			<!-- Main Content -->
+			<div class="w-full grow md:max-w-[75ch]">
+				<h1 class="pb-8 font-serif text-6xl font-bold">
+					{t({ es: 'Acerca de Mí', gl: 'Eu', en: 'About Me' })}
+				</h1>
+				<!-- Top Image (only on smaler and medium screen) -->
+				<div class="mb-8 lg:hidden">
+					<Picture
+						src={profilePicture}
+						alt="About Me"
+						widths={[280, 400, 750]}
+						priority
+						formats={['avif', 'webp', 'jpg']}
+						class="relative rounded-lg"
+						layout="constrained"
+					/>
+					<p class="mt-2 mb-4 text-sm italic opacity-80">
+						{
+							t({
+								es: 'Este joven apuesto soy yo',
+								gl: 'Este mozo guapo son eu',
+								en: 'This handsome young man is me',
+							})
+						}
+					</p>
+					{
+						SocialLinks.map((link) => (
+							<a
+								class="text-primary dark:text-primary-dark hover:animate-pulse"
+								href={link.url}
+								aria-label={link.name}
+								data-umami-event="Social About Link"
+								data-umami-event-url={link.url}
+								rel="noopener noreferrer me"
+								target="_blank"
+							>
+								<Icon
+									size={35}
+									name={`mdi:${link.icon}`}
+									class="mr-2 mb-1 inline-block"
+								/>
+							</a>
+						))
+					}
+				</div>
+				<div
+					class="prose prose-neutral prose-lg md:prose-xl dark:prose-invert prose-img:rounded-xl prose-figure:text-center prose-img:mx-auto"
+				>
+					<Content />
+				</div>
+			</div>
+		</article>
+	</main>
+</Layout>

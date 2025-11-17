@@ -1,0 +1,189 @@
+---
+import { type Lang, useTranslations } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+import type { CollectionEntry } from 'astro:content'
+import FormattedDate from '@/components/FormattedDate.astro'
+import type { MarkdownHeading, ImageMetadata } from 'astro'
+import TableOfContents from '@/components/TableOfContents.astro'
+import CommentSection from '@/components/CommentSection.astro'
+import TranslateToggle from '@/components/TranslateToggle.astro'
+import BlogPostImage from '@/components/BlogPostImage.astro'
+import KatexHead from '@/components/KatexHead.astro'
+import Layout from './Base.astro'
+import { Icon } from 'astro-icon/components'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+
+dayjs.extend(utc)
+
+type Props = CollectionEntry<'blog'>['data'] & {
+	headings: MarkdownHeading[]
+	slug: string
+	remarkPluginFrontmatter: Record<string, string>
+}
+
+const {
+	pubId,
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	coverImageCredit,
+	headings,
+	tags,
+	slug,
+	remarkPluginFrontmatter,
+} = Astro.props
+
+const locale = Astro.currentLocale as Lang
+const blogImages = import.meta.glob<{ default: ImageMetadata }>(
+	'/src/assets/blogimages/**/*.{jpeg,jpg,png,gif}'
+)
+
+const coverImagePath = `/src/assets/blogimages/${pubId}/cover.jpg`
+
+const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
+	.utc()
+	.locale(locale)
+	.format('D MMM YY')
+
+const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
+---
+
+<Layout
+	title={title}
+	description={description}
+	keywords={tags ? tags.join(', ') : ''}
+	og={slug}
+	lastModified={dayjs(remarkPluginFrontmatter.lastModified).utc().toISOString()}
+>
+	<main>
+		<article>
+			<div
+				class="app-container relative flex flex-col justify-between gap-8 py-24 lg:flex-row-reverse"
+			>
+				<div class="relative md:w-1/4">
+					<div class="sticky top-0 hidden md:top-28 lg:block">
+						<TableOfContents headings={headings} />
+					</div>
+				</div>
+				<div class="w-full grow md:max-w-[75ch]">
+					<div>
+						<h1
+							class="pt-12 font-serif text-4xl leading-snug font-bold sm:text-5xl"
+							transition:name={`blog-title-${pubId}`}
+						>
+							{title}
+						</h1>
+						<div class="flex flex-wrap items-center gap-4 py-8 text-lg">
+							<!-- Publish date -->
+							<span>
+								<Icon
+									name="mdi:calendar-month-outline"
+									class="text-accent dark:text-accent-dark inline-block"
+								/>
+								<FormattedDate date={pubDate} />
+							</span>
+
+							<!-- Updated date -->
+							{
+								updatedDate && (
+									<span>
+										<Icon
+											name="mdi:calendar-refresh-outline"
+											class="text-secondary dark:text-accent-dark inline-block"
+										/>
+										Last updated on <FormattedDate date={updatedDate} />
+									</span>
+								)
+							}
+
+							<!-- Read time -->
+							<span>
+								<Icon
+									name="mdi:clock-time-four-outline"
+									class="text-accent dark:text-accent-dark inline-block"
+								/>
+								{minutesRead}
+								{
+									t({
+										es: 'minutos de lectura',
+										gl: 'minutos de lectura',
+										en: 'min read',
+									})
+								}
+							</span>
+							<span class="grow"></span>
+							<span>
+								<TranslateToggle pubId={pubId} />
+							</span>
+						</div>
+
+						{
+							blogImages[coverImagePath] && (
+								<>
+									<BlogPostImage
+										title={title}
+										pubId={pubId}
+										imageSrc={blogImages[coverImagePath]()}
+									/>
+									{coverImageCredit && (
+										<p class="mt-2 mb-6 text-sm italic opacity-80">
+											{t({ es: 'Créditos', gl: 'Créditos', en: 'Credit' })}:{' '}
+											{coverImageCredit}
+										</p>
+									)}
+								</>
+							)
+						}
+					</div>
+					<div class="mb-8 flex flex-wrap gap-4">
+						{
+							tags &&
+								tags.map((tag) => (
+									<div class="bg-secondary dark:bg-secondary-dark rounded-xl px-5 py-3 font-medium italic md:px-4 md:py-2">
+										#{tag}
+									</div>
+								))
+						}
+					</div>
+					<div
+						class="prose prose-neutral prose-lg md:prose-xl dark:prose-invert prose-img:rounded-xl prose-figure:text-center prose-img:mx-auto prose-style"
+					>
+						<slot />
+					</div>
+
+					<!-- Suggest edit -->
+					<div class="mt-16 mb-8 flex flex-wrap justify-between gap-4 italic">
+						<a
+							href={`https://github.com/TeenBiscuits/Blog/edit/main/src/content/blog/${slug}/index.md`}
+							data-umami-event="Suggest edit"
+							target="_blank"
+							class="underline-offset-4 opacity-70 hover:underline hover:opacity-100"
+							><Icon name="mdi:pencil-outline" class="inline-block" />
+							{
+								t({
+									es: 'Sugerir un cambio',
+									gl: 'Suxerir un cambio',
+									en: 'Suggest an edit',
+								})
+							}
+						</a>
+						<p class="opacity-70">
+							{
+								t({
+									es: 'Última modificación',
+									gl: 'Última modificación',
+									en: 'Last modified',
+								})
+							}: {lastModified}
+						</p>
+					</div>
+
+					<CommentSection title={title} />
+				</div>
+			</div>
+		</article>
+	</main>
+	<KatexHead />
+</Layout>

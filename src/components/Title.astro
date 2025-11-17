@@ -1,0 +1,151 @@
+---
+import { useTranslations, type Lang } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+
+// Animation texts for each language
+const animationTexts = JSON.stringify([
+	t({
+		es: 'Cuaderno',
+		gl: 'Caderno',
+		en: 'Notebook',
+	}),
+	t({
+		es: 'Diario',
+		gl: 'Diario',
+		en: 'Journal',
+	}),
+	t({
+		es: 'Blog',
+		gl: 'Blog',
+		en: 'Blog',
+	}),
+	t({
+		es: 'Super Blog',
+		gl: 'Super Blog',
+		en: 'Super Blog',
+	}),
+	t({
+		es: 'Vlog.',
+		gl: 'Vlog.',
+		en: 'Vlog.',
+	}),
+	t({
+		es: 'Blog de Pablo',
+		gl: 'Blog de Pablo',
+		en: "Pablo's Blog",
+	}),
+])
+---
+
+<h1
+	class="blog-title decoration-primary dark:decoration-primary-dark font-serif text-8xl leading-none font-bold underline decoration-wavy"
+	data-animation-texts={animationTexts}
+>
+	{
+		t({
+			es: `Blog de Pablo`,
+			gl: `Blog de Pablo`,
+			en: `Pablo's Blog`,
+		})
+	}
+</h1>
+<style>
+	:global(.cursor) {
+		animation: blink 0.5s steps(1) infinite;
+	}
+
+	@keyframes blink {
+		50% {
+			opacity: 0;
+		}
+	}
+</style>
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		// Get the h1 element and read animation texts from data attribute
+		const h1Element = document.querySelector('h1.blog-title')
+		if (!h1Element) {
+			return
+		}
+
+		const animationTextsAttr = h1Element.getAttribute('data-animation-texts')
+		if (!animationTextsAttr) {
+			return
+		}
+
+		// Parse the JSON array of translated texts
+		const dataText: string[] = JSON.parse(animationTextsAttr)
+
+		// type one text in the typwriter
+		// keeps calling itself until the text is finished
+		function typeWriter(
+			text: string,
+			i: number,
+			fnCallback: (() => void) | undefined,
+			isLastText: boolean = false
+		) {
+			// check if text isn't finished yet
+			if (i < text.length) {
+				// add next character to h1
+				if (h1Element) {
+					h1Element.innerHTML = `${text.substring(
+						0,
+						i + 1
+					)}<span class="cursor" aria-hidden="true">|</span>`
+				}
+
+				// wait for a while and call this function again for next character
+				setTimeout(() => {
+					typeWriter(text, i + 1, fnCallback, isLastText)
+				}, 150)
+			}
+			// text finished, call callback if there is a callback function
+			else if (typeof fnCallback === 'function') {
+				// if it's the last text, remove the cursor after a short delay
+				if (isLastText && h1Element) {
+					setTimeout(() => {
+						if (h1Element) {
+							h1Element.innerHTML = text
+							h1Element.classList.add('underline')
+						}
+						if (fnCallback) {
+							fnCallback()
+						}
+					}, 700)
+				} else {
+					// call callback after timeout
+					setTimeout(fnCallback, 700)
+				}
+			}
+		}
+		// start a typewriter animation for a text in the dataText array
+		function StartTextAnimation(i: number) {
+			if (typeof dataText[i] === 'undefined') {
+				setTimeout(() => {
+					StartTextAnimation(0)
+				}, 20000)
+			}
+			// check if dataText[i] exists
+			if (i < dataText.length && typeof dataText[i] !== 'undefined') {
+				// Remove underline class on first animation
+				if (i === 0 && h1Element) {
+					h1Element.classList.remove('underline')
+				}
+				// check if this is the last text in the array
+				const isLastText = i === dataText.length - 1
+				// text exists! start typewriter animation
+				typeWriter(
+					dataText[i],
+					0,
+					() => {
+						// after callback (and whole text has been animated), start next text
+						StartTextAnimation(i + 1)
+					},
+					isLastText
+				)
+			}
+		}
+		// start the text animation
+		StartTextAnimation(0)
+	})
+</script>

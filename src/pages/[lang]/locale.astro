@@ -1,0 +1,39 @@
+---
+import { SITE_BASE } from '@/consts'
+import { LOCALES, useTranslations, type Lang } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+import Layout from '@/layouts/Base.astro'
+
+export const getStaticPaths = () =>
+	Object.keys(LOCALES).map((lang) => ({
+		params: { lang },
+	}))
+---
+
+<Layout>
+	<main class="app-container pt-36">
+		<h1 class="pb-2 font-serif text-6xl font-bold">
+			{t({ es: 'Elige Idioma', gl: 'Escolle Idioma', en: 'Choose Language' })}
+		</h1>
+	</main>
+	<section class="app-container py-24">
+		<div class="flex flex-col justify-center gap-12 md:flex-row md:gap-30">
+			{
+				Object.entries(LOCALES).map(([lang, config]) => (
+					<div>
+						<a
+							class="item-center decoration-primary dark:decoration-primary-dark text-4xl decoration-wavy underline-offset-4 hover:underline"
+							href={`${SITE_BASE}/${lang}/`}
+							data-umami-event={`Locale Change`}
+							data-umami-event-lang-to={lang}
+							data-umami-event-lang-from={Astro.currentLocale}
+							data-umami-event-source="locale-page"
+						>
+							{config.emogi} {config.label}
+						</a>
+					</div>
+				))
+			}
+		</div>
+	</section>
+</Layout>

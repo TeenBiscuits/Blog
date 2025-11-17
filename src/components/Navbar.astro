@@ -1,0 +1,184 @@
+---
+import NavbarLink from './NavbarLink.astro'
+import { Icon } from 'astro-icon/components'
+import ThemeSelector from './ThemeSelector.astro'
+import LocaleSelector from './LocaleSelector.astro'
+import ProgressBar from './ProgressBar.astro'
+import { SITE_BASE, WebsiteLinks } from '@/consts'
+import LogoSVG from '@/assets/logo.svg'
+import { type Lang } from '@/i18n'
+const isPost = /^\/[^/]+\/posts\//.test(Astro.url.pathname)
+const locale = Astro.currentLocale as Lang
+---
+
+<header class="fixed top-0 z-40 w-full bg-transparent backdrop-blur-sm">
+	<nav>
+		<div class="app-container flex items-center justify-between py-5">
+			<a
+				href={`${SITE_BASE}/${locale}/`}
+				aria-label="Home"
+				transition:persist
+				data-umami-event="Logo Home Link"
+			>
+				<LogoSVG
+					height={42}
+					width={42}
+					class="hover:text-accent dark:hover:text-accent-dark"
+				/>
+			</a>
+			<div class="hidden items-center gap-8 md:flex">
+				{
+					WebsiteLinks.map((link) => (
+						<NavbarLink
+							class="text-lg"
+							href={`${SITE_BASE}/${locale}/${link.url}`}
+							target={link.url.charAt(0) === 'h' ? '_blank' : '_self'}
+							data-umami-event={`${link.name['es']} Navbar Link`}
+						>
+							{link.name[locale]}
+						</NavbarLink>
+					))
+				}
+				<LocaleSelector transition:persist />
+				<ThemeSelector transition:persist />
+			</div>
+			<button
+				class="cursor-pointer md:hidden"
+				id="nav-open-btn"
+				aria-label="Open navigation menu"
+				title="Open navigation menu"
+			>
+				<Icon aria-hidden name="mdi:menu" size={32} />
+			</button>
+
+			<!-- Mobile nav -->
+			<div
+				class="bg-background dark:bg-background-dark border-background fixed top-0 right-0 z-40 h-screen w-5/6 translate-x-full border-l px-8 py-6 transition-transform md:hidden"
+				id="mobile-menu"
+				data-umami-event="Open Mobile nav"
+			>
+				<button
+					id="nav-close-btn"
+					class="ml-auto block cursor-pointer"
+					aria-label="Close navigation menu"
+					title="Close navigation menu"
+					data-umami-event="Close Mobile nav"
+				>
+					<Icon aria-hidden name="mdi:close" size={32} />
+				</button>
+				<div class="flex h-full flex-col items-start gap-8 pt-16">
+					{
+						WebsiteLinks.map((link) => (
+							<NavbarLink
+								class="text-4xl font-light"
+								href={`${SITE_BASE}/${locale}/${link.url}`}
+								data-umami-event={`${link.name['es']} Navbar Link`}
+							>
+								{link.name[locale]}
+							</NavbarLink>
+						))
+					}
+					<div class="mt-4 flex gap-8">
+						<LocaleSelector />
+						<ThemeSelector />
+					</div>
+				</div>
+			</div>
+		</div>
+		{isPost && <ProgressBar />}
+	</nav>
+
+	<script>
+		// Setup mobile navigation toggle functionality
+		function setupNav() {
+			// Get references to the open and close buttons
+			const openBtn = document.querySelector('#nav-open-btn')
+			const closeBtn = document.querySelector('#nav-close-btn')
+
+			// Toggle the mobile navigation menu visibility
+			function toggleNav() {
+				document
+					.querySelector('#mobile-menu')
+					?.classList.toggle('mobile-nav-open')
+			}
+
+			// Attach click listeners to open and close buttons
+			openBtn?.addEventListener('click', toggleNav)
+			closeBtn?.addEventListener('click', toggleNav)
+		}
+
+		// Setup nav on initial load and on page navigation
+		setupNav()
+		document.addEventListener('DOMContentLoaded', setupNav)
+		document.addEventListener('astro:page-load', setupNav)
+	</script>
+</header>
+
+<script is:inline>
+	// Apply the current theme (dark/light/auto) to the document
+	function applyTheme() {
+		// Determine if dark mode should be active based on localStorage or OS preference
+		const isDark =
+			localStorage.theme === 'dark' ||
+			(!('theme' in localStorage) &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+		// Toggle the 'dark' class on the root element
+		document.documentElement.classList.toggle('dark', isDark)
+
+		// Get the current theme setting (defaults to 'auto' if not set)
+		const theme = localStorage.theme || 'auto'
+		// Update theme button active states to reflect current selection
+		document.querySelectorAll('.theme-button').forEach((el) => {
+			el.classList.toggle('active', el.dataset.theme === `theme-${theme}`)
+		})
+	}
+
+	// Setup click listeners for all theme selector buttons
+	function setupThemeListeners() {
+		document.querySelectorAll('.theme-button').forEach((button) => {
+			button.addEventListener('click', () => {
+				// Extract theme name from button's data attribute
+				const theme = button.dataset.theme.replace('theme-', '')
+
+				// Save theme preference to localStorage or remove it for 'auto'
+				if (theme === 'auto') {
+					localStorage.removeItem('theme')
+				} else {
+					localStorage.theme = theme
+				}
+
+				// Apply the newly selected theme
+				applyTheme()
+			})
+		})
+	}
+
+	// Initialize theme system
+	function init() {
+		setupThemeListeners()
+		applyTheme()
+	}
+
+	// Initial setup
+	init()
+
+	// View transitions support - preserve theme class during navigation
+	document.addEventListener('astro:before-swap', (event) => {
+		// Determine dark mode state before page swap
+		const isDark =
+			localStorage.theme === 'dark' ||
+			(!('theme' in localStorage) &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches)
+		// Apply dark class to new document before it's displayed
+		event.newDocument.documentElement.classList.toggle('dark', isDark)
+	})
+
+	// Reinitialize theme system after Astro page navigation
+	document.addEventListener('astro:page-load', init)
+
+	// OS theme change listener - update theme when system preference changes
+	window
+		.matchMedia('(prefers-color-scheme: dark)')
+		.addEventListener('change', applyTheme)
+</script>

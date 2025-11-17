@@ -1,0 +1,29 @@
+---
+
+---
+
+<div id="progress-container">
+	<div
+		id="progress-bar"
+		class="bg-primary dark:bg-primary-dark h-1 w-[0%] transition"
+	>
+	</div>
+</div>
+
+<script>
+	// Update progress bar on scroll
+	window.addEventListener('scroll', () => {
+		const progressBar = document.getElementById('progress-bar')
+		if (!progressBar) {
+			return
+		}
+
+		const winScroll =
+			document.body.scrollTop || document.documentElement.scrollTop
+		const height =
+			document.documentElement.scrollHeight -
+			document.documentElement.clientHeight
+		const scrolled = (winScroll / height) * 100
+		progressBar.style.width = `${scrolled}%`
+	})
+</script>
