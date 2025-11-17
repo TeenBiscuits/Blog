@@ -17,7 +17,7 @@ jobs:
         # https://github.com/tj-actions/vercel-wait
         uses: tj-actions/vercel-wait@v1.2.2
         with:
-          delay: 10
+          delay: '10'
           project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           token: ${{ secrets.VERCEL_TOKEN }}
           sha: ${{ github.sha }}
