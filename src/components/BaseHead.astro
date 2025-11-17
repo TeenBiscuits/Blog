@@ -101,7 +101,9 @@ const ogImage = image
 <!-- Track browser language in Umami -->
 <script>
 	const trackLanguage = () => {
-		window.umami?.track((props) => ({ ...props, language: navigator.language }))
+		if (window.umami) {
+			window.umami.track()
+		}
 	}
 
 	window.addEventListener('load', trackLanguage)
