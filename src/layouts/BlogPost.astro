@@ -121,12 +121,19 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 
 						{
 							blogImages[coverImagePath] && (
-								<BlogPostImage
-									title={title}
-									pubId={pubId}
-									imageSrc={blogImages[coverImagePath]()}
-									coverImageCredit={coverImageCredit}
-								/>
+								<>
+									<BlogPostImage
+										title={title}
+										pubId={pubId}
+										imageSrc={blogImages[coverImagePath]()}
+									/>
+									{coverImageCredit && (
+										<p class="mt-2 mb-6 text-sm italic opacity-80">
+											{t({ es: 'Créditos', gl: 'Créditos', en: 'Credit' })}:{' '}
+											{coverImageCredit}
+										</p>
+									)}
+								</>
 							)
 						}
 					</div>
