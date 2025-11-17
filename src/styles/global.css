@@ -70,3 +70,7 @@ html {
 .prose ::marker {
 	@apply text-primary dark:text-primary-dark;
 }
+
+.katex {
+	font: var(--font-sans) !important;
+}
