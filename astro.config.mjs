@@ -19,7 +19,7 @@ import rehypeKatex from 'rehype-katex'
 import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from './src/locales'
 
 // Oldest date for lastmod of all website
-const minDate = new Date('2025-01-01')
+const minDate = new Date('2025-11-17')
 
 const siteUrl =
 	process.env.VERCEL_ENV === 'production'
