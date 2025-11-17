@@ -1,6 +1,8 @@
 # Blog de Pablo
 
-![Astro](https://img.shields.io/badge/Astro-%232C2052.svg?logo=astro&logoColor=white)![TailwindCSS](https://img.shields.io/badge/tailwindcss-62BAE0.svg?logo=tailwind-css&logoColor=white)![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?logo=vercel&logoColor=white)
+![Astro](https://img.shields.io/badge/Astro-%232C2052.svg?logo=astro&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-62BAE0.svg?logo=tailwind-css&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?logo=vercel&logoColor=white)
 
 > _mi blog personal en el que hablo de las cosas que aprendo o que simplemente me apetecen_
 
