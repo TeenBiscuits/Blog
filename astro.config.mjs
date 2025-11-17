@@ -7,6 +7,7 @@ import icon from 'astro-icon'
 
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import rehypeFigureTitle from 'rehype-figure-title'
+import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 
 import customSitemap from './src/plugins/custom-sitemap.mjs'
@@ -51,7 +52,12 @@ export default defineConfig({
 	},
 
 	markdown: {
-		remarkPlugins: [remarkMath, remarkReadingTime, remarkModifiedTime],
+		remarkPlugins: [
+			remarkMath,
+			remarkGfm,
+			remarkReadingTime,
+			remarkModifiedTime,
+		],
 		rehypePlugins: [
 			rehypeKatex,
 			rehypeFigureTitle,

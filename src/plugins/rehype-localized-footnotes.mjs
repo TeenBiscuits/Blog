@@ -26,15 +26,31 @@ export function rehypeLocalizedFootnotes() {
 			// Find the footnotes section (it has class "footnotes" and data-footnotes attribute)
 			if (
 				node.tagName === 'section' &&
-				node.properties?.className?.includes('footnotes') &&
-				node.properties?.dataFootnotes === true
+				node.properties?.className?.includes('footnotes')
 			) {
 				// Find the heading inside the footnotes section
 				visit(node, 'element', (headingNode) => {
 					if (headingNode.tagName === 'h2') {
+						// Remove the sr-only class to make heading visible
+						if (headingNode.properties?.className) {
+							headingNode.properties.className =
+								headingNode.properties.className.filter(
+									(cls) => cls !== 'sr-only'
+								)
+						}
+
 						// Replace the heading text
-						if (headingNode.children && headingNode.children[0]) {
-							headingNode.children[0].value = footnoteHeadings[lang]
+						if (headingNode.children && headingNode.children.length > 0) {
+							// Handle text nodes
+							const textNode = headingNode.children.find(
+								(child) => child.type === 'text'
+							)
+							if (textNode) {
+								textNode.value = footnoteHeadings[lang]
+							} else if (headingNode.children[0]) {
+								// Fallback for other node types
+								headingNode.children[0].value = footnoteHeadings[lang]
+							}
 						}
 					}
 				})
