@@ -72,18 +72,23 @@ const ogImage = image
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={localeTitle} />
-<meta property="og:site_name" content={localeTitle} />
+<meta property="og:site_name" content={t(SITE_TITLE)} />
 <meta property="og:description" content={localeDescription} />
 <meta property="og:image" content={new URL(ogImage, Astro.url)} />
+<meta property="og:locale" content={LOCALES[locale]?.lang || locale} />
+<meta property="og:locale:alternate" content="es_ES" />
+<meta property="og:locale:alternate" content="gl_ES" />
+<meta property="og:locale:alternate" content="en_GB" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:domain" content={Astro.site?.host} />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={localeTitle} />
 <meta property="twitter:description" content={localeDescription} />
 <meta property="twitter:image" content={new URL(ogImage, Astro.url)} />
-<meta property="og:locale" content={LOCALES[locale]?.lang || locale} />
 <meta name="twitter:site" content={t(X_ACCOUNT)} />
+<meta name="twitter:creator" content={t(X_ACCOUNT)} />
 
 <!-- Self Hosted Umami -->
 <script
