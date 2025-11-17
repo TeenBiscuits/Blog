@@ -8,7 +8,7 @@ on:
 jobs:
   wait-for-vercel-deployment:
     name: 🔼 Esperar el deploy en Vercel
-    if: github.repository == 'TeenBiscuits/Pasame-Codigo'
+    if: github.repository == 'TeenBiscuits/Blog'
     runs-on: ubuntu-latest
     steps:
       - name: ⌛ Esperar deploy
@@ -24,7 +24,7 @@ jobs:
 
   indexnow:
     name: 🔎 Bing IndexNow
-    if: github.repository == 'TeenBiscuits/Pasame-Codigo'
+    if: github.repository == 'TeenBiscuits/Blog'
     needs: [wait-for-vercel-deployment]
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +42,7 @@ jobs:
 
   google-indexing:
     name: 🔎 Google Index
-    if: github.repository == 'TeenBiscuits/Pasame-Codigo'
+    if: github.repository == 'TeenBiscuits/Blog'
     needs: [wait-for-vercel-deployment]
     runs-on: ubuntu-latest
     steps:
