@@ -1,0 +1,8 @@
+# Ignore artifacts:
+dist
+.unlighthouse
+.vercel
+
+# Ignore all MD/MDX files:
+**/*.mdx
+**/*.md
