@@ -74,3 +74,13 @@ html {
 .katex {
 	font: var(--font-sans) !important;
 }
+
+.astro-social-share {
+	@apply my-2 h-6;
+}
+.astro-social-share a {
+	@apply mr-2.5 no-underline;
+}
+.astro-social-share svg {
+	@apply dark:fill-secondary-dark fill-secondary h-6 hover:animate-bounce;
+}

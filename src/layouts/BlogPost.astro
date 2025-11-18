@@ -1,5 +1,6 @@
 ---
 import { type Lang, useTranslations } from '@/i18n'
+import { X_ACCOUNT } from '@/consts'
 const t = useTranslations(Astro.currentLocale as Lang)
 import type { CollectionEntry } from 'astro:content'
 import FormattedDate from '@/components/FormattedDate.astro'
@@ -9,6 +10,7 @@ import CommentSection from '@/components/CommentSection.astro'
 import TranslateToggle from '@/components/TranslateToggle.astro'
 import BlogPostImage from '@/components/BlogPostImage.astro'
 import KatexHead from '@/components/KatexHead.astro'
+import { SocialShare } from 'astro-social-share'
 import Layout from './Base.astro'
 import { Icon } from 'astro-icon/components'
 import dayjs from 'dayjs'
@@ -128,7 +130,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 										imageSrc={blogImages[coverImagePath]()}
 									/>
 									{coverImageCredit && (
-										<p class="mt-2 mb-6 text-sm italic opacity-80">
+										<p class="mt-2 mb-3 text-sm italic opacity-80">
 											{t({ es: 'Créditos', gl: 'Créditos', en: 'Credit' })}:{' '}
 											{coverImageCredit}
 										</p>
@@ -137,15 +139,23 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 							)
 						}
 					</div>
-					<div class="mb-8 flex flex-wrap gap-4">
-						{
-							tags &&
-								tags.map((tag) => (
-									<div class="bg-secondary dark:bg-secondary-dark rounded-xl px-5 py-3 font-medium italic md:px-4 md:py-2">
-										#{tag}
-									</div>
-								))
-						}
+					<div class="mb-8 flex flex-wrap justify-between gap-2">
+						<div class="flex flex-wrap gap-4">
+							{
+								tags &&
+									tags.map((tag) => (
+										<div class="bg-secondary dark:bg-secondary-dark rounded-xl px-5 py-3 font-medium italic md:px-4 md:py-2">
+											#{tag}
+										</div>
+									))
+							}
+						</div>
+						<SocialShare
+							title={title}
+							description={description}
+							via={typeof X_ACCOUNT === 'string' ? X_ACCOUNT : ''}
+							url={`${Astro.url.href}?utm_medium=social_share`}
+						/>
 					</div>
 					<div
 						class="prose prose-neutral prose-lg md:prose-xl dark:prose-invert prose-img:rounded-xl prose-figure:text-center prose-img:mx-auto prose-style"
