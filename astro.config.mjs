@@ -3,6 +3,7 @@ import { defineConfig, fontProviders } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
+import umami from '@yeskunall/astro-umami'
 import icon from 'astro-icon'
 
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
@@ -45,7 +46,16 @@ export default defineConfig({
 		},
 	},
 
-	integrations: [mdx(), customSitemap(siteUrl, 'dist', minDate), icon()],
+	integrations: [
+		umami({
+			id: '22e6e276-eba7-4919-9174-5a3b9787afc0',
+			endpointUrl: 'https://analytics.pablopl.dev',
+			domains: ['blog.pablopl.dev'],
+		}),
+		mdx(),
+		customSitemap(siteUrl, 'dist', minDate),
+		icon(),
+	],
 
 	vite: {
 		plugins: [tailwindcss()],

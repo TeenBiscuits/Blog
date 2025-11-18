@@ -20,6 +20,7 @@
         "@fontsource/silkscreen": "^5.2.8",
         "@iconify-json/mdi": "^1.2.3",
         "@tailwindcss/vite": "^4.1.17",
+        "@yeskunall/astro-umami": "^0.0.7",
         "astro": "^5.15.6",
         "astro-embed": "^0.9.2",
         "astro-icon": "^1.1.5",
@@ -510,6 +511,8 @@
     "@vue/server-renderer": ["@vue/server-renderer@3.5.24", "", { "dependencies": { "@vue/compiler-ssr": "3.5.24", "@vue/shared": "3.5.24" }, "peerDependencies": { "vue": "3.5.24" } }, "sha512-Yh2j2Y4G/0/4z/xJ1Bad4mxaAk++C2v4kaa8oSYTMJBJ00/ndPuxCnWeot0/7/qafQFLh5pr6xeV6SdMcE/G1w=="],
 
     "@vue/shared": ["@vue/shared@3.5.24", "", {}, "sha512-9cwHL2EsJBdi8NY22pngYYWzkTDhld6fAD6jlaeloNGciNSJL6bLpbxVgXl96X00Jtc6YWQv96YA/0sxex/k1A=="],
+
+    "@yeskunall/astro-umami": ["@yeskunall/astro-umami@0.0.7", "", { "peerDependencies": { "astro": "^3.0.0 || ^4.0.0 || ^5.0.0" } }, "sha512-8W/At28qKyPGepwvVumgJX0VZ0F9KK4M4zNDQfUZ3iBJpAKUTAkdIXM7i7I+PFsP7rXOo/AVgcDXDOv9L03QhQ=="],
 
     "abbrev": ["abbrev@3.0.1", "", {}, "sha512-AO2ac6pjRB3SJmGJo+v5/aK6Omggp6fsLrs6wN9bd35ulu4cCwaAU9+7ZhXjeqHVkaHThLuzH0nZr0YpCDhygg=="],
 
