@@ -46,10 +46,6 @@ const { pubId } = Astro.props
 								gl: `Traducir ao ${config.label}`,
 								en: `Translate to ${config.label}`,
 							})}
-							data-umami-event={`Locale Change`}
-							data-umami-event-lang-to={lang}
-							data-umami-event-lang-from={Astro.currentLocale}
-							data-umami-event-source={pubId}
 						>
 							<span>{config.emogi}</span>
 							<span class="decoration-accent dark:decoration-accent-dark hidden decoration-wavy group-hover:underline md:hidden lg:inline">

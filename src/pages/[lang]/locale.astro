@@ -24,10 +24,6 @@ export const getStaticPaths = () =>
 						<a
 							class="item-center decoration-primary dark:decoration-primary-dark text-4xl decoration-wavy underline-offset-4 hover:underline"
 							href={`${SITE_BASE}/${lang}/`}
-							data-umami-event={`Locale Change`}
-							data-umami-event-lang-to={lang}
-							data-umami-event-lang-from={Astro.currentLocale}
-							data-umami-event-source="locale-page"
 						>
 							{config.emogi} {config.label}
 						</a>

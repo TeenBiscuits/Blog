@@ -14,12 +14,7 @@ const locale = Astro.currentLocale as Lang
 <header class="fixed top-0 z-40 w-full bg-transparent backdrop-blur-sm">
 	<nav>
 		<div class="app-container flex items-center justify-between py-5">
-			<a
-				href={`${SITE_BASE}/${locale}/`}
-				aria-label="Home"
-				transition:persist
-				data-umami-event="Logo Home Link"
-			>
+			<a href={`${SITE_BASE}/${locale}/`} aria-label="Home" transition:persist>
 				<LogoSVG
 					height={42}
 					width={42}
@@ -33,7 +28,6 @@ const locale = Astro.currentLocale as Lang
 							class="text-lg"
 							href={`${SITE_BASE}/${locale}/${link.url}`}
 							target={link.url.charAt(0) === 'h' ? '_blank' : '_self'}
-							data-umami-event={`${link.name['es']} Navbar Link`}
 						>
 							{link.name[locale]}
 						</NavbarLink>
@@ -72,7 +66,6 @@ const locale = Astro.currentLocale as Lang
 							<NavbarLink
 								class="text-4xl font-light"
 								href={`${SITE_BASE}/${locale}/${link.url}`}
-								data-umami-event={`${link.name['es']} Navbar Link`}
 							>
 								{link.name[locale]}
 							</NavbarLink>

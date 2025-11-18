@@ -90,10 +90,7 @@ const newArtDate = blog.reduce(
 		<div class="posts-grid-container">
 			{posts.map((post) => <BlogCard post={post} />)}
 		</div>
-		<a
-			class="btn-secondary"
-			href={`/${locale}/posts`}
-			data-umami-event="See All Posts Link"
+		<a class="btn-secondary" href={`/${locale}/posts`}
 			>{t({ es: 'Ver Más', gl: 'Ver Mais', en: 'See More' })}
 			<Icon size={20} name="mdi:arrow-right" />
 		</a>
@@ -114,10 +111,7 @@ const newArtDate = blog.reduce(
 					})
 				}
 			</p>
-			<a
-				class="btn-primary"
-				href={`/${locale}/about`}
-				data-umami-event="About Me Hero Link"
+			<a class="btn-primary" href={`/${locale}/about`}
 				>{
 					t({
 						es: 'Ir a Acerca de mí',
