@@ -21,7 +21,7 @@ export const SITE_KEYWORDS: string | Multilingual = {
 	en: 'personal blog, articles, technology, programming, tutorials',
 }
 
-export const X_ACCOUNT: string | Multilingual = '@PabloPortasL'
+export const X_ACCOUNT: string | Multilingual = 'PabloPortasL'
 
 // Deprecated const from original blog theme https://github.com/yashjawale/saral-theme-astro/
 export const SITE_BASE = ''

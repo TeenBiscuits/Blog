@@ -87,8 +87,8 @@ const ogImage = image
 <meta property="twitter:title" content={localeTitle} />
 <meta property="twitter:description" content={localeDescription} />
 <meta property="twitter:image" content={new URL(ogImage, Astro.url)} />
-<meta name="twitter:site" content={t(X_ACCOUNT)} />
-<meta name="twitter:creator" content={t(X_ACCOUNT)} />
+<meta name="twitter:site" content={`@${t(X_ACCOUNT)}`} />
+<meta name="twitter:creator" content={`@${t(X_ACCOUNT)}`} />
 
 <!-- Auto-discovery -->
 <link rel="sitemap" href="/sitemap-index.xml" />
