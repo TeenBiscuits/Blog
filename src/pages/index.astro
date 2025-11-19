@@ -12,6 +12,7 @@ import {
 } from '@/i18n'
 import { SITE_TITLE, SITE_DESCRIPTION, X_ACCOUNT } from '@/consts'
 
+const locale = Astro.currentLocale as Lang
 const t = useTranslations(Astro.currentLocale as Lang)
 const langs = Object.keys(LOCALES)
 const baseUrl = import.meta.env.PROD ? Astro.site : '/'
@@ -34,22 +35,38 @@ const defaultLocale = DEFAULT_LOCALE
 			))
 		}
 
-		<!-- icon -->
+		<!-- Favicons -->
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" sizes="192x192" href="/android-chrome.png" />
+		<!-- <link rel="shortcut icon" href="/favicon.ico" /> -->
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<meta name="apple-mobile-web-app-title" content="P Blog" />
+		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="color-scheme" content="light dark" />
 
-		<!-- OGP -->
+		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
 		<meta property="og:title" content={t(SITE_TITLE)} />
 		<meta property="og:site_name" content={t(SITE_TITLE)} />
 		<meta property="og:description" content={t(SITE_DESCRIPTION)} />
-		<meta property="og:image" content={`${Astro.site}og.png`} />
-		<meta property="og:url" content={Astro.url} />
-		<meta property="og:locale" content={DEFAULT_LOCALE} />
-		<meta name="twitter:card" content="summary" />
+		<meta
+			property="og:image"
+			content={new URL(`/open-graph/${locale}/og.png`, Astro.url)}
+		/>
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:domain" content={Astro.site?.host} />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:title" content={t(SITE_TITLE)} />
+		<meta property="twitter:description" content={t(SITE_DESCRIPTION)} />
+		<meta
+			property="twitter:image"
+			content={new URL(`/open-graph/${locale}/og.png`, Astro.url)}
+		/>
 		<meta name="twitter:site" content={`@${t(X_ACCOUNT)}`} />
+		<meta name="twitter:creator" content={`@${t(X_ACCOUNT)}`} />
 
 		<noscript>
 			<meta
