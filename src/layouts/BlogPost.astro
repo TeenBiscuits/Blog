@@ -166,9 +166,11 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 					<!-- Suggest edit -->
 					<div class="mt-16 mb-8 flex flex-wrap justify-between gap-4 italic">
 						<a
-							href={`https://github.com/TeenBiscuits/Blog/edit/main/src/content/blog/${slug}/index.md`}
+							href={`https://github.com/TeenBiscuits/Blog/edit/main/src/content/blog/${slug}/index.mdx`}
 							data-umami-event="Suggest edit"
+							data-umami-event-url={`https://github.com/TeenBiscuits/Blog/edit/main/src/content/blog/${slug}/index.mdx`}
 							target="_blank"
+							rel="nofollow noopener noreferrer"
 							class="underline-offset-4 opacity-70 hover:underline hover:opacity-100"
 							><Icon name="mdi:pencil-outline" class="inline-block" />
 							{
