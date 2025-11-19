@@ -78,9 +78,11 @@ const ogImage = image
 <meta property="og:description" content={localeDescription} />
 <meta property="og:image" content={new URL(ogImage, Astro.url)} />
 <meta property="og:locale" content={LOCALES[locale]?.lang || locale} />
+{/*
 <meta property="og:locale:alternate" content="es_ES" />
 <meta property="og:locale:alternate" content="gl_ES" />
 <meta property="og:locale:alternate" content="en_GB" />
+*/}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
