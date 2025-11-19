@@ -38,10 +38,6 @@ if (inArticle) {
 			id="js-link"
 			href="#"
 			class="flex items-center gap-2 decoration-wavy underline-offset-2 hover:underline"
-			data-umami-event={`Locale Change`}
-			data-umami-event-lang-to=""
-			data-umami-event-lang-from={Astro.currentLocale}
-			data-umami-event-source="locale-suggest"
 		>
 			<div>
 				<span id="js-linkMsg"></span>
@@ -98,7 +94,6 @@ if (inArticle) {
 		}
 
 		link.href = targetPath
-		link.setAttribute('data-umami-event-lang-to', lang)
 		linkMsg.innerText = `${LOCALE_SUGGEST_TEXT[lang] || LOCALE_SUGGEST_TEXT['en']} `
 		linkText.innerText =
 			linkText.innerText = `${LOCALES[lang].emogi} ${LOCALES[lang].label}`
