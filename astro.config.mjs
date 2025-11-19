@@ -32,6 +32,7 @@ const siteUrl =
 // https://astro.build/config
 export default defineConfig({
 	site: siteUrl,
+	trailingSlash: 'always',
 
 	build: {
 		inlineStylesheets: 'always',
