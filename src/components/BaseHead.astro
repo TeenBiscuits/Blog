@@ -5,6 +5,7 @@ const t = useTranslations(Astro.currentLocale as Lang)
 import Favicons from '@/components/Favicons.astro'
 import OpenGraph from '@/components/OpenGraph.astro'
 import Analytics from '@/components/Analytics.astro'
+import HRefLang from '@/components/HRefLang.astro'
 import '@/styles/global.css'
 import { Font } from 'astro:assets'
 import { ClientRouter } from 'astro:transitions'
@@ -27,18 +28,7 @@ const { title, description, keywords, image } = Astro.props
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 
-{
-	/*
-	<!-- Locales Paths -->
-	getLocalePaths(Astro.url).map((props) => (
-		<link
-			rel="alternate"
-			hreflang={LOCALES[props.lang]?.lang || props.lang}
-			href={Astro.site?.origin + props.path}
-		/>
-	))
- */
-}
+<HRefLang />
 
 <Favicons />
 

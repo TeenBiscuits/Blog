@@ -1,0 +1,25 @@
+---
+import { LOCALES, getLocalePaths } from '@/i18n'
+
+const localePaths = await getLocalePaths(Astro.url)
+const esPath = localePaths.find((props) => props.lang === 'es')
+---
+
+{
+	localePaths.map((props) => (
+		<link
+			rel="alternate"
+			hreflang={LOCALES[props.lang]?.lang || props.lang}
+			href={Astro.site?.origin + props.path}
+		/>
+	))
+}
+{
+	esPath && (
+		<link
+			rel="alternate"
+			hreflang="x-default"
+			href={Astro.site?.origin + esPath.path}
+		/>
+	)
+}
