@@ -1,5 +1,5 @@
 ---
-import { SITE_BASE, SocialLinks, WebsiteLinks } from '@/consts'
+import { SocialLinks, WebsiteLinks } from '@/consts'
 import Firma from '@/components/Firma.astro'
 import Frase from '@/assets/frase.svg'
 import { Icon } from 'astro-icon/components'
@@ -27,7 +27,7 @@ const today = new Date()
 						WebsiteLinks.map((link) => (
 							<a
 								class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
-								href={`${SITE_BASE}/${locale}/${link.url}`}
+								href={`/${locale}/${link.url}`}
 							>
 								{link.name[locale]}
 							</a>
@@ -55,7 +55,7 @@ const today = new Date()
 						))
 					}
 					<a
-						href={`${SITE_BASE}/${locale}/rss.xml`}
+						href={`/${locale}/rss.xml`}
 						data-umami-event="RSS Feed Footer Link"
 						target="_blank"
 						class="hover:text-secondary dark:hover:text-secondary-dark text-lg"

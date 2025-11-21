@@ -1,5 +1,4 @@
 ---
-import { SITE_BASE } from '@/consts'
 import { LOCALES, useTranslations, type Lang } from '@/i18n'
 const t = useTranslations(Astro.currentLocale as Lang)
 import Layout from '@/layouts/Base.astro'
@@ -23,7 +22,7 @@ export const getStaticPaths = () =>
 					<div>
 						<a
 							class="item-center decoration-primary dark:decoration-primary-dark text-4xl decoration-wavy underline-offset-4 hover:underline"
-							href={`${SITE_BASE}/${lang}/`}
+							href={`/${lang}/`}
 						>
 							{config.emogi} {config.label}
 						</a>

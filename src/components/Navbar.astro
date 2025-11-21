@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components'
 import ThemeSelector from './ThemeSelector.astro'
 import LocaleSelector from './LocaleSelector.astro'
 import ProgressBar from './ProgressBar.astro'
-import { SITE_BASE, WebsiteLinks } from '@/consts'
+import { WebsiteLinks } from '@/consts'
 import LogoSVG from '@/assets/logo.svg'
 import { type Lang } from '@/i18n'
 const isPost = /^\/[^/]+\/posts\/.+/.test(Astro.url.pathname)
@@ -14,7 +14,7 @@ const locale = Astro.currentLocale as Lang
 <header class="fixed top-0 z-40 w-full bg-transparent backdrop-blur-sm">
 	<nav>
 		<div class="app-container flex items-center justify-between py-5">
-			<a href={`${SITE_BASE}/${locale}/`} aria-label="Home" transition:persist>
+			<a href={`/${locale}/`} aria-label="Home" transition:persist>
 				<LogoSVG
 					height={42}
 					width={42}
@@ -26,7 +26,7 @@ const locale = Astro.currentLocale as Lang
 					WebsiteLinks.map((link) => (
 						<NavbarLink
 							class="text-lg"
-							href={`${SITE_BASE}/${locale}/${link.url}`}
+							href={`/${locale}/${link.url}`}
 							target={link.url.charAt(0) === 'h' ? '_blank' : '_self'}
 						>
 							{link.name[locale]}
@@ -65,7 +65,7 @@ const locale = Astro.currentLocale as Lang
 						WebsiteLinks.map((link) => (
 							<NavbarLink
 								class="text-4xl font-light"
-								href={`${SITE_BASE}/${locale}/${link.url}`}
+								href={`/${locale}/${link.url}`}
 							>
 								{link.name[locale]}
 							</NavbarLink>

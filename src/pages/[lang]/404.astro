@@ -1,6 +1,5 @@
 ---
 import { LOCALES, useTranslations, type Lang } from '@/i18n'
-import { SITE_BASE } from '@/consts'
 import Layout from '@/layouts/Base.astro'
 const t = useTranslations(Astro.currentLocale as Lang)
 
@@ -31,7 +30,7 @@ export const getStaticPaths = () =>
 					})
 				}
 			</p>
-			<a class="btn-primary" href={`${SITE_BASE}/${locale}/`}>
+			<a class="btn-primary" href={`/${locale}/`}>
 				{
 					t({
 						es: 'Ir a la página principal',

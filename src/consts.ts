@@ -23,9 +23,6 @@ export const SITE_KEYWORDS: string | Multilingual = {
 
 export const X_ACCOUNT: string | Multilingual = 'PabloPortasL'
 
-// Deprecated const from original blog theme https://github.com/yashjawale/saral-theme-astro/
-export const SITE_BASE = ''
-
 export const SocialLinks = [
 	{
 		icon: 'github',
@@ -58,10 +55,10 @@ type WebLinks = WebLink[]
 
 export const WebsiteLinks: WebLinks = [
 	{ name: { es: 'Principal', gl: 'Principal', en: 'Home' }, url: '' },
-	{ name: { es: 'Artículos', gl: 'Artigos', en: 'Posts' }, url: 'posts' },
+	{ name: { es: 'Artículos', gl: 'Artigos', en: 'Posts' }, url: 'posts/' },
 	{
 		name: { es: 'Acerca de Mí', gl: 'Eu', en: 'About Me' },
-		url: 'about',
+		url: 'about/',
 	},
 ]
 

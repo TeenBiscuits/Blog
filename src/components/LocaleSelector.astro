@@ -1,5 +1,4 @@
 ---
-import { SITE_BASE } from '@/consts'
 import { Icon } from 'astro-icon/components'
 import { type Lang } from '@/i18n'
 const locale = Astro.currentLocale as Lang
@@ -9,7 +8,7 @@ const isActive = Astro.url.pathname.startsWith(`/${locale}/locale`)
 
 <div class="flex items-center justify-center">
 	<a
-		href={`${SITE_BASE}/${locale}/locale`}
+		href={`/${locale}/locale/`}
 		aria-label="Select Language"
 		class:list={[`${className}`, { active: isActive }]}
 	>
