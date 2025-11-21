@@ -9,11 +9,27 @@ export const getStaticPaths = () =>
 	}))
 ---
 
-<Layout>
+<Layout
+	title={t({ es: 'Elige Idioma', gl: 'Escolle Idioma', en: 'Choose Language' })}
+	description={t({
+		es: 'Cambia el idioma del blog. Contenido disponible en tres idiomas para una mejor experiencia de lectura.',
+		gl: 'Cambia o idioma do blog. Contido dispoñible en tres idiomas para unha mellor experiencia de lectura.',
+		en: 'Change the blog language. Content available in three languages for a better reading experience.',
+	})}
+>
 	<main class="app-container pt-36">
-		<h1 class="pb-2 font-serif text-6xl font-bold">
+		<h1 class="pb-8 font-serif text-6xl font-bold">
 			{t({ es: 'Elige Idioma', gl: 'Escolle Idioma', en: 'Choose Language' })}
 		</h1>
+		<p class="text-lg leading-[2rem]">
+			{
+				t({
+					es: 'Dicen que escribir en varios idiomas es bueno para el cerebro y que en cada idioma que hablas tienes una personalidad. No sé si nada de eso es verdad, pero mi blog esta en los tres idioma que domino.',
+					gl: 'Din que escribir en varios idiomas é bo para o cerebro e que en cada idioma que falas tes unha personalidade. Non sei se nada diso é verdade, pero o meu blog está nos tres idiomas que domino.',
+					en: "They say that writing in multiple languages is good for the brain and that in each language you speak you have a different personality. I don't know if any of that is true, but my blog is in the three languages I master.",
+				})
+			}
+		</p>
 	</main>
 	<section class="app-container py-24">
 		<div class="flex flex-col justify-center gap-12 md:flex-row md:gap-30">

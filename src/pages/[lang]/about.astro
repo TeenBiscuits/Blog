@@ -18,7 +18,15 @@ const aboutContent = await getEntry('about', currentLang)
 const { Content } = await render(aboutContent!)
 ---
 
-<Layout lastModified={aboutContent?.data.pubDate.toISOString()}>
+<Layout
+	title={t({ es: 'Acerca de Mí', gl: 'Eu', en: 'About Me' })}
+	description={t({
+		es: 'Pablo Portas López, estudiante de Ingeniería Informática. Con ganas de entender el mundo. Este es mi blog personal.',
+		gl: 'Pablo Portas López, estudante de Enxeñaría Informática. Con ganas de entender o mundo. Este é o meu blog persoal.',
+		en: 'Pablo Portas López, Computer Engineering student. Eager to understand the world. This is my personal blog.',
+	})}
+	lastModified={aboutContent?.data.pubDate.toISOString()}
+>
 	<main>
 		<article
 			class="app-container relative flex flex-col justify-between gap-8 py-24 pt-36 lg:flex-row-reverse"

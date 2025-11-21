@@ -32,7 +32,15 @@ const tags = [
 */
 ---
 
-<Layout lastModified={newArtDate.toISOString()}>
+<Layout
+	title={t({ es: 'Artículos', gl: 'Artigos', en: 'Posts' })}
+	description={t({
+		es: 'escribo cosas y las publico, a veces, hasta pienso antes de escribirlas',
+		gl: 'escribo cousas e publícoas, ás veces, ata penso antes de escribilas',
+		en: 'I write things and publish them, sometimes I even think before writing them',
+	})}
+	lastModified={newArtDate.toISOString()}
+>
 	<main class="app-container pt-36">
 		<h1 class="pb-8 font-serif text-6xl font-bold">
 			{t({ es: 'Artículos', gl: 'Artigos', en: 'Posts' })}
