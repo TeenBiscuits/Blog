@@ -63,6 +63,7 @@ const { pubId } = Astro.props
 		document
 			.getElementById('translate-toggle')
 			?.addEventListener('click', () => {
+				window.umami!.track('translate-toogle-click')
 				const links = document.getElementById('language-links')
 				const toggle = document.getElementById('translate-toggle')
 				if (links && toggle) {
