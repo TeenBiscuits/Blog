@@ -1,6 +1,7 @@
 ---
 import {
 	SITE_TITLE,
+	SITE_TITLE_SOCIAL,
 	SITE_DESCRIPTION,
 	SITE_KEYWORDS,
 	X_ACCOUNT,
@@ -16,7 +17,7 @@ interface Props {
 const { title, description, keywords, image } = Astro.props
 
 const locale = Astro.currentLocale as Lang
-const localeTitle = title ? `${title} - ${t(SITE_TITLE)}` : t(SITE_TITLE)
+const localeTitle = title ? `${title} - ${t(SITE_TITLE)}` : t(SITE_TITLE_SOCIAL)
 const localeDescription = description || t(SITE_DESCRIPTION)
 const localeKeywords = keywords
 	? `${t(SITE_KEYWORDS)}, ${keywords}`

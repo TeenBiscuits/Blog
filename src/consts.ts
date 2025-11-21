@@ -9,6 +9,12 @@ export const SITE_TITLE: string | Multilingual = {
 	en: `Pablo's Blog`,
 }
 
+export const SITE_TITLE_SOCIAL: string | Multilingual = {
+	es: 'Blog de Pablo | Tecnología y Opinión',
+	gl: 'Blog de Pablo | Tecnoloxía e Opinión',
+	en: `Pablo's Blog | Technology and Opinion`,
+}
+
 export const SITE_DESCRIPTION: string | Multilingual = {
 	es: 'mi blog personal en el que hablo de las cosas que aprendo o que simplemente me apetecen',
 	gl: 'o meu blog persoal no que falo das cousas que aprendo ou que simplemente me apetece',
