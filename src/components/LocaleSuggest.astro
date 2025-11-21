@@ -85,7 +85,7 @@ if (inArticle) {
 			pathnames[3] !== ''
 		) {
 			// On /lang/posts/xxx -> redirect to /lang/posts/xxx in the suggested language
-			targetPath = `/${lang}/posts/${translationMap[lang]}`
+			targetPath = `/${lang}/posts/${translationMap[lang]}/`
 		} else {
 			// Default: redirect to the same page structure in the suggested language
 			// Replace the current language with the suggested one
