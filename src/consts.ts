@@ -16,9 +16,9 @@ export const SITE_TITLE_SOCIAL: string | Multilingual = {
 }
 
 export const SITE_DESCRIPTION: string | Multilingual = {
-	es: 'mi blog personal en el que hablo de las cosas que aprendo o que simplemente me apetecen',
-	gl: 'o meu blog persoal no que falo das cousas que aprendo ou que simplemente me apetece',
-	en: 'my personal blog in which I talk about the things I learn or the things I just feel like',
+	es: 'blog personal de Pablo Portas López, en el que hablo de las cosas que aprendo o que simplemente me apetecen',
+	gl: 'blog persoal de Pablo Portas López, no que falo das cousas que aprendo ou que simplemente me apetece',
+	en: 'personal blog of Pablo Portas López, where I talk about the things I learn or that I simply feel like',
 }
 
 export const SITE_KEYWORDS: string | Multilingual = {
