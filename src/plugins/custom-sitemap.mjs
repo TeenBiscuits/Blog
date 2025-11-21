@@ -24,6 +24,42 @@ function getLatestArticleDate(item, site, distFolder, minDate) {
 	return lastmod > minDate ? lastmod.toISOString() : minDate.toISOString()
 }
 
+// Function that extracts hreflang links from the HTML file
+function getHreflangLinks(item, site, distFolder) {
+	const filePathSequence = item.url.replace(site, '').split('/').filter(Boolean)
+	const filePath = path.join(
+		import.meta.dirname,
+		'..',
+		'..',
+		distFolder,
+		...filePathSequence,
+		'index.html'
+	)
+
+	const fileContent = fs.readFileSync(filePath).toString()
+
+	// Match all hreflang links except x-default
+	const hreflangRegex =
+		/<link[^>]*rel="alternate"[^>]*hreflang="([^"]+)"[^>]*href="([^"]+)"[^>]*>/g
+	const links = []
+	let match
+
+	while ((match = hreflangRegex.exec(fileContent)) !== null) {
+		const lang = match[1]
+		const href = match[2]
+
+		// Skip x-default as it's not a specific language
+		if (lang !== 'x-default') {
+			links.push({
+				lang: lang,
+				url: href,
+			})
+		}
+	}
+
+	return links
+}
+
 const customSitemap = (site, distFolder, minDate) =>
 	sitemap({
 		i18n: {
@@ -53,6 +89,7 @@ const customSitemap = (site, distFolder, minDate) =>
 					lastmod: getLatestArticleDate(item, site, distFolder, minDate),
 					changefreq: 'monthly',
 					priority: 0.7,
+					links: getHreflangLinks(item, site, distFolder),
 				}
 			}
 			// About page - does not change
@@ -71,6 +108,13 @@ const customSitemap = (site, distFolder, minDate) =>
 					lastmod: minDate, // min update date
 					changefreq: 'never',
 					priority: 0.3,
+				}
+			}
+			// Root Page
+			if (item.url === site || item.url === `${site}/`) {
+				return {
+					...item,
+					links: [],
 				}
 			}
 			// Homepage - changes with each article upload
