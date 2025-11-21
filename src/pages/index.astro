@@ -2,7 +2,7 @@
 // Inspired from https://github.com/psephopaiktes/astro-i18n-starter/
 // Redirect to Top page for user's system locale
 
-import { getLocalePaths, LOCALES, DEFAULT_LOCALE } from '@/i18n'
+import { LOCALES, DEFAULT_LOCALE } from '@/i18n'
 import Favicons from '@/components/Favicons.astro'
 import OpenGraph from '@/components/OpenGraph.astro'
 
@@ -16,17 +16,6 @@ const defaultLocale = DEFAULT_LOCALE
 		<meta charset="UTF-8" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<meta name="generator" content={Astro.generator} />
-		{
-			/*
-			getLocalePaths(Astro.url).map((props) => (
-				<link
-					rel="alternate"
-					hreflang={LOCALES[props.lang]?.lang || props.lang}
-					href={Astro.site?.origin + props.path}
-				/>
-			))
-			 */
-		}
 
 		<Favicons />
 		<OpenGraph title="redirect..." />
