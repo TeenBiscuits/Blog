@@ -1,19 +1,11 @@
 ---
 // Inspired from https://github.com/psephopaiktes/astro-i18n-starter/
 // Redirect to Top page for user's system locale
-// Basically, you don't need to edit this file.
 
-import {
-	useTranslations,
-	getLocalePaths,
-	LOCALES,
-	DEFAULT_LOCALE,
-	type Lang,
-} from '@/i18n'
-import { SITE_TITLE, SITE_DESCRIPTION, X_ACCOUNT } from '@/consts'
+import { getLocalePaths, LOCALES, DEFAULT_LOCALE } from '@/i18n'
+import Favicons from '@/components/Favicons.astro'
+import OpenGraph from '@/components/OpenGraph.astro'
 
-const locale = Astro.currentLocale as Lang
-const t = useTranslations(Astro.currentLocale as Lang)
 const langs = Object.keys(LOCALES)
 const baseUrl = import.meta.env.PROD ? Astro.site : '/'
 const defaultLocale = DEFAULT_LOCALE
@@ -22,7 +14,7 @@ const defaultLocale = DEFAULT_LOCALE
 <html lang={DEFAULT_LOCALE}>
 	<head>
 		<meta charset="UTF-8" />
-		<title>redireccionando...</title>
+		<title>redirect...</title>
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<meta name="generator" content={Astro.generator} />
 		{
@@ -35,38 +27,8 @@ const defaultLocale = DEFAULT_LOCALE
 			))
 		}
 
-		<!-- Favicons -->
-		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<!-- <link rel="shortcut icon" href="/favicon.ico" /> -->
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		<meta name="apple-mobile-web-app-title" content="P Blog" />
-		<link rel="manifest" href="/site.webmanifest" />
-		<meta name="color-scheme" content="light dark" />
-
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={Astro.url} />
-		<meta property="og:title" content={t(SITE_TITLE)} />
-		<meta property="og:site_name" content={t(SITE_TITLE)} />
-		<meta property="og:description" content={t(SITE_DESCRIPTION)} />
-		<meta
-			property="og:image"
-			content={new URL(`/open-graph/${locale}/og.png`, Astro.url)}
-		/>
-
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:domain" content={Astro.site?.host} />
-		<meta property="twitter:url" content={Astro.url} />
-		<meta property="twitter:title" content={t(SITE_TITLE)} />
-		<meta property="twitter:description" content={t(SITE_DESCRIPTION)} />
-		<meta
-			property="twitter:image"
-			content={new URL(`/open-graph/${locale}/og.png`, Astro.url)}
-		/>
-		<meta name="twitter:site" content={`@${t(X_ACCOUNT)}`} />
-		<meta name="twitter:creator" content={`@${t(X_ACCOUNT)}`} />
+		<Favicons />
+		<OpenGraph />
 
 		<noscript>
 			<meta
@@ -95,6 +57,10 @@ const defaultLocale = DEFAULT_LOCALE
 		</script>
 	</head>
 	<body>
-		<h1>redireccionando...</h1>
+		<h1>redirect...</h1>
+		<p>
+			If not redirected, <a href={`${baseUrl + DEFAULT_LOCALE}/`}>click here</a
+			>.
+		</p>
 	</body>
 </html>
