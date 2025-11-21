@@ -1,0 +1,61 @@
+---
+import {
+	SITE_TITLE,
+	SITE_DESCRIPTION,
+	SITE_KEYWORDS,
+	X_ACCOUNT,
+} from '@/consts'
+import { useTranslations, LOCALES, type Lang } from '@/i18n'
+const t = useTranslations(Astro.currentLocale as Lang)
+interface Props {
+	title?: string
+	description?: string
+	keywords?: string
+	image?: string
+}
+const { title, description, keywords, image } = Astro.props
+
+const locale = Astro.currentLocale as Lang
+const localeTitle = title ? `${title} - ${t(SITE_TITLE)}` : t(SITE_TITLE)
+const localeDescription = description || t(SITE_DESCRIPTION)
+const localeKeywords = keywords
+	? `${t(SITE_KEYWORDS)}, ${keywords}`
+	: t(SITE_KEYWORDS)
+const ogImage = image
+	? `/open-graph/${image}.jpg`
+	: `/open-graph/${locale}/og.png`
+---
+
+{/* Primary Meta Tags */}
+<title>{localeTitle}</title>
+<meta name="title" content={localeTitle} />
+<meta name="description" content={localeDescription} />
+<meta name="keywords" content={localeKeywords} />
+<meta name="author" content="Pablo Portas López" />
+<link type="text/plain" rel="author" href="/humans.txt" />
+
+{/* Open Graph / Facebook */}
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={localeTitle} />
+<meta property="og:site_name" content={t(SITE_TITLE)} />
+<meta property="og:description" content={localeDescription} />
+<meta property="og:image" content={new URL(ogImage, Astro.url)} />
+<meta property="og:locale" content={LOCALES[locale]?.lang || locale} />
+{
+	/*
+<meta property="og:locale:alternate" content="es_ES" />
+<meta property="og:locale:alternate" content="gl_ES" />
+<meta property="og:locale:alternate" content="en_GB" />
+*/
+}
+
+{/* Twitter */}
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:domain" content={Astro.site?.host} />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={localeTitle} />
+<meta property="twitter:description" content={localeDescription} />
+<meta property="twitter:image" content={new URL(ogImage, Astro.url)} />
+<meta name="twitter:site" content={`@${t(X_ACCOUNT)}`} />
+<meta name="twitter:creator" content={`@${t(X_ACCOUNT)}`} />
