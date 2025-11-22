@@ -108,7 +108,10 @@ export async function getLocalePaths(url: URL): Promise<LocalePath[]> {
 	// For non-post pages, use the default behavior
 	return Object.keys(LOCALES).map((lang) => ({
 		lang: lang as Lang,
-		path: getRelativeLocaleUrl(lang, url.pathname.replace(/^\/[a-zA-Z-]+/, '')),
+		path: getRelativeLocaleUrl(
+			lang,
+			url.pathname.replace(/^\/[a-zA-Z-]+\//, '')
+		),
 	}))
 }
 type LocalePath = {
