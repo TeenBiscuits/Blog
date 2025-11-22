@@ -93,13 +93,13 @@ export async function getLocalePaths(url: URL): Promise<LocalePath[]> {
 			if (translatedSlug) {
 				return {
 					lang: lang as Lang,
-					path: getRelativeLocaleUrl(lang, `/posts/${translatedSlug}/`),
+					path: getRelativeLocaleUrl(lang, `/posts/${translatedSlug}`),
 				}
 			} else {
 				// Fallback: if no translation exists for this language, use the current slug
 				return {
 					lang: lang as Lang,
-					path: getRelativeLocaleUrl(lang, `/posts/${currentSlug}/`),
+					path: getRelativeLocaleUrl(lang, `/posts/${currentSlug}`),
 				}
 			}
 		})

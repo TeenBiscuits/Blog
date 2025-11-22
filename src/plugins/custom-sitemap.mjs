@@ -74,7 +74,7 @@ const customSitemap = (site, distFolder, minDate) =>
 		// Customize sitemap entries based on page type (no lastmod)
 		serialize(item) {
 			// Articles listing page - changes with each article upload
-			if (item.url.endsWith('/posts/')) {
+			if (item.url.endsWith('/posts')) {
 				return {
 					...item,
 					lastmod: getLatestArticleDate(item, site, distFolder, minDate), // latest article date
@@ -83,7 +83,7 @@ const customSitemap = (site, distFolder, minDate) =>
 				}
 			}
 			// Individual article page - rarely changes after publication
-			if (item.url.split('/posts/')[1]) {
+			if (item.url.split('/posts')[1]) {
 				return {
 					...item,
 					lastmod: getLatestArticleDate(item, site, distFolder, minDate),
@@ -93,7 +93,7 @@ const customSitemap = (site, distFolder, minDate) =>
 				}
 			}
 			// About page - does not change
-			if (item.url.endsWith('/about/')) {
+			if (item.url.endsWith('/about')) {
 				return {
 					...item,
 					lastmod: getLatestArticleDate(item, site, distFolder, minDate), // last update about page
@@ -102,7 +102,7 @@ const customSitemap = (site, distFolder, minDate) =>
 				}
 			}
 			// Locale selector page - never changes
-			if (item.url.endsWith('/locale/')) {
+			if (item.url.endsWith('/locale')) {
 				return {
 					...item,
 					lastmod: minDate, // min update date
@@ -111,23 +111,20 @@ const customSitemap = (site, distFolder, minDate) =>
 				}
 			}
 			// Root Page
-			if (item.url === site || item.url === `${site}/`) {
+			if (item.url === site) {
 				return {
 					...item,
 					links: [],
 				}
 			}
 			// Homepage - changes with each article upload
-			if (item.url.endsWith('/')) {
-				return {
-					...item,
-					lastmod: getLatestArticleDate(item, site, distFolder, minDate), // latest article date
-					changefreq: 'weekly',
-					priority: 1.0,
-					links: getHreflangLinks(item, site, distFolder),
-				}
+			return {
+				...item,
+				lastmod: getLatestArticleDate(item, site, distFolder, minDate), // latest article date
+				changefreq: 'weekly',
+				priority: 1.0,
+				links: getHreflangLinks(item, site, distFolder),
 			}
-			return item
 		},
 	})
 
