@@ -27,7 +27,7 @@ const today = new Date()
 						WebsiteLinks.map((link) => (
 							<a
 								class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
-								href={`/${locale}/${link.url}`}
+								href={`/${locale}${link.url}`}
 							>
 								{link.name[locale]}
 							</a>

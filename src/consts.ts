@@ -61,10 +61,10 @@ type WebLinks = WebLink[]
 
 export const WebsiteLinks: WebLinks = [
 	{ name: { es: 'Principal', gl: 'Principal', en: 'Home' }, url: '' },
-	{ name: { es: 'Artículos', gl: 'Artigos', en: 'Posts' }, url: 'posts/' },
+	{ name: { es: 'Artículos', gl: 'Artigos', en: 'Posts' }, url: '/posts' },
 	{
 		name: { es: 'Acerca de Mí', gl: 'Eu', en: 'About Me' },
-		url: 'about/',
+		url: '/about',
 	},
 ]
 

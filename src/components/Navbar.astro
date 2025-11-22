@@ -14,7 +14,7 @@ const locale = Astro.currentLocale as Lang
 <header class="fixed top-0 z-40 w-full bg-transparent backdrop-blur-sm">
 	<nav>
 		<div class="app-container flex items-center justify-between py-5">
-			<a href={`/${locale}/`} aria-label="Home" transition:persist>
+			<a href={`/${locale}`} aria-label="Home" transition:persist>
 				<LogoSVG
 					height={42}
 					width={42}
@@ -26,7 +26,7 @@ const locale = Astro.currentLocale as Lang
 					WebsiteLinks.map((link) => (
 						<NavbarLink
 							class="text-lg"
-							href={`/${locale}/${link.url}`}
+							href={`/${locale}${link.url}`}
 							target={link.url.charAt(0) === 'h' ? '_blank' : '_self'}
 						>
 							{link.name[locale]}
@@ -65,7 +65,7 @@ const locale = Astro.currentLocale as Lang
 						WebsiteLinks.map((link) => (
 							<NavbarLink
 								class="text-4xl font-light"
-								href={`/${locale}/${link.url}`}
+								href={`/${locale}${link.url}`}
 							>
 								{link.name[locale]}
 							</NavbarLink>

@@ -90,7 +90,7 @@ const newArtDate = blog.reduce(
 		<div class="posts-grid-container">
 			{posts.map((post) => <BlogCard post={post} />)}
 		</div>
-		<a class="btn-secondary" href={`/${locale}/posts/`}
+		<a class="btn-secondary" href={`/${locale}/posts`}
 			>{t({ es: 'Ver Más', gl: 'Ver Mais', en: 'See More' })}
 			<Icon size={20} name="mdi:arrow-right" />
 		</a>
@@ -111,7 +111,7 @@ const newArtDate = blog.reduce(
 					})
 				}
 			</p>
-			<a class="btn-primary" href={`/${locale}/about/`}
+			<a class="btn-primary" href={`/${locale}/about`}
 				>{
 					t({
 						es: 'Ir a Acerca de mí',
@@ -147,8 +147,8 @@ const newArtDate = blog.reduce(
 				<a
 					class="btn-secondary"
 					data-umami-event="Download Resume Hero Link"
-					data-umami-event-url={`https://cv.pablopl.dev/${locale}/`}
-					href={`https://cv.pablopl.dev/${locale}/`}
+					data-umami-event-url={`https://cv.pablopl.dev/${locale}`}
+					href={`https://cv.pablopl.dev/${locale}`}
 					target="_blank"
 					>{
 						t({

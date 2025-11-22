@@ -8,7 +8,7 @@ const isActive = Astro.url.pathname.startsWith(`/${locale}/locale`)
 
 <div class="flex items-center justify-center">
 	<a
-		href={`/${locale}/locale/`}
+		href={`/${locale}/locale`}
 		aria-label="Select Language"
 		class:list={[`${className}`, { active: isActive }]}
 	>

@@ -23,7 +23,7 @@ const defaultLocale = DEFAULT_LOCALE
 		<noscript>
 			<meta
 				http-equiv="refresh"
-				content={`0;url=${baseUrl + DEFAULT_LOCALE}/`}
+				content={`0;url=${baseUrl + DEFAULT_LOCALE}`}
 			/>
 		</noscript>
 
@@ -32,16 +32,16 @@ const defaultLocale = DEFAULT_LOCALE
 				localStorage.selectedLang &&
 				langs.includes(localStorage.selectedLang)
 			) {
-				location.href = `${baseUrl + localStorage.selectedLang}/`
+				location.href = `${baseUrl + localStorage.selectedLang}`
 			} else {
 				const browserLang = navigator.language.toLowerCase()
 
 				if (langs.includes(browserLang)) {
-					location.href = `${baseUrl + browserLang}/`
+					location.href = `${baseUrl + browserLang}`
 				} else if (langs.includes(browserLang.split('-')[0])) {
-					location.href = `${baseUrl + browserLang.split('-')[0]}/`
+					location.href = `${baseUrl + browserLang.split('-')[0]}`
 				} else {
-					location.href = `${baseUrl + defaultLocale}/`
+					location.href = `${baseUrl + defaultLocale}`
 				}
 			}
 		</script>
@@ -49,8 +49,7 @@ const defaultLocale = DEFAULT_LOCALE
 	<body>
 		<h1>redirect...</h1>
 		<p>
-			If not redirected, <a href={`${baseUrl + DEFAULT_LOCALE}/`}>click here</a
-			>.
+			If not redirected, <a href={`${baseUrl + DEFAULT_LOCALE}`}>click here</a>.
 		</p>
 	</body>
 </html>
