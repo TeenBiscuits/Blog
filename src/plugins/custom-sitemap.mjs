@@ -124,6 +124,7 @@ const customSitemap = (site, distFolder, minDate) =>
 					lastmod: getLatestArticleDate(item, site, distFolder, minDate), // latest article date
 					changefreq: 'weekly',
 					priority: 1.0,
+					links: getHreflangLinks(item, site, distFolder),
 				}
 			}
 			return item
