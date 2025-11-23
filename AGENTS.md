@@ -18,8 +18,9 @@
 - **Path Aliases**: `@/*` → `src/*`, `@blogimages/*` → `src/assets/blogimages/*`
 - **TypeScript**: Strict mode enabled, use explicit types, no `any`, no non-null assertions (`!`), no `console` statements
 - **Naming**: camelCase for variables/functions, PascalCase for components/types, UPPER_SNAKE_CASE for constants
-- **Components**: Astro components in `.astro` files, use ViewTransitions API (`transition:name` props)
+- **Components**: Astro components in `.astro` files, use ViewTransitions API (`transition:name` props for page transitions)
 - **i18n**: Multi-locale support (es/gl/en), use `Lang` type, `useTranslations()` helper, locale prefixes required
-- **Content**: Blog posts in `src/content/blog/{locale}/{id}/index.md` with pubId frontmatter
+- **Content**: Blog posts in `src/content/blog/{locale}/{id}/index.mdx` with pubId frontmatter (MDX format)
 - **Error Handling**: Use try-catch for async ops, validate with TypeScript types, handle edge cases explicitly
 - **ESLint**: Enforce arrow functions, template literals, accessibility (jsx-a11y), Astro-specific rules
+- **Image Assets**: Blog images in `src/assets/blogimages/{pubId}/`, use `Picture` component with multiple formats (avif, webp, jpg)
