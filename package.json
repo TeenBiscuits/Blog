@@ -42,6 +42,7 @@
 		"rehype-katex": "^7.0.1",
 		"remark-gfm": "^4.0.1",
 		"remark-math": "^6.0.0",
+		"tailwind-animations": "^1.0.1",
 		"tailwindcss": "^4.1.18",
 		"typescript": "^5.9.3",
 		"unist-util-visit": "^5.1.0"
