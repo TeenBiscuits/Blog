@@ -64,19 +64,13 @@ for (const heading of headings) {
 }
 
 <script>
-	import { triggerHaptic } from '@/lib/haptics'
+	import { addHapticListener } from '@/lib/haptics'
 
-	function setupTocHaptics() {
+	document.addEventListener('astro:page-load', () => {
 		document
 			.querySelectorAll<HTMLAnchorElement>('nav ul a[href^="#"]')
 			.forEach((link) => {
-				link.addEventListener('click', () => {
-					triggerHaptic('selection')
-				})
+				addHapticListener(link, 'selection')
 			})
-	}
-
-	setupTocHaptics()
-	document.addEventListener('DOMContentLoaded', setupTocHaptics)
-	document.addEventListener('astro:page-load', setupTocHaptics)
+	})
 </script>

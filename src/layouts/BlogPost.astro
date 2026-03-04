@@ -201,23 +201,16 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 </Layout>
 
 <script>
-	import { triggerHaptic } from '@/lib/haptics'
+	import { addHapticListener } from '@/lib/haptics'
 
-	function setupBlogPostHaptics() {
+	document.addEventListener('astro:page-load', () => {
 		document.querySelectorAll('.social-share-btn').forEach((btn) => {
-			btn.addEventListener('click', () => {
-				triggerHaptic('success')
-			})
+			addHapticListener(btn, 'success')
 		})
 
-		document
-			.querySelector<HTMLAnchorElement>('a[data-umami-event="Suggest edit"]')
-			?.addEventListener('click', () => {
-				triggerHaptic('light')
-			})
-	}
-
-	setupBlogPostHaptics()
-	document.addEventListener('DOMContentLoaded', setupBlogPostHaptics)
-	document.addEventListener('astro:page-load', setupBlogPostHaptics)
+		const suggestEdit = document.querySelector<HTMLAnchorElement>(
+			'a[data-umami-event="Suggest edit"]'
+		)
+		if (suggestEdit) addHapticListener(suggestEdit, 'light')
+	})
 </script>

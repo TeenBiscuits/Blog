@@ -45,21 +45,15 @@ const { title, description, keywords, og, lastModified } = Astro.props
 
 <!-- Global haptics for social icons and buttons -->
 <script>
-	import { triggerHaptic } from '@/lib/haptics'
+	import { addHapticListener } from '@/lib/haptics'
 
-	function setupGlobalHaptics() {
+	document.addEventListener('astro:page-load', () => {
 		document
 			.querySelectorAll<HTMLElement>(
 				'a[data-umami-event^="Social"], .btn-primary, .btn-secondary'
 			)
 			.forEach((el) => {
-				el.addEventListener('click', () => {
-					triggerHaptic('light')
-				})
+				addHapticListener(el, 'light')
 			})
-	}
-
-	setupGlobalHaptics()
-	document.addEventListener('DOMContentLoaded', setupGlobalHaptics)
-	document.addEventListener('astro:page-load', setupGlobalHaptics)
+	})
 </script>

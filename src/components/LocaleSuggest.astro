@@ -132,15 +132,10 @@ if (inArticle) {
 </script>
 
 <script>
-	import { triggerHaptic } from '@/lib/haptics'
+	import { addHapticListener } from '@/lib/haptics'
 
-	function setupLocaleSuggestHaptic() {
-		document.getElementById('js-close')?.addEventListener('click', () => {
-			triggerHaptic('selection')
-		})
-	}
-
-	setupLocaleSuggestHaptic()
-	document.addEventListener('DOMContentLoaded', setupLocaleSuggestHaptic)
-	document.addEventListener('astro:page-load', setupLocaleSuggestHaptic)
+	document.addEventListener('astro:page-load', () => {
+		const closeBtn = document.getElementById('js-close')
+		if (closeBtn) addHapticListener(closeBtn, 'selection')
+	})
 </script>

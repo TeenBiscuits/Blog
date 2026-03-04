@@ -61,30 +61,25 @@ const { pubId } = Astro.props
 <script>
 	import { triggerHaptic } from '@/lib/haptics'
 
-	function setupTranslateToggle() {
-		document
-			.getElementById('translate-toggle')
-			?.addEventListener('click', () => {
+	document.addEventListener('astro:page-load', () => {
+		const toggle = document.getElementById('translate-toggle')
+		if (toggle && !toggle.hasAttribute('data-translate-init')) {
+			toggle.setAttribute('data-translate-init', '')
+			toggle.addEventListener('click', () => {
 				triggerHaptic('light')
 				window.umami!.track('translate-toogle-click')
 				const links = document.getElementById('language-links')
-				const toggle = document.getElementById('translate-toggle')
-				if (links && toggle) {
+				const btn = document.getElementById('translate-toggle')
+				if (links && btn) {
 					links.classList.toggle('hidden')
 					links.classList.toggle('flex')
 					setTimeout(() => {
 						links.classList.toggle('opacity-0')
 						links.classList.toggle('opacity-100')
 					}, 10)
-					toggle.classList.toggle('hidden')
+					btn.classList.toggle('hidden')
 				}
 			})
-	}
-
-	setupTranslateToggle()
-	document.addEventListener('DOMContentLoaded', setupTranslateToggle)
-
-	document.addEventListener('astro:after-swap', () => {
-		setupTranslateToggle()
+		}
 	})
 </script>
