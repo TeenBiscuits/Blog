@@ -18,7 +18,7 @@ const coverImagePath = `/src/assets/blogimages/${post.data.pubId}/cover.jpg`
 <a
 	transition:name={`blog-card-${post.data.pubId}`}
 	href={`/${locale}/posts/${id}`}
-	class="blog-card group hover:bg-secondary dark:hover:bg-secondary-dark flex h-full flex-col gap-4 rounded-3xl p-3 pb-8 transition-colors"
+	class="group hover:bg-secondary dark:hover:bg-secondary-dark flex h-full flex-col gap-4 rounded-3xl p-3 pb-8 transition-colors"
 >
 	{
 		blogImages[coverImagePath] && (
@@ -49,18 +49,3 @@ const coverImagePath = `/src/assets/blogimages/${post.data.pubId}/cover.jpg`
 		<FormattedDate date={post.data.pubDate} />
 	</p>
 </a>
-
-<script>
-	import { triggerHaptic } from '@/lib/haptics'
-
-	function setupBlogCardHaptics() {
-		document.querySelectorAll('.blog-card').forEach((card) => {
-			card.addEventListener('click', () => {
-				triggerHaptic('light')
-			})
-		})
-	}
-
-	setupBlogCardHaptics()
-	document.addEventListener('astro:page-load', setupBlogCardHaptics)
-</script>

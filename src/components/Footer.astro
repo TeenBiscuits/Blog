@@ -85,18 +85,3 @@ const today = new Date()
 		</div>
 	</div>
 </footer>
-
-<script>
-	import { triggerHaptic } from '@/lib/haptics'
-
-	function setupFooterHaptics() {
-		document.querySelectorAll<HTMLAnchorElement>('footer a').forEach((link) => {
-			link.addEventListener('click', () => {
-				triggerHaptic('light')
-			})
-		})
-	}
-
-	setupFooterHaptics()
-	document.addEventListener('astro:page-load', setupFooterHaptics)
-</script>

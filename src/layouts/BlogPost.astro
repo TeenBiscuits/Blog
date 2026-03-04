@@ -199,24 +199,3 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 	</main>
 	<KatexHead />
 </Layout>
-
-<script>
-	import { triggerHaptic } from '@/lib/haptics'
-
-	function setupBlogPostHaptics() {
-		document.querySelectorAll('.social-share-btn').forEach((btn) => {
-			btn.addEventListener('click', () => {
-				triggerHaptic('success')
-			})
-		})
-
-		document
-			.querySelector<HTMLAnchorElement>('a[data-umami-event="Suggest edit"]')
-			?.addEventListener('click', () => {
-				triggerHaptic('light')
-			})
-	}
-
-	setupBlogPostHaptics()
-	document.addEventListener('astro:page-load', setupBlogPostHaptics)
-</script>
