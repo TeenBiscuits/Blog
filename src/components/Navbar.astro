@@ -82,13 +82,15 @@ const locale = Astro.currentLocale as Lang
 	</nav>
 
 	<script>
-		import { triggerHaptic, addHapticListener } from '@/lib/haptics'
+		import { triggerHaptic } from '@/lib/haptics'
 
-		document.addEventListener('astro:page-load', () => {
-			// Mobile nav toggle: needs both haptic + menu toggle behavior
+		// Setup mobile navigation toggle functionality
+		function setupNav() {
+			// Get references to the open and close buttons
 			const openBtn = document.querySelector('#nav-open-btn')
 			const closeBtn = document.querySelector('#nav-close-btn')
 
+			// Toggle the mobile navigation menu visibility
 			function toggleNav() {
 				triggerHaptic('soft')
 				document
@@ -96,27 +98,40 @@ const locale = Astro.currentLocale as Lang
 					?.classList.toggle('mobile-nav-open')
 			}
 
-			if (openBtn && !openBtn.hasAttribute('data-nav-init')) {
-				openBtn.setAttribute('data-nav-init', '')
-				openBtn.addEventListener('click', toggleNav)
-			}
-			if (closeBtn && !closeBtn.hasAttribute('data-nav-init')) {
-				closeBtn.setAttribute('data-nav-init', '')
-				closeBtn.addEventListener('click', toggleNav)
-			}
+			// Attach click listeners to open and close buttons
+			openBtn?.addEventListener('click', toggleNav)
+			closeBtn?.addEventListener('click', toggleNav)
+		}
 
-			// Theme toggle buttons (may persist across navigations)
+		// Setup nav on initial load and on page navigation
+		setupNav()
+		document.addEventListener('DOMContentLoaded', setupNav)
+		document.addEventListener('astro:page-load', setupNav)
+	</script>
+
+	<!-- Haptic feedback for theme toggle buttons and header links -->
+	<script>
+		import { triggerHaptic } from '@/lib/haptics'
+
+		function setupHeaderHaptics() {
 			document.querySelectorAll('.theme-button').forEach((button) => {
-				addHapticListener(button, 'selection')
+				button.addEventListener('click', () => {
+					triggerHaptic('selection')
+				})
 			})
 
-			// Header nav links
 			document
 				.querySelectorAll<HTMLAnchorElement>('header nav a')
 				.forEach((link) => {
-					addHapticListener(link, 'light')
+					link.addEventListener('click', () => {
+						triggerHaptic('light')
+					})
 				})
-		})
+		}
+
+		setupHeaderHaptics()
+		document.addEventListener('DOMContentLoaded', setupHeaderHaptics)
+		document.addEventListener('astro:page-load', setupHeaderHaptics)
 	</script>
 </header>
 

@@ -51,11 +51,17 @@ const coverImagePath = `/src/assets/blogimages/${post.data.pubId}/cover.jpg`
 </a>
 
 <script>
-	import { addHapticListener } from '@/lib/haptics'
+	import { triggerHaptic } from '@/lib/haptics'
 
-	document.addEventListener('astro:page-load', () => {
+	function setupBlogCardHaptics() {
 		document.querySelectorAll('.blog-card').forEach((card) => {
-			addHapticListener(card, 'light')
+			card.addEventListener('click', () => {
+				triggerHaptic('light')
+			})
 		})
-	})
+	}
+
+	setupBlogCardHaptics()
+	document.addEventListener('DOMContentLoaded', setupBlogCardHaptics)
+	document.addEventListener('astro:page-load', setupBlogCardHaptics)
 </script>

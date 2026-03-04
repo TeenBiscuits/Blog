@@ -87,13 +87,17 @@ const today = new Date()
 </footer>
 
 <script>
-	import { addHapticListener } from '@/lib/haptics'
+	import { triggerHaptic } from '@/lib/haptics'
 
-	document.addEventListener('astro:page-load', () => {
-		document
-			.querySelectorAll<HTMLAnchorElement>('footer a')
-			.forEach((link) => {
-				addHapticListener(link, 'light')
+	function setupFooterHaptics() {
+		document.querySelectorAll<HTMLAnchorElement>('footer a').forEach((link) => {
+			link.addEventListener('click', () => {
+				triggerHaptic('light')
 			})
-	})
+		})
+	}
+
+	setupFooterHaptics()
+	document.addEventListener('DOMContentLoaded', setupFooterHaptics)
+	document.addEventListener('astro:page-load', setupFooterHaptics)
 </script>
