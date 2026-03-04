@@ -59,10 +59,13 @@ const { pubId } = Astro.props
 	</span>
 </>
 <script>
+	import { triggerHaptic } from '@/lib/haptics'
+
 	function setupTranslateToggle() {
 		document
 			.getElementById('translate-toggle')
 			?.addEventListener('click', () => {
+				triggerHaptic('light')
 				window.umami!.track('translate-toogle-click')
 				const links = document.getElementById('language-links')
 				const toggle = document.getElementById('translate-toggle')

@@ -48,3 +48,20 @@ export const getStaticPaths = () =>
 		</div>
 	</section>
 </Layout>
+
+<script>
+	import { triggerHaptic } from '@/lib/haptics'
+
+	function setupLocaleHaptics() {
+		document
+			.querySelectorAll<HTMLAnchorElement>('section a')
+			.forEach((link) => {
+				link.addEventListener('click', () => {
+					triggerHaptic('medium')
+				})
+			})
+	}
+
+	setupLocaleHaptics()
+	document.addEventListener('astro:page-load', setupLocaleHaptics)
+</script>

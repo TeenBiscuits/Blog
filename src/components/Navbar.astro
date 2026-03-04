@@ -82,6 +82,8 @@ const locale = Astro.currentLocale as Lang
 	</nav>
 
 	<script>
+		import { triggerHaptic } from '@/lib/haptics'
+
 		// Setup mobile navigation toggle functionality
 		function setupNav() {
 			// Get references to the open and close buttons
@@ -90,6 +92,7 @@ const locale = Astro.currentLocale as Lang
 
 			// Toggle the mobile navigation menu visibility
 			function toggleNav() {
+				triggerHaptic('soft')
 				document
 					.querySelector('#mobile-menu')
 					?.classList.toggle('mobile-nav-open')
@@ -104,6 +107,30 @@ const locale = Astro.currentLocale as Lang
 		setupNav()
 		document.addEventListener('DOMContentLoaded', setupNav)
 		document.addEventListener('astro:page-load', setupNav)
+	</script>
+
+	<!-- Haptic feedback for theme toggle buttons and header links -->
+	<script>
+		import { triggerHaptic } from '@/lib/haptics'
+
+		function setupHeaderHaptics() {
+			document.querySelectorAll('.theme-button').forEach((button) => {
+				button.addEventListener('click', () => {
+					triggerHaptic('selection')
+				})
+			})
+
+			document
+				.querySelectorAll<HTMLAnchorElement>('header nav a')
+				.forEach((link) => {
+					link.addEventListener('click', () => {
+						triggerHaptic('light')
+					})
+				})
+		}
+
+		setupHeaderHaptics()
+		document.addEventListener('astro:page-load', setupHeaderHaptics)
 	</script>
 </header>
 
