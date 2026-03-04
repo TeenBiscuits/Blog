@@ -130,7 +130,6 @@ const locale = Astro.currentLocale as Lang
 		}
 
 		setupHeaderHaptics()
-		document.addEventListener('DOMContentLoaded', setupHeaderHaptics)
 		document.addEventListener('astro:page-load', setupHeaderHaptics)
 	</script>
 </header>

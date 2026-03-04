@@ -82,7 +82,6 @@ const { pubId } = Astro.props
 	}
 
 	setupTranslateToggle()
-	document.addEventListener('DOMContentLoaded', setupTranslateToggle)
 
 	document.addEventListener('astro:after-swap', () => {
 		setupTranslateToggle()
