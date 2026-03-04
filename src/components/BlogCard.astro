@@ -62,5 +62,6 @@ const coverImagePath = `/src/assets/blogimages/${post.data.pubId}/cover.jpg`
 	}
 
 	setupBlogCardHaptics()
+	document.addEventListener('DOMContentLoaded', setupBlogCardHaptics)
 	document.addEventListener('astro:page-load', setupBlogCardHaptics)
 </script>

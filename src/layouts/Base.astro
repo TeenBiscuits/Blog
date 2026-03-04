@@ -60,5 +60,6 @@ const { title, description, keywords, og, lastModified } = Astro.props
 	}
 
 	setupGlobalHaptics()
+	document.addEventListener('DOMContentLoaded', setupGlobalHaptics)
 	document.addEventListener('astro:page-load', setupGlobalHaptics)
 </script>

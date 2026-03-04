@@ -98,5 +98,6 @@ const today = new Date()
 	}
 
 	setupFooterHaptics()
+	document.addEventListener('DOMContentLoaded', setupFooterHaptics)
 	document.addEventListener('astro:page-load', setupFooterHaptics)
 </script>
