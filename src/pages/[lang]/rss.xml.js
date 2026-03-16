@@ -2,6 +2,10 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts'
 import { localeParams } from '@/i18n'
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
+import MarkdownIt from 'markdown-it'
+import sanitizeHtml from 'sanitize-html'
+
+const parser = new MarkdownIt()
 
 export const getStaticPaths = () => localeParams
 
@@ -29,12 +33,17 @@ export async function GET(context) {
 			title: post.data.title,
 			pubDate: post.data.pubDate,
 			description: post.data.description,
-			content: post.rendered ? post.rendered.html : '',
-			link: `/${locale}/posts/${post.id.split('/')[1]}/`,
+			content: post.body
+				? sanitizeHtml(parser.render(post.body), {
+						allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+					})
+				: undefined,
+			link: `/${locale}/posts/${post.id.split('/')[1]}`,
 			customData: `<updated>${
 				post.data.updatedDate ? post.data.updatedDate : ''
 			}</updated>`,
 		})),
+		trailingSlash: false,
 		stylesheet: `/${locale}/rss-styles.xsl`,
 	})
 }
