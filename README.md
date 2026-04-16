@@ -1,14 +1,64 @@
-# Blog de Pablo
+# EmDash Blog Template
 
-![Astro](https://img.shields.io/badge/Astro-%232C2052.svg?logo=astro&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-62BAE0.svg?logo=tailwind-css&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?logo=vercel&logoColor=white)
+A clean, minimal blog built with [EmDash](https://github.com/emdash-cms/emdash). Runs on any Node.js server with SQLite and local file storage.
 
-> _mi blog personal en el que hablo de las cosas que aprendo o que simplemente me apetecen_
+![Blog template homepage](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-light-desktop.jpg)
 
-He construido este blog usando Astro + Tailwindcss. Me he basado principalmente en:
+## What's Included
 
-- [Saral Theme](https://github.com/yashjawale/saral-theme-astro)
-- [Astro i18n Starter](https://github.com/psephopaiktes/astro-i18n-starter)
+- Featured post hero on the homepage
+- Post archive with reading time estimates
+- Category and tag archives
+- Full-text search
+- RSS feed
+- SEO metadata and JSON-LD
+- Dark/light mode
+- Audit log plugin
 
-Este repo **no es una plantilla**, **ni pretende serlo**, pero puedes ver el código e inspirarte si esto te ayuda.
+## Pages
+
+| Page             | Route             |
+| ---------------- | ----------------- |
+| Homepage         | `/`               |
+| All posts        | `/posts`          |
+| Single post      | `/posts/:slug`    |
+| Category archive | `/category/:slug` |
+| Tag archive      | `/tag/:slug`      |
+| Search           | `/search`         |
+| Static pages     | `/pages/:slug`    |
+| 404              | fallback          |
+
+## Screenshots
+
+|       | Desktop                                                                                                                                     | Mobile                                                                                                                                    |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Light | ![homepage light desktop](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-light-desktop.jpg) | ![homepage light mobile](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-light-mobile.jpg) |
+| Dark  | ![homepage dark desktop](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-dark-desktop.jpg)   | ![homepage dark mobile](https://raw.githubusercontent.com/emdash-cms/emdash/main/assets/templates/blog/latest/homepage-dark-mobile.jpg)   |
+
+## Infrastructure
+
+- **Runtime:** Node.js
+- **Database:** SQLite (local file)
+- **Storage:** Local filesystem
+- **Framework:** Astro with `@astrojs/node`
+
+## Getting Started
+
+```bash
+pnpm install
+pnpm bootstrap
+pnpm dev
+```
+
+Open http://localhost:4321 for the site and http://localhost:4321/\_emdash/admin for the CMS.
+
+## Want Cloudflare Instead?
+
+See the [Cloudflare variant](../blog-cloudflare) for a version that deploys to Cloudflare Workers with D1 and R2.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/emdash-cms/templates/tree/main/blog-cloudflare)
+
+## See Also
+
+- [All templates](../)
+- [EmDash documentation](https://github.com/emdash-cms/emdash/tree/main/docs)
