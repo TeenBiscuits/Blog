@@ -48,7 +48,7 @@ const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}
 const menu = await getMenu("primary");
 
 // Fetch pages for footer
-const { entries: pages } = await getEmDashCollection("pages");
+const { entries: pages } = await getEmDashCollection("pages", { locale: Astro.currentLocale });
 
 // Build public page context for plugin contributions
 // SEO data is passed here and rendered securely by EmDashHead

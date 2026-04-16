@@ -1,0 +1,27 @@
+---
+import { getTranslations } from "emdash";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+interface Props {
+  collection: string;
+  entryId: string;
+}
+
+const { collection, entryId } = Astro.props;
+const { translations } = await getTranslations(collection, entryId);
+---
+
+<nav aria-label="Language">
+  <ul>
+    {translations.map((t) => (
+      <li>
+        <a
+          href={getRelativeLocaleUrl(t.locale, `/blog/${t.slug}`)}
+          aria-current={t.locale === Astro.currentLocale ? "page" : undefined}
+        >
+          {t.locale.toUpperCase()}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

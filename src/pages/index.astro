@@ -6,7 +6,7 @@ import PostCard from "../components/PostCard.astro";
 import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 
-const { entries: posts, cacheHint } = await getEmDashCollection("posts");
+const { entries: posts, cacheHint, error } = await getEmDashCollection("posts", { locale: Astro.currentLocale, });
 const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
 
 Astro.cache.set(cacheHint);

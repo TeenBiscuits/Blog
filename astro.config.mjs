@@ -14,12 +14,17 @@ export default defineConfig({
     layout: "constrained",
     responsiveStyles: true,
   },
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es", "en", "gl"],
+    fallback: { en: "es", gl: "es" },
+  },
   integrations: [
     react(),
     emdash({
-      database: sqlite({ url: "file:./data.db" }),
+      database: sqlite({ url: "file:./data/emdash.db" }),
       storage: local({
-        directory: "./uploads",
+        directory: "./data/uploads",
         baseUrl: "/_emdash/api/media/file",
       }),
       plugins: [auditLogPlugin()],

@@ -25,7 +25,9 @@ if (!slug) {
 	return Astro.redirect("/404");
 }
 
-const { entry: post, cacheHint } = await getEmDashEntry("posts", slug);
+const { entry: post, cacheHint, error } = await getEmDashEntry("posts", slug, {
+  locale: Astro.currentLocale,
+});
 
 if (!post) {
 	return Astro.redirect("/404");

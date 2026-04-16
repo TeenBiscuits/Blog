@@ -10,6 +10,7 @@ export const GET: APIRoute = async ({ site, url }) => {
   );
 
   const { entries: posts } = await getEmDashCollection("posts", {
+    locale: Astro.currentLocale,
     orderBy: { published_at: "desc" },
     limit: 20,
   });

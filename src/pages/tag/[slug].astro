@@ -12,6 +12,7 @@ if (!term) {
 }
 
 const { entries: posts } = await getEmDashCollection("posts", {
+    locale: Astro.currentLocale,
 	where: { tag: term.slug },
 	orderBy: { published_at: "desc" },
 });

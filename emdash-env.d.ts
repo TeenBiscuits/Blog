@@ -22,13 +22,7 @@ export interface Post {
   slug: string | null;
   status: string;
   title: string;
-  featured_image?: {
-    id: string;
-    src?: string;
-    alt?: string;
-    width?: number;
-    height?: number;
-  };
+  featured_image?: { id: string; src?: string; alt?: string; width?: number; height?: number };
   content?: PortableTextBlock[];
   excerpt?: string;
   createdAt: Date;

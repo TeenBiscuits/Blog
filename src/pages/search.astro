@@ -8,7 +8,7 @@ import { getReadingTime, extractText } from "../utils/reading-time";
 
 const query = Astro.url.searchParams.get("q")?.trim() || "";
 
-const { entries: allPosts } = await getEmDashCollection("posts");
+const { entries: allPosts } = await getEmDashCollection("posts", { locale: Astro.currentLocale, });
 
 // Simple search: match query against title, excerpt, and content
 function matchesQuery(post: (typeof allPosts)[0], q: string): boolean {
