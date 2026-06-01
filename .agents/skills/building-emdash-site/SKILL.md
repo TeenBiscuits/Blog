@@ -59,11 +59,7 @@ Read **[references/site-features.md](references/site-features.md)** for site set
 
 ### 5. Create the seed file
 
-Write `seed/seed.json` with collections, fields, taxonomies, menus, widgets, and sample content. Validate with:
-
-```bash
-npx emdash seed seed/seed.json --validate
-```
+Write `seed/seed.json` with collections, fields, taxonomies, menus, widgets, and sample content.
 
 ### 6. Run and verify
 
@@ -79,44 +75,39 @@ The admin UI is at `http://localhost:4321/_emdash/admin`.
 // Content (entries have .data.byline and .data.bylines eagerly loaded)
 import { getEmDashCollection, getEmDashEntry } from "emdash";
 const { entries, nextCursor, cacheHint } = await getEmDashCollection("posts", {
-  limit: 10,
-  cursor,
-  orderBy: { published_at: "desc" },
+	limit: 10,
+	cursor,
+	orderBy: { published_at: "desc" },
 });
 const { entry: post, cacheHint } = await getEmDashEntry("posts", slug);
 
 // Site features
 import {
-  getSiteSettings,
-  getMenu,
-  getTaxonomyTerms,
-  getTerm,
-  getEntryTerms,
-  getEntriesByTerm,
-  getWidgetArea,
-  search,
-  getSection,
-  getSeoMeta,
+	getSiteSettings,
+	getMenu,
+	getTaxonomyTerms,
+	getTerm,
+	getEntryTerms,
+	getEntriesByTerm,
+	getWidgetArea,
+	search,
+	getSection,
+	getSeoMeta,
 } from "emdash";
 
 // Bylines (standalone queries -- usually not needed since entries have bylines attached)
-import {
-  getEntryBylines,
-  getBylinesForEntries,
-  getByline,
-  getBylineBySlug,
-} from "emdash";
+import { getByline, getBylineBySlug } from "emdash";
 
 // UI components
 import {
-  PortableText,
-  Image,
-  Comments,
-  CommentForm,
-  WidgetArea,
-  EmDashHead,
-  EmDashBodyStart,
-  EmDashBodyEnd,
+	PortableText,
+	Image,
+	Comments,
+	CommentForm,
+	WidgetArea,
+	EmDashHead,
+	EmDashBodyStart,
+	EmDashBodyEnd,
 } from "emdash/ui";
 import LiveSearch from "emdash/ui/search";
 

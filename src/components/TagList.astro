@@ -1,45 +1,52 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '../i18n/utils'
+
 interface Props {
-  tags: Array<{ slug: string; label: string }>;
-  class?: string;
+	tags: Array<{ slug: string; label: string }>
+	class?: string
+	locale?: Locale
 }
 
-const { tags, class: className } = Astro.props;
+const { tags, class: className, locale = 'es' } = Astro.props
 ---
 
-{tags.length > 0 && (
-  <ul class:list={["tag-list", className]}>
-    {tags.map((tag) => (
-      <li>
-        <a href={`/tag/${tag.slug}`} class="tag">{tag.label}</a>
-      </li>
-    ))}
-  </ul>
-)}
+{
+	tags.length > 0 && (
+		<ul class:list={['tag-list', className]}>
+			{tags.map((tag) => (
+				<li>
+					<a href={getRelativeLocaleUrl(locale, `/tag/${tag.slug}`)} class="tag">
+						{tag.label}
+					</a>
+				</li>
+			))}
+		</ul>
+	)
+}
 
 <style>
-  .tag-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-2);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-2);
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
 
-  .tag {
-    display: inline-block;
-    padding: var(--tag-padding-y) var(--spacing-3);
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-    background: var(--color-surface);
-    border-radius: var(--radius);
-    text-decoration: none;
-    transition: color var(--transition-fast), background var(--transition-fast);
-  }
+	.tag {
+		display: inline-block;
+		padding: var(--tag-padding-y) var(--spacing-3);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		color: var(--color-text);
+		background: var(--color-teal);
+		text-decoration: none;
+		transition: opacity var(--transition-fast);
+	}
 
-  .tag:hover {
-    color: var(--color-text);
-    background: var(--color-border);
-  }
+	.tag:hover {
+		opacity: 0.8;
+	}
 </style>

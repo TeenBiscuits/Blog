@@ -6,18 +6,21 @@
     "description": "A blog with posts and pages",
     "author": "EmDash"
   },
-
   "settings": {
-    "title": "My Blog",
-    "tagline": "Thoughts on building for the web"
+    "title": "Mi Blog",
+    "tagline": "Reflexiones sobre construir para la web"
   },
-
   "collections": [
     {
       "slug": "posts",
       "label": "Posts",
       "labelSingular": "Post",
-      "supports": ["drafts", "revisions", "search", "seo"],
+      "supports": [
+        "drafts",
+        "revisions",
+        "search",
+        "seo"
+      ],
       "commentsEnabled": true,
       "fields": [
         {
@@ -49,7 +52,11 @@
       "slug": "pages",
       "label": "Pages",
       "labelSingular": "Page",
-      "supports": ["drafts", "revisions", "search"],
+      "supports": [
+        "drafts",
+        "revisions",
+        "search"
+      ],
       "fields": [
         {
           "slug": "title",
@@ -67,18 +74,28 @@
       ]
     }
   ],
-
   "taxonomies": [
     {
       "name": "category",
       "label": "Categories",
       "labelSingular": "Category",
       "hierarchical": true,
-      "collections": ["posts"],
+      "collections": [
+        "posts"
+      ],
       "terms": [
-        { "slug": "development", "label": "Development" },
-        { "slug": "design", "label": "Design" },
-        { "slug": "notes", "label": "Notes" }
+        {
+          "slug": "development",
+          "label": "Development"
+        },
+        {
+          "slug": "design",
+          "label": "Design"
+        },
+        {
+          "slug": "notes",
+          "label": "Notes"
+        }
       ]
     },
     {
@@ -86,16 +103,29 @@
       "label": "Tags",
       "labelSingular": "Tag",
       "hierarchical": false,
-      "collections": ["posts"],
+      "collections": [
+        "posts"
+      ],
       "terms": [
-        { "slug": "webdev", "label": "Web Development" },
-        { "slug": "opinion", "label": "Opinion" },
-        { "slug": "tools", "label": "Tools" },
-        { "slug": "creativity", "label": "Creativity" }
+        {
+          "slug": "webdev",
+          "label": "Web Development"
+        },
+        {
+          "slug": "opinion",
+          "label": "Opinion"
+        },
+        {
+          "slug": "tools",
+          "label": "Tools"
+        },
+        {
+          "slug": "creativity",
+          "label": "Creativity"
+        }
       ]
     }
   ],
-
   "bylines": [
     {
       "id": "byline-editorial",
@@ -109,19 +139,74 @@
       "isGuest": true
     }
   ],
-
   "menus": [
     {
       "name": "primary",
-      "label": "Primary Navigation",
+      "label": "Navegación Principal",
+      "locale": "es",
       "items": [
-        { "type": "custom", "label": "Home", "url": "/" },
-        { "type": "custom", "label": "About", "url": "/pages/about" },
-        { "type": "custom", "label": "Posts", "url": "/posts" }
+        {
+          "type": "custom",
+          "label": "Inicio",
+          "url": "/es/"
+        },
+        {
+          "type": "custom",
+          "label": "Acerca de",
+          "url": "/es/pages/about"
+        },
+        {
+          "type": "custom",
+          "label": "Entradas",
+          "url": "/es/posts"
+        }
+      ]
+    },
+    {
+      "name": "primary",
+      "label": "Primary Navigation",
+      "locale": "en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Home",
+          "url": "/en/"
+        },
+        {
+          "type": "custom",
+          "label": "About",
+          "url": "/en/pages/about"
+        },
+        {
+          "type": "custom",
+          "label": "Posts",
+          "url": "/en/posts"
+        }
+      ]
+    },
+    {
+      "name": "primary",
+      "label": "Navegación Principal",
+      "locale": "gl",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Inicio",
+          "url": "/gl/"
+        },
+        {
+          "type": "custom",
+          "label": "Acerca de",
+          "url": "/gl/pages/about"
+        },
+        {
+          "type": "custom",
+          "label": "Entradas",
+          "url": "/gl/posts"
+        }
       ]
     }
   ],
-
   "widgetAreas": [
     {
       "name": "sidebar",
@@ -187,19 +272,28 @@
       ]
     }
   ],
-
   "sections": [
     {
       "slug": "newsletter-signup",
       "title": "Newsletter Signup",
       "description": "A call-to-action block for newsletter subscriptions",
-      "keywords": ["newsletter", "subscribe", "email", "cta"],
+      "keywords": [
+        "newsletter",
+        "subscribe",
+        "email",
+        "cta"
+      ],
       "source": "theme",
       "content": [
         {
           "_type": "block",
           "style": "h3",
-          "children": [{ "_type": "span", "text": "Stay in the loop" }]
+          "children": [
+            {
+              "_type": "span",
+              "text": "Stay in the loop"
+            }
+          ]
         },
         {
           "_type": "block",
@@ -217,7 +311,11 @@
       "slug": "about-author",
       "title": "About the Author",
       "description": "Brief author bio for use in posts or pages",
-      "keywords": ["author", "bio", "about"],
+      "keywords": [
+        "author",
+        "bio",
+        "about"
+      ],
       "source": "theme",
       "content": [
         {
@@ -233,9 +331,39 @@
       ]
     }
   ],
-
   "content": {
     "pages": [
+      {
+        "id": "about-es",
+        "slug": "about",
+        "locale": "es",
+        "status": "published",
+        "data": {
+          "title": "Acerca de",
+          "content": [
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Un espacio para escribir sobre software, diseño y pensamientos ocasionales. Sin calendario de publicaciones, sin boletines. Solo cosas que quería escribir."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Construido con Astro y EmDash. El código fuente está abierto por si quieres ver cómo funciona."
+                }
+              ]
+            }
+          ]
+        }
+      },
       {
         "id": "about",
         "slug": "about",
@@ -264,10 +392,107 @@
               ]
             }
           ]
-        }
+        },
+        "locale": "en"
       }
     ],
     "posts": [
+      {
+        "id": "post-1-es",
+        "slug": "construir-a-largo-plazo",
+        "locale": "es",
+        "status": "published",
+        "data": {
+          "title": "Construir a Largo Plazo",
+          "excerpt": "Los frameworks cambiarán. Las bases de datos cambiarán. Lo que sobrevive es la claridad de tu pensamiento.",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&h=800&fit=crop",
+              "alt": "Code on a monitor in a dark room",
+              "filename": "building-long-term.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Cada pocos años la industria decide colectivamente que todo lo que hemos estado haciendo está mal y hay una forma mejor. Nuevos frameworks, nuevos paradigmas, nuevas herramientas de build. El cambio es implacable, y si no tienes cuidado, pasas más tiempo migrando que construyendo."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "He escrito software el tiempo suficiente para haber visto varios de estos ciclos. De jQuery a Backbone a Angular a React a lo que venga después. Cada transición parecía urgente en su momento. Mirando atrás, las cosas que realmente importaron rara vez tuvieron que ver con el framework."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Lo que sobrevive"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Los modelos de datos limpios sobreviven. Las fronteras claras entre sistemas sobreviven. Los buenos nombres sobreviven. La decisión de mantener las cosas simples cuando podrías haberlas hecho ingeniosas — eso definitivamente sobrevive."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Lo que no sobrevive es el código escrito para impresionar, las abstracciones construidas para problemas que nunca se materializaron y las arquitecturas diseñadas alrededor de las opiniones de un framework en lugar de la realidad del dominio."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "El mejor código que he escrito es aburrido. Se lee como prosa, hace una cosa bien y no requiere un doctorado en teoría de categorías para entenderlo. El peor código que he escrito era técnicamente impresionante en su momento."
+                }
+              ]
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-editorial"
+          },
+          {
+            "byline": "byline-guest",
+            "roleLabel": "Guest essay"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "development"
+          ],
+          "tag": [
+            "opinion"
+          ]
+        }
+      },
       {
         "id": "post-1",
         "slug": "building-for-the-long-term",
@@ -306,7 +531,12 @@
             {
               "_type": "block",
               "style": "h2",
-              "children": [{ "_type": "span", "text": "What survives" }]
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "What survives"
+                }
+              ]
             },
             {
               "_type": "block",
@@ -341,13 +571,23 @@
           ]
         },
         "bylines": [
-          { "byline": "byline-editorial" },
-          { "byline": "byline-guest", "roleLabel": "Guest essay" }
+          {
+            "byline": "byline-editorial"
+          },
+          {
+            "byline": "byline-guest",
+            "roleLabel": "Guest essay"
+          }
         ],
         "taxonomies": {
-          "category": ["development"],
-          "tag": ["opinion"]
-        }
+          "category": [
+            "development"
+          ],
+          "tag": [
+            "opinion"
+          ]
+        },
+        "locale": "en"
       },
       {
         "id": "post-2",
@@ -388,7 +628,10 @@
               "_type": "block",
               "style": "h2",
               "children": [
-                { "_type": "span", "text": "The performance argument" }
+                {
+                  "_type": "span",
+                  "text": "The performance argument"
+                }
               ]
             },
             {
@@ -413,11 +656,21 @@
             }
           ]
         },
-        "bylines": [{ "byline": "byline-editorial" }],
+        "bylines": [
+          {
+            "byline": "byline-editorial"
+          }
+        ],
         "taxonomies": {
-          "category": ["development"],
-          "tag": ["webdev", "opinion"]
-        }
+          "category": [
+            "development"
+          ],
+          "tag": [
+            "webdev",
+            "opinion"
+          ]
+        },
+        "locale": "en"
       },
       {
         "id": "post-3",
@@ -458,7 +711,10 @@
               "_type": "block",
               "style": "h2",
               "children": [
-                { "_type": "span", "text": "The fear of being wrong" }
+                {
+                  "_type": "span",
+                  "text": "The fear of being wrong"
+                }
               ]
             },
             {
@@ -484,9 +740,14 @@
           ]
         },
         "taxonomies": {
-          "category": ["notes"],
-          "tag": ["opinion"]
-        }
+          "category": [
+            "notes"
+          ],
+          "tag": [
+            "opinion"
+          ]
+        },
+        "locale": "en"
       },
       {
         "id": "post-4",
@@ -527,7 +788,10 @@
               "_type": "block",
               "style": "h2",
               "children": [
-                { "_type": "span", "text": "The Unix philosophy, revisited" }
+                {
+                  "_type": "span",
+                  "text": "The Unix philosophy, revisited"
+                }
               ]
             },
             {
@@ -553,9 +817,14 @@
           ]
         },
         "taxonomies": {
-          "category": ["development"],
-          "tag": ["tools"]
-        }
+          "category": [
+            "development"
+          ],
+          "tag": [
+            "tools"
+          ]
+        },
+        "locale": "en"
       },
       {
         "id": "post-5",
@@ -595,7 +864,12 @@
             {
               "_type": "block",
               "style": "h2",
-              "children": [{ "_type": "span", "text": "Embracing the box" }]
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Embracing the box"
+                }
+              ]
             },
             {
               "_type": "block",
@@ -620,9 +894,14 @@
           ]
         },
         "taxonomies": {
-          "category": ["design"],
-          "tag": ["creativity"]
-        }
+          "category": [
+            "design"
+          ],
+          "tag": [
+            "creativity"
+          ]
+        },
+        "locale": "en"
       },
       {
         "id": "post-6",
@@ -663,7 +942,10 @@
               "_type": "block",
               "style": "h2",
               "children": [
-                { "_type": "span", "text": "Why side projects matter" }
+                {
+                  "_type": "span",
+                  "text": "Why side projects matter"
+                }
               ]
             },
             {
@@ -689,9 +971,14 @@
           ]
         },
         "taxonomies": {
-          "category": ["development"],
-          "tag": ["creativity"]
-        }
+          "category": [
+            "development"
+          ],
+          "tag": [
+            "creativity"
+          ]
+        },
+        "locale": "en"
       },
       {
         "id": "post-7",
@@ -731,7 +1018,12 @@
             {
               "_type": "block",
               "style": "h2",
-              "children": [{ "_type": "span", "text": "Removing as a feature" }]
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Removing as a feature"
+                }
+              ]
             },
             {
               "_type": "block",
@@ -756,9 +1048,14 @@
           ]
         },
         "taxonomies": {
-          "category": ["notes"],
-          "tag": ["opinion"]
-        }
+          "category": [
+            "notes"
+          ],
+          "tag": [
+            "opinion"
+          ]
+        },
+        "locale": "en"
       },
       {
         "id": "post-draft",
@@ -779,7 +1076,8 @@
               ]
             }
           ]
-        }
+        },
+        "locale": "en"
       }
     ]
   }

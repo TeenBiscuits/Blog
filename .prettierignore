@@ -1,0 +1,7 @@
+# Ignore artifacts:
+dist
+.unlighthouse
+.vercel
+.agents
+.claude
+.cursor

@@ -16,10 +16,10 @@ const { entries: posts } = await getEmDashCollection("posts");
 
 // With options
 const { entries: posts, cacheHint } = await getEmDashCollection("posts", {
-  status: "published",
-  limit: 10,
-  orderBy: { published_at: "desc" },
-  where: { category: "news" },
+	status: "published",
+	limit: 10,
+	orderBy: { published_at: "desc" },
+	where: { category: "news" },
 });
 ```
 
@@ -42,7 +42,7 @@ import { getEmDashEntry } from "emdash";
 const { entry: post, cacheHint } = await getEmDashEntry("posts", slug);
 
 if (!post) {
-  return Astro.redirect("/404");
+	return Astro.redirect("/404");
 }
 ```
 
@@ -50,32 +50,32 @@ if (!post) {
 
 ```typescript
 interface ContentEntry<T> {
-  id: string; // The slug (used in URLs)
-  data: T; // All fields, including system fields
-  edit: EditProxy; // Visual editing attributes (spread onto elements)
+	id: string; // The slug (used in URLs)
+	data: T; // All fields, including system fields
+	edit: EditProxy; // Visual editing attributes (spread onto elements)
 }
 
 // data includes system fields plus your custom fields:
 interface PostData {
-  id: string; // Database ULID (use for taxonomy lookups, etc.)
-  slug: string;
-  status: string;
-  title: string;
-  featured_image?: {
-    id: string;
-    src?: string;
-    alt?: string;
-    width?: number;
-    height?: number;
-  };
-  content?: PortableTextBlock[];
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date | null;
-  // Bylines (eagerly loaded)
-  byline: BylineSummary | null; // Primary author
-  bylines: ContentBylineCredit[]; // All credits (with roleLabel, source)
-  // ... your custom fields
+	id: string; // Database ULID (use for taxonomy lookups, etc.)
+	slug: string;
+	status: string;
+	title: string;
+	featured_image?: {
+		id: string;
+		src?: string;
+		alt?: string;
+		width?: number;
+		height?: number;
+	};
+	content?: PortableTextBlock[];
+	createdAt: Date;
+	updatedAt: Date;
+	publishedAt: Date | null;
+	// Bylines (eagerly loaded)
+	byline: BylineSummary | null; // Primary author
+	bylines: ContentBylineCredit[]; // All credits (with roleLabel, source)
+	// ... your custom fields
 }
 ```
 
@@ -273,28 +273,28 @@ import { getEmDashCollection } from "emdash";
 const siteTitle = "My Site";
 
 export const GET: APIRoute = async ({ url }) => {
-  const siteUrl = url.origin;
-  const { entries: posts } = await getEmDashCollection("posts", {
-    orderBy: { published_at: "desc" },
-    limit: 20,
-  });
+	const siteUrl = url.origin;
+	const { entries: posts } = await getEmDashCollection("posts", {
+		orderBy: { published_at: "desc" },
+		limit: 20,
+	});
 
-  const items = posts
-    .filter((p) => p.data.publishedAt)
-    .map((post) => {
-      const postUrl = `${siteUrl}/posts/${post.id}`;
-      return `    <item>
+	const items = posts
+		.filter((p) => p.data.publishedAt)
+		.map((post) => {
+			const postUrl = `${siteUrl}/posts/${post.id}`;
+			return `    <item>
       <title>${escapeXml(post.data.title)}</title>
       <link>${postUrl}</link>
       <guid isPermaLink="true">${postUrl}</guid>
       <pubDate>${post.data.publishedAt!.toUTCString()}</pubDate>
       <description>${escapeXml(post.data.excerpt || "")}</description>
     </item>`;
-    })
-    .join("\n");
+		})
+		.join("\n");
 
-  return new Response(
-    `<?xml version="1.0" encoding="UTF-8"?>
+	return new Response(
+		`<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${escapeXml(siteTitle)}</title>
@@ -305,22 +305,22 @@ export const GET: APIRoute = async ({ url }) => {
 ${items}
   </channel>
 </rss>`,
-    {
-      headers: {
-        "Content-Type": "application/rss+xml; charset=utf-8",
-        "Cache-Control": "public, max-age=3600",
-      },
-    },
-  );
+		{
+			headers: {
+				"Content-Type": "application/rss+xml; charset=utf-8",
+				"Cache-Control": "public, max-age=3600",
+			},
+		},
+	);
 };
 
 function escapeXml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
+	return s
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;");
 }
 ```
 
@@ -381,8 +381,8 @@ Dates come as `Date` objects. Use `toLocaleDateString` or `Intl.DateTimeFormat`:
 
 ```typescript
 const formatted = post.data.publishedAt?.toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
+	year: "numeric",
+	month: "long",
+	day: "numeric",
 });
 ```

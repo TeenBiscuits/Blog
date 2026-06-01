@@ -1,0 +1,447 @@
+---
+import { getEmDashCollection, getTermsForEntries, getSiteSettings } from 'emdash'
+import { Image } from 'emdash/ui'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import Base from '../../layouts/Base.astro'
+import PostCard from '../../components/PostCard.astro'
+import { resolveBlogSiteIdentity } from '../../utils/site-identity'
+import { formatDate, type Locale } from '../../i18n/utils'
+
+const locale = (Astro.currentLocale ?? 'es') as Locale
+
+const POSTS_PER_PAGE = 7
+
+const [{ entries: posts, cacheHint }, settings] = await Promise.all([
+	getEmDashCollection('posts', {
+		orderBy: { published_at: 'desc' },
+		limit: POSTS_PER_PAGE + 1,
+		locale,
+	}),
+	getSiteSettings(),
+])
+const { siteTitle, siteTagline } = resolveBlogSiteIdentity(settings)
+
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint)
+
+const visiblePosts = posts.slice(0, POSTS_PER_PAGE)
+const hasMorePosts = posts.length > POSTS_PER_PAGE
+
+const featuredPost = visiblePosts[0]
+const gridPosts = visiblePosts.slice(1, 7)
+
+const tagEntryIds = [
+	...(featuredPost ? [featuredPost.data.id] : []),
+	...gridPosts.map((p) => p.data.id),
+]
+const tagsByEntry = await getTermsForEntries('posts', tagEntryIds, 'tag')
+
+const gridPostsWithTags = gridPosts.map((post) => ({
+	post,
+	tags: (tagsByEntry.get(post.data.id) ?? []).map((t) => ({
+		slug: t.slug,
+		label: t.label,
+	})),
+}))
+---
+
+<Base title={siteTitle} description={siteTagline}>
+	{
+		posts.length === 0 ? (
+			<section class="empty-state">
+				<h2>No posts yet</h2>
+				<p>Create your first post in the admin panel.</p>
+				<a href="/_emdash/admin/content/posts/new" class="btn">
+					Create a post
+				</a>
+			</section>
+		) : (
+			<div class="home-content">
+				<section class="hero">
+					<div class="hero-main">
+						<div class="hero-label">Bienvenido al</div>
+						<h1 class="hero-title">{siteTitle}</h1>
+						<p class="hero-subtitle">{siteTagline}</p>
+					</div>
+				</section>
+
+				{featuredPost && (
+					<section class="recent-section">
+						<h2 class="recent-heading">Articulos Recientes</h2>
+						<div class="featured-card">
+							<a href={getRelativeLocaleUrl(locale, `/posts/${featuredPost.id}`)} class="featured-card-image-wrap">
+								{featuredPost.data.featured_image ? (
+									<div class="featured-card-image">
+										<Image image={featuredPost.data.featured_image} />
+									</div>
+								) : (
+									<div class="featured-card-placeholder">
+										<span>Cover del articulo</span>
+									</div>
+								)}
+							</a>
+							<div class="featured-card-content">
+								<a href={getRelativeLocaleUrl(locale, `/posts/${featuredPost.id}`)} class="featured-card-title-link">
+									<h3 class="featured-card-title">{featuredPost.data.title}</h3>
+								</a>
+								{featuredPost.data.excerpt && (
+									<p class="featured-card-excerpt">{featuredPost.data.excerpt}</p>
+								)}
+								<div class="featured-card-bottom">
+									{formatDate(featuredPost.data.publishedAt, locale) && (
+										<span class="featured-card-date">{formatDate(featuredPost.data.publishedAt, locale)}</span>
+									)}
+									<a href={getRelativeLocaleUrl(locale, `/posts/${featuredPost.id}`)} class="featured-card-btn">
+										Ver mas
+									</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				)}
+
+				{gridPostsWithTags.length > 0 && (
+					<section class="posts-section">
+						<div class="posts-grid">
+							{gridPostsWithTags.map(({ post, tags }) => (
+								<PostCard
+									title={post.data.title ?? 'Untitled'}
+									excerpt={post.data.excerpt}
+									featuredImage={post.data.featured_image}
+									href={getRelativeLocaleUrl(locale, `/posts/${post.id}`)}
+									date={post.data.publishedAt ?? undefined}
+									tags={tags}
+									locale={locale}
+								/>
+							))}
+						</div>
+						{hasMorePosts && (
+							<div class="view-all-wrap">
+								<a href={getRelativeLocaleUrl(locale, '/posts')} class="view-all-link">
+									Ver todos los articulos
+								</a>
+							</div>
+						)}
+					</section>
+				)}
+			</div>
+		)
+	}
+</Base>
+
+<style>
+	.home-content {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: var(--spacing-16) var(--spacing-6);
+	}
+
+	/* Hero */
+	.hero {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		margin-bottom: var(--spacing-16);
+	}
+
+	.hero-main {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-6);
+		max-width: 760px;
+	}
+
+	.hero-label {
+		font-family: var(--font-sans);
+		font-size: 0.8125rem;
+		text-transform: uppercase;
+		letter-spacing: 0.16em;
+		color: var(--color-muted);
+	}
+
+	.hero-title {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: 5.75rem;
+		font-weight: 700;
+		line-height: 1.02;
+		letter-spacing: -0.02em;
+		color: var(--color-text);
+		text-decoration: underline;
+		text-decoration-color: var(--color-hero-underline);
+		text-decoration-thickness: 7px;
+		text-decoration-style: wavy;
+		text-underline-offset: 0.12em;
+	}
+
+	.hero-subtitle {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2xl);
+		line-height: 1.5;
+		color: var(--color-text-secondary);
+		max-width: 620px;
+	}
+
+	/* Recent section */
+	.recent-section {
+		margin-bottom: var(--spacing-16);
+		display: flex;
+		flex-direction: column;
+		gap: 1.125rem;
+	}
+
+	.recent-heading {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: 2.625rem;
+		font-weight: 700;
+		line-height: 1.19;
+		color: var(--color-text);
+	}
+
+	.featured-card {
+		display: flex;
+		width: 100%;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+	}
+
+	.featured-card-image-wrap {
+		display: flex;
+		width: 440px;
+		height: 260px;
+		flex-shrink: 0;
+		overflow: hidden;
+	}
+
+	.featured-card-image {
+		width: 100%;
+		height: 100%;
+	}
+
+	.featured-card-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.featured-card-placeholder {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		align-items: flex-end;
+		justify-content: flex-start;
+		background: var(--color-sand);
+		padding: var(--spacing-4);
+	}
+
+	.featured-card-placeholder span {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--color-on-accent, var(--color-bg));
+	}
+
+	.featured-card-content {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		padding: 1.75rem 2.125rem;
+		gap: 1.125rem;
+	}
+
+	.featured-card-title-link {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.featured-card-title {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: 2.375rem;
+		font-weight: 700;
+		line-height: 1.16;
+		color: var(--color-text);
+		transition: color var(--transition-fast);
+	}
+
+	.featured-card-title-link:hover .featured-card-title {
+		color: var(--color-text-secondary);
+	}
+
+	.featured-card-excerpt {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xl);
+		line-height: 1.55;
+		color: var(--color-text-secondary);
+	}
+
+	.featured-card-bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.featured-card-date {
+		font-family: var(--font-sans);
+		font-size: 0.9375rem;
+		color: var(--color-muted);
+	}
+
+	.featured-card-btn {
+		display: inline-flex;
+		padding: 0.5625rem 1rem;
+		background: var(--color-teal);
+		border: 1px solid var(--color-teal-border);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		line-height: 1.25;
+		color: var(--color-on-accent, var(--color-bg));
+		text-decoration: none;
+		transition:
+			background var(--transition-fast),
+			border-color var(--transition-fast);
+	}
+
+	.featured-card-btn:hover {
+		filter: brightness(0.95);
+	}
+
+	/* Posts grid */
+	.posts-section {
+		margin-top: var(--spacing-16);
+	}
+
+	.posts-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--spacing-12) var(--spacing-8);
+	}
+
+	.view-all-wrap {
+		text-align: center;
+		margin-top: var(--spacing-12);
+	}
+
+	.view-all-link {
+		display: inline-flex;
+		padding: 0.625rem 1.5rem;
+		border: 1px solid var(--color-border);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		color: var(--color-text);
+		text-decoration: none;
+		transition:
+			background var(--transition-fast),
+			border-color var(--transition-fast);
+	}
+
+	.view-all-link:hover {
+		border-color: var(--color-muted);
+		background: var(--color-surface);
+	}
+
+	/* Empty state */
+	.empty-state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--spacing-3);
+		text-align: center;
+		padding: var(--spacing-20) var(--spacing-6);
+		max-width: 400px;
+		margin: 0 auto;
+	}
+
+	.empty-state h2 {
+		font-size: var(--font-size-2xl);
+		font-weight: 600;
+	}
+
+	.empty-state p {
+		color: var(--color-muted);
+	}
+
+	.btn {
+		display: inline-block;
+		margin-top: var(--spacing-4);
+		padding: var(--spacing-3) var(--spacing-6);
+		background: var(--color-teal);
+		color: var(--color-on-accent, var(--color-bg));
+		text-decoration: none;
+		font-size: var(--font-size-sm);
+	}
+
+	@media (max-width: 1100px) {
+		.hero-title {
+			font-size: 3.5rem;
+		}
+
+		.featured-card {
+			flex-direction: column;
+		}
+
+		.featured-card-image-wrap {
+			width: 100%;
+			height: 220px;
+		}
+	}
+
+	@media (max-width: 900px) {
+		.home-content {
+			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
+		}
+
+		.hero {
+			margin-bottom: var(--spacing-10);
+		}
+
+		.hero-title {
+			font-size: 2.75rem;
+		}
+
+		.hero-subtitle {
+			font-size: var(--font-size-lg);
+		}
+
+		.featured-card-title {
+			font-size: 1.75rem;
+		}
+
+		.posts-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: var(--spacing-8) var(--spacing-6);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.hero-title {
+			font-size: 2.25rem;
+			text-decoration-thickness: 4px;
+		}
+
+		.hero-subtitle {
+			font-size: var(--font-size-base);
+		}
+
+		.recent-heading {
+			font-size: 1.75rem;
+		}
+
+		.featured-card-title {
+			font-size: 1.5rem;
+		}
+
+		.featured-card-content {
+			padding: var(--spacing-4);
+		}
+
+		.featured-card-bottom {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--spacing-3);
+		}
+
+		.posts-grid {
+			grid-template-columns: 1fr;
+			gap: var(--spacing-8);
+		}
+	}
+</style>

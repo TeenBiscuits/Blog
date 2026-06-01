@@ -1,0 +1,802 @@
+---
+import {
+	getEmDashEntry,
+	getEmDashCollection,
+	getEntryTerms,
+	getTermsForEntries,
+	getSeoMeta,
+	decodeSlug,
+	getSiteSettings,
+} from 'emdash'
+import { Image, PortableText, Comments, CommentForm, WidgetArea } from 'emdash/ui'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import Base from '../../../layouts/Base.astro'
+import PostCard from '../../../components/PostCard.astro'
+import { getReadingTime } from '../../../utils/reading-time'
+import { resolveBlogSiteIdentity } from '../../../utils/site-identity'
+import { formatDate, type Locale } from '../../../i18n/utils'
+
+const locale = (Astro.currentLocale ?? 'es') as Locale
+const slug = decodeSlug(Astro.params.slug)
+
+if (!slug) {
+	return Astro.redirect(getRelativeLocaleUrl(locale, '/404'))
+}
+
+const { entry: post, cacheHint } = await getEmDashEntry('posts', slug, { locale })
+
+if (!post) {
+	return Astro.redirect(getRelativeLocaleUrl(locale, '/404'))
+}
+
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint)
+
+function getImageUrl(img: unknown): string | undefined {
+	if (!img || typeof img !== 'object') return undefined
+	const image = img as Record<string, unknown>
+	if (typeof image.src === 'string' && image.src) {
+		return image.src.startsWith('http')
+			? image.src
+			: `${Astro.url.origin}${image.src}`
+	}
+	const meta = image.meta as Record<string, unknown> | undefined
+	const storageKey =
+		(typeof meta?.storageKey === 'string' ? meta.storageKey : undefined) ||
+		(typeof image.id === 'string' ? image.id : undefined)
+	if (storageKey) {
+		return `${Astro.url.origin}/_emdash/api/media/file/${storageKey}`
+	}
+	return undefined
+}
+
+const featuredImageUrl = getImageUrl(post.data.featured_image)
+const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings())
+
+const seo = getSeoMeta(post, {
+	siteTitle,
+	siteUrl: Astro.url.origin,
+	path: `/${locale}/posts/${slug}`,
+	defaultOgImage: featuredImageUrl,
+})
+
+const readingTime = getReadingTime(post.data.content)
+
+const [tags, { entries: recentPosts }] = await Promise.all([
+	getEntryTerms('posts', post.data.id, 'tag'),
+	getEmDashCollection('posts', {
+		orderBy: { published_at: 'desc' },
+		limit: 4,
+		locale,
+	}),
+])
+const otherPosts = recentPosts.filter((p) => p.id !== post.id).slice(0, 3)
+
+const otherTagsByEntry = await getTermsForEntries(
+	'posts',
+	otherPosts.map((p) => p.data.id),
+	'tag'
+)
+const otherPostsWithTags = otherPosts.map((p) => ({
+	post: p,
+	tags: otherTagsByEntry.get(p.data.id) ?? [],
+	bylines: p.data.bylines ?? [],
+}))
+
+const publishDate = post.data.publishedAt ? formatDate(post.data.publishedAt, locale) : null
+---
+
+<Base
+	title={seo.title}
+	pageTitle={seo.ogTitle}
+	description={seo.description}
+	image={seo.ogImage}
+	canonical={seo.canonical}
+	robots={seo.robots}
+	type="article"
+	publishedTime={post.data.publishedAt?.toISOString() ?? null}
+	modifiedTime={post.data.updatedAt.toISOString()}
+	content={{ collection: 'posts', id: post.data.id, slug }}
+>
+	<article class="article">
+		<div class="article-hero" {...post.edit.featured_image}>
+			{
+				post.data.featured_image ? (
+					<Image image={post.data.featured_image} />
+				) : (
+					<div class="hero-placeholder">
+						<span>Ilustracion de portada</span>
+					</div>
+				)
+			}
+		</div>
+
+		<div class="article-grid">
+			<aside class="article-meta-col">
+				<div class="meta-card">
+					{publishDate && (
+						<div class="meta-block">
+							<span class="meta-label">Published</span>
+							<time class="meta-value">{publishDate}</time>
+						</div>
+					)}
+					<div class="meta-block">
+						<span class="meta-label">Reading time</span>
+						<span class="meta-value">{readingTime} min</span>
+					</div>
+					{
+						tags.length > 0 && (
+							<div class="meta-block">
+								<span class="meta-label">Tags</span>
+								<div class="meta-tags">
+									{tags.map((t) => (
+										<a href={getRelativeLocaleUrl(locale, `/tag/${t.slug}`)} class="meta-tag">
+											{t.label}
+										</a>
+									))}
+								</div>
+							</div>
+						)
+					}
+				</div>
+			</aside>
+
+			<div class="article-main">
+				<header class="article-header">
+					<div class="article-meta-row">
+						{publishDate && <span class="article-meta-item">{publishDate}</span>}
+						<span class="article-meta-dot">&middot;</span>
+						<span class="article-meta-item">{readingTime} min read</span>
+					</div>
+					<h1 class="article-title" {...post.edit.title}>{post.data.title}</h1>
+					{
+						post.data.excerpt && (
+							<p class="article-excerpt" {...post.edit.excerpt}>
+								{post.data.excerpt}
+							</p>
+						)
+					}
+				</header>
+
+				<div class="article-content">
+					<PortableText value={post.data.content} />
+				</div>
+
+				<div class="article-comments">
+					<h2 class="comments-heading">Comentarios</h2>
+					<Comments collection="posts" contentId={post.data.id} threaded />
+					<CommentForm collection="posts" contentId={post.data.id} />
+				</div>
+			</div>
+
+			<aside class="article-sidebar">
+				<div class="sidebar-sticky">
+					<div class="sidebar-box">
+						<h4 class="sidebar-box-title">On this page</h4>
+						<div class="toc-content" id="toc-content">
+						</div>
+					</div>
+					<div class="sidebar-box">
+						<div class="sidebar-widgets">
+							<WidgetArea name="sidebar" />
+						</div>
+					</div>
+				</div>
+			</aside>
+		</div>
+	</article>
+
+	{
+		otherPostsWithTags.length > 0 && (
+			<section class="more-posts">
+				<h2 class="more-title">Continue reading</h2>
+				<div class="more-grid">
+					{otherPostsWithTags.map(
+						({ post: p, tags: postTags }) => (
+							<PostCard
+								title={p.data.title}
+								excerpt={p.data.excerpt}
+								featuredImage={p.data.featured_image}
+								href={getRelativeLocaleUrl(locale, `/posts/${p.id}`)}
+								date={p.data.publishedAt ?? undefined}
+								tags={postTags.map((t) => ({ slug: t.slug, label: t.label }))}
+								locale={locale}
+							/>
+						)
+					)}
+				</div>
+			</section>
+		)
+	}
+
+	<script>
+		function buildToc() {
+			const content = document.querySelector('.article-content')
+			const tocContainer = document.getElementById('toc-content')
+			if (!content || !tocContainer) return
+
+			const headings = content.querySelectorAll('h2, h3')
+			if (headings.length === 0) {
+				const sidebarBoxes = tocContainer.closest('.sidebar-box') as HTMLElement | null
+				if (sidebarBoxes) sidebarBoxes.style.display = 'none'
+				return
+			}
+
+			const list = document.createElement('ul')
+			list.className = 'toc-list'
+
+			headings.forEach((heading, index) => {
+				if (!heading.id) {
+					heading.id = `heading-${index}`
+				}
+
+				const li = document.createElement('li')
+				li.className =
+					heading.tagName === 'H3' ? 'toc-item toc-item--nested' : 'toc-item'
+
+				const link = document.createElement('a')
+				link.href = `#${heading.id}`
+				link.className = 'toc-link'
+				link.textContent = heading.textContent
+
+				li.appendChild(link)
+				list.appendChild(li)
+			})
+
+			tocContainer.appendChild(list)
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						const id = entry.target.id
+						const link = tocContainer.querySelector(`a[href="#${id}"]`)
+						if (link) {
+							if (entry.isIntersecting) {
+								tocContainer
+									.querySelectorAll('.toc-link')
+									.forEach((l) => l.classList.remove('active'))
+								link.classList.add('active')
+							}
+						}
+					})
+				},
+				{ rootMargin: '-80px 0px -80% 0px' }
+			)
+
+			headings.forEach((heading) => observer.observe(heading))
+		}
+
+		buildToc()
+	</script>
+</Base>
+
+<style>
+	.article {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+	}
+
+	.article-hero {
+		width: 100%;
+		height: 420px;
+		overflow: hidden;
+		background: var(--color-sand);
+		display: flex;
+		align-items: flex-end;
+		padding: var(--spacing-4) var(--spacing-6);
+		box-sizing: border-box;
+		position: relative;
+	}
+
+	.article-hero img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.hero-placeholder {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		color: var(--color-on-accent, var(--color-bg));
+	}
+
+	.article-grid {
+		display: grid;
+		grid-template-columns: var(--meta-col-width) minmax(0, 700px) 280px;
+		gap: var(--spacing-7);
+		justify-content: center;
+		padding: 0 var(--spacing-6);
+		margin: var(--spacing-10) 0 var(--spacing-16);
+	}
+
+	.article-meta-col {
+		display: block;
+	}
+
+	.meta-card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		padding: var(--spacing-4);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-4);
+		position: sticky;
+		top: var(--spacing-8);
+	}
+
+	.meta-block {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-1);
+	}
+
+	.meta-label {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 400;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		color: var(--color-muted);
+	}
+
+	.meta-value {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--color-text);
+	}
+
+	.meta-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-2);
+		margin-top: 0.375rem;
+	}
+
+	.meta-tag {
+		display: inline-block;
+		padding: var(--spacing-1) var(--spacing-2);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		color: var(--color-text);
+		background: var(--color-teal);
+		text-decoration: none;
+	}
+
+	.meta-tag:nth-child(even) {
+		background: var(--color-sand);
+	}
+
+	/* Article main */
+	.article-main {
+		min-width: 0;
+	}
+
+	.article-header {
+		margin-bottom: var(--spacing-8);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-4);
+	}
+
+	.article-meta-row {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-3);
+	}
+
+	.article-meta-item {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+	}
+
+	.article-meta-dot {
+		color: var(--color-muted);
+	}
+
+	.article-title {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: 4.5rem;
+		font-weight: 700;
+		line-height: 1.06;
+		color: var(--color-text);
+	}
+
+	.article-excerpt {
+		font-family: var(--font-sans);
+		font-size: 1.75rem;
+		line-height: 1.43;
+		color: var(--color-text-secondary);
+	}
+
+	/* Content */
+	.article-content {
+		font-family: var(--font-sans);
+		font-size: 1.5625rem;
+		line-height: 1.56;
+		color: var(--color-text);
+	}
+
+	.article-content :global(p) {
+		margin-bottom: 1.5em;
+	}
+
+	.article-content :global(h2) {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: 2.875rem;
+		font-weight: 700;
+		line-height: 1.13;
+		margin-top: 2em;
+		margin-bottom: 0.75em;
+		color: var(--color-text);
+		scroll-margin-top: var(--spacing-4);
+	}
+
+	.article-content :global(h3) {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+		margin-top: 1.5em;
+		margin-bottom: 0.5em;
+		scroll-margin-top: var(--spacing-4);
+	}
+
+	.article-content :global(blockquote) {
+		margin: 2em 0;
+		padding: var(--spacing-4) var(--spacing-6);
+		border-left: 3px solid var(--color-border);
+		background: var(--color-surface);
+		color: var(--color-text-secondary);
+		font-style: italic;
+	}
+
+	.article-content :global(pre) {
+		margin: 2em 0;
+		padding: var(--spacing-5);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		overflow-x: auto;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		line-height: 1.6;
+	}
+
+	.article-content :global(code) {
+		font-family: var(--font-mono);
+		font-size: 0.85em;
+		background: var(--color-surface);
+		padding: 0.2em 0.4em;
+	}
+
+	.article-content :global(pre code) {
+		background: none;
+		padding: 0;
+	}
+
+	.article-content :global(ul),
+	.article-content :global(ol) {
+		margin-bottom: 1.5em;
+		padding-left: 1.5em;
+	}
+
+	.article-content :global(li) {
+		margin-bottom: 0.5em;
+	}
+
+	.article-content :global(img) {
+		margin: 2em 0;
+	}
+
+	.article-content :global(hr) {
+		margin: 3em 0;
+		border: none;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.article-content :global(a) {
+		color: var(--color-text);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		text-decoration-thickness: 1px;
+	}
+
+	.article-content :global(a:hover) {
+		color: var(--color-text-secondary);
+	}
+
+	/* Sidebar */
+	.article-sidebar {
+		display: block;
+	}
+
+	.sidebar-sticky {
+		position: sticky;
+		top: var(--spacing-8);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-4);
+	}
+
+	.sidebar-box {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		padding: var(--spacing-4);
+	}
+
+	.sidebar-box-title {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+		line-height: 1.25;
+		color: var(--color-text);
+		margin-bottom: var(--spacing-3);
+	}
+
+	.sidebar-box-title:not(:first-child) {
+		margin-top: var(--spacing-6);
+	}
+
+	.toc-content :global(.toc-list) {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-1);
+	}
+
+	.toc-content :global(.toc-item--nested) {
+		padding-left: var(--spacing-3);
+	}
+
+	.toc-content :global(.toc-link) {
+		display: block;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-base);
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		padding: var(--spacing-1) 0;
+		line-height: var(--leading-normal);
+		transition: color var(--transition-fast);
+	}
+
+	.toc-content :global(.toc-link:hover),
+	.toc-content :global(.toc-link.active) {
+		color: var(--color-text);
+	}
+
+	.sidebar-widgets :global(.widget-area) {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-4);
+	}
+
+	.sidebar-widgets :global(.widget__title) {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+		color: var(--color-text);
+		margin-bottom: var(--spacing-3);
+	}
+
+	.sidebar-widgets :global(.widget__content) {
+		color: var(--color-text-secondary);
+		line-height: var(--leading-normal);
+	}
+
+	.sidebar-widgets :global(.widget-search__input) {
+		width: 100%;
+		padding: var(--spacing-2) var(--spacing-3);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-base);
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		color: var(--color-text);
+	}
+
+	.sidebar-widgets :global(.widget-search__input)::placeholder {
+		color: var(--color-muted);
+	}
+
+	.sidebar-widgets :global(.widget-search__input):focus {
+		outline: none;
+		border-color: var(--color-border);
+		box-shadow: 0 0 0 3px var(--color-accent-ring);
+	}
+
+	.sidebar-widgets :global(.widget-search__button) {
+		display: none;
+	}
+
+	.sidebar-widgets :global(.widget-categories li),
+	.sidebar-widgets :global(.widget-recent-posts li),
+	.sidebar-widgets :global(.widget-archives li) {
+		padding: var(--spacing-2) 0;
+		border-bottom: 1px solid var(--color-border);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.sidebar-widgets :global(.widget-categories li:last-child),
+	.sidebar-widgets :global(.widget-recent-posts li:last-child),
+	.sidebar-widgets :global(.widget-archives li:last-child) {
+		border-bottom: none;
+	}
+
+	.sidebar-widgets :global(.widget-categories__link),
+	.sidebar-widgets :global(.widget-recent-posts a),
+	.sidebar-widgets :global(.widget-archives__link) {
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-base);
+	}
+
+	.sidebar-widgets :global(.widget-categories__link:hover),
+	.sidebar-widgets :global(.widget-recent-posts a:hover),
+	.sidebar-widgets :global(.widget-archives__link:hover) {
+		color: var(--color-text);
+	}
+
+	.sidebar-widgets :global(.widget-tags__cloud) {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-2);
+	}
+
+	.sidebar-widgets :global(.widget-tags__cloud li) {
+		margin: 0;
+	}
+
+	.sidebar-widgets :global(.widget-tags__link) {
+		display: inline-block;
+		padding: var(--tag-padding-y) var(--spacing-2);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		color: var(--color-text);
+		background: var(--color-sand);
+		text-decoration: none;
+	}
+
+	/* Comments */
+	.article-comments {
+		margin-top: var(--spacing-12);
+		padding-top: var(--spacing-8);
+		border-top: 1px solid var(--color-border);
+	}
+
+	.comments-heading {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: 1.875rem;
+		font-weight: 700;
+		margin-bottom: var(--spacing-6);
+	}
+
+	.article-comments :global(.ec-comments) {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		padding: var(--spacing-4);
+		margin-bottom: var(--spacing-4);
+	}
+
+	.article-comments :global(.ec-comments-heading) {
+		font-family: var(--font-serif, var(--font-sans));
+		font-weight: 700;
+		margin-bottom: var(--spacing-4);
+	}
+
+	.article-comments :global(.ec-comment-form-field input),
+	.article-comments :global(.ec-comment-form-field textarea) {
+		background: var(--color-surface) !important;
+		border: 1px solid var(--color-border) !important;
+		color: var(--color-text) !important;
+		font-family: var(--font-sans) !important;
+		padding: var(--spacing-3) !important;
+	}
+
+	.article-comments :global(.ec-comment-form-submit) {
+		background: var(--color-teal) !important;
+		border: 1px solid var(--color-teal-border) !important;
+		color: var(--color-text) !important;
+		font-family: var(--font-sans) !important;
+		padding: var(--spacing-3) var(--spacing-4) !important;
+	}
+
+	/* More posts */
+	.more-posts {
+		padding: var(--spacing-16) var(--spacing-6);
+		max-width: var(--wide-width);
+		margin: 0 auto;
+	}
+
+	.more-title {
+		font-family: var(--font-serif, var(--font-sans));
+		font-size: var(--font-size-3xl);
+		font-weight: 700;
+		margin-bottom: var(--spacing-8);
+		color: var(--color-text);
+	}
+
+	.more-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--spacing-8);
+	}
+
+	@media (max-width: 1100px) {
+		.article-grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 0;
+		}
+
+		.article-meta-col,
+		.article-sidebar {
+			display: none;
+		}
+
+		.article-title {
+			font-size: 2.75rem;
+		}
+
+		.article-excerpt {
+			font-size: 1.375rem;
+		}
+
+		.article-content {
+			font-size: 1.25rem;
+		}
+
+		.article-content :global(h2) {
+			font-size: 2rem;
+		}
+	}
+
+	@media (max-width: 900px) {
+		.article-hero {
+			height: 240px;
+			padding: var(--spacing-4);
+		}
+
+		.article-grid {
+			padding: 0 var(--spacing-4);
+		}
+
+		.more-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.article-hero {
+			height: 200px;
+		}
+
+		.article-title {
+			font-size: 2rem;
+		}
+
+		.article-excerpt {
+			font-size: var(--font-size-lg);
+		}
+
+		.article-content {
+			font-size: var(--font-size-lg);
+		}
+
+		.article-content :global(h2) {
+			font-size: 1.5rem;
+		}
+
+		.more-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

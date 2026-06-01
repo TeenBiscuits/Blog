@@ -11,56 +11,56 @@ import { definePlugin } from "emdash";
 import { z } from "astro/zod";
 
 definePlugin({
-  id: "forms",
-  version: "1.0.0",
+	id: "forms",
+	version: "1.0.0",
 
-  routes: {
-    // Simple route
-    status: {
-      handler: async (ctx) => {
-        return { ok: true };
-      },
-    },
+	routes: {
+		// Simple route
+		status: {
+			handler: async (ctx) => {
+				return { ok: true };
+			},
+		},
 
-    // Route with input validation
-    submissions: {
-      input: z.object({
-        formId: z.string().optional(),
-        limit: z.number().default(50),
-        cursor: z.string().optional(),
-      }),
-      handler: async (ctx) => {
-        const { formId, limit, cursor } = ctx.input;
-        const result = await ctx.storage.submissions!.query({
-          where: formId ? { formId } : undefined,
-          orderBy: { createdAt: "desc" },
-          limit,
-          cursor,
-        });
-        return {
-          items: result.items,
-          cursor: result.cursor,
-          hasMore: result.hasMore,
-        };
-      },
-    },
+		// Route with input validation
+		submissions: {
+			input: z.object({
+				formId: z.string().optional(),
+				limit: z.number().default(50),
+				cursor: z.string().optional(),
+			}),
+			handler: async (ctx) => {
+				const { formId, limit, cursor } = ctx.input;
+				const result = await ctx.storage.submissions!.query({
+					where: formId ? { formId } : undefined,
+					orderBy: { createdAt: "desc" },
+					limit,
+					cursor,
+				});
+				return {
+					items: result.items,
+					cursor: result.cursor,
+					hasMore: result.hasMore,
+				};
+			},
+		},
 
-    // Nested path
-    "settings/save": {
-      input: z.object({
-        enabled: z.boolean().optional(),
-        apiKey: z.string().optional(),
-      }),
-      handler: async (ctx) => {
-        for (const [key, value] of Object.entries(ctx.input)) {
-          if (value !== undefined) {
-            await ctx.kv.set(`settings:${key}`, value);
-          }
-        }
-        return { success: true };
-      },
-    },
-  },
+		// Nested path
+		"settings/save": {
+			input: z.object({
+				enabled: z.boolean().optional(),
+				apiKey: z.string().optional(),
+			}),
+			handler: async (ctx) => {
+				for (const [key, value] of Object.entries(ctx.input)) {
+					if (value !== undefined) {
+						await ctx.kv.set(`settings:${key}`, value);
+					}
+				}
+				return { success: true };
+			},
+		},
+	},
 });
 ```
 
@@ -76,15 +76,15 @@ definePlugin({
 
 ```typescript
 interface RouteContext<TInput = unknown> extends PluginContext {
-  input: TInput; // Validated input
-  request: Request; // Original request
-  plugin: { id: string; version: string };
-  storage: Record<string, StorageCollection>;
-  kv: KVAccess;
-  content?: ContentAccess; // If capability declared
-  media?: MediaAccess;
-  http?: HttpAccess;
-  log: LogAccess;
+	input: TInput; // Validated input
+	request: Request; // Original request
+	plugin: { id: string; version: string };
+	storage: Record<string, StorageCollection>;
+	kv: KVAccess;
+	content?: ContentAccess; // If capability declared
+	media?: MediaAccess;
+	http?: HttpAccess;
+	log: LogAccess;
 }
 ```
 
@@ -134,8 +134,8 @@ throw new Error("Item not found"); // 500 with { error: "Item not found" }
 
 // Custom status code
 throw new Response(JSON.stringify({ error: "Not found" }), {
-  status: 404,
-  headers: { "Content-Type": "application/json" },
+	status: 404,
+	headers: { "Content-Type": "application/json" },
 });
 ```
 
@@ -145,15 +145,15 @@ Routes respond to all methods. Check `ctx.request.method`:
 
 ```typescript
 handler: async (ctx) => {
-  switch (ctx.request.method) {
-    case "GET":
-      return await ctx.storage.items!.get(ctx.input.id);
-    case "DELETE":
-      await ctx.storage.items!.delete(ctx.input.id);
-      return { deleted: true };
-    default:
-      throw new Response("Method not allowed", { status: 405 });
-  }
+	switch (ctx.request.method) {
+		case "GET":
+			return await ctx.storage.items!.get(ctx.input.id);
+		case "DELETE":
+			await ctx.storage.items!.delete(ctx.input.id);
+			return { deleted: true };
+		default:
+			throw new Response("Method not allowed", { status: 405 });
+	}
 };
 ```
 
@@ -215,30 +215,30 @@ routes: {
 
 ### External API Proxy
 
-Requires `network:fetch` capability and `allowedHosts`:
+Requires `network:request` capability and `allowedHosts`:
 
 ```typescript
 definePlugin({
-  capabilities: ["network:fetch"],
-  allowedHosts: ["api.weather.example.com"],
+	capabilities: ["network:request"],
+	allowedHosts: ["api.weather.example.com"],
 
-  routes: {
-    forecast: {
-      input: z.object({ city: z.string() }),
-      handler: async (ctx) => {
-        const apiKey = await ctx.kv.get<string>("settings:apiKey");
-        if (!apiKey) throw new Error("API key not configured");
+	routes: {
+		forecast: {
+			input: z.object({ city: z.string() }),
+			handler: async (ctx) => {
+				const apiKey = await ctx.kv.get<string>("settings:apiKey");
+				if (!apiKey) throw new Error("API key not configured");
 
-        const response = await ctx.http!.fetch(
-          `https://api.weather.example.com/forecast?city=${ctx.input.city}`,
-          { headers: { "X-API-Key": apiKey } },
-        );
+				const response = await ctx.http!.fetch(
+					`https://api.weather.example.com/forecast?city=${ctx.input.city}`,
+					{ headers: { "X-API-Key": apiKey } },
+				);
 
-        if (!response.ok) throw new Error(`API error: ${response.status}`);
-        return response.json();
-      },
-    },
-  },
+				if (!response.ok) throw new Error(`API error: ${response.status}`);
+				return response.json();
+			},
+		},
+	},
 });
 ```
 

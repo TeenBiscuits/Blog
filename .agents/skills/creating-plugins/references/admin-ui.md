@@ -14,13 +14,13 @@ import { StatusWidget } from "./components/StatusWidget";
 
 // Pages keyed by path (must match admin.pages paths)
 export const pages = {
-  "/settings": SettingsPage,
-  "/reports": ReportsPage,
+	"/settings": SettingsPage,
+	"/reports": ReportsPage,
 };
 
 // Widgets keyed by ID (must match admin.widgets IDs)
 export const widgets = {
-  status: StatusWidget,
+	status: StatusWidget,
 };
 ```
 
@@ -28,17 +28,17 @@ Reference in plugin definition:
 
 ```typescript
 definePlugin({
-  id: "my-plugin",
-  version: "1.0.0",
+	id: "my-plugin",
+	version: "1.0.0",
 
-  admin: {
-    entry: "@my-org/my-plugin/admin",
-    pages: [
-      { path: "/settings", label: "Settings", icon: "settings" },
-      { path: "/reports", label: "Reports", icon: "chart" },
-    ],
-    widgets: [{ id: "status", title: "Status", size: "half" }],
-  },
+	admin: {
+		entry: "@my-org/my-plugin/admin",
+		pages: [
+			{ path: "/settings", label: "Settings", icon: "settings" },
+			{ path: "/reports", label: "Reports", icon: "chart" },
+		],
+		widgets: [{ id: "status", title: "Status", size: "half" }],
+	},
 });
 ```
 
@@ -137,16 +137,7 @@ const result = await api.get("history?limit=50"); // Query params
 Pre-built components from `@emdash-cms/admin`:
 
 ```typescript
-import {
-  Card,
-  Button,
-  Input,
-  Select,
-  Toggle,
-  Table,
-  Loading,
-  Alert,
-} from "@emdash-cms/admin";
+import { Card, Button, Input, Select, Toggle, Table, Loading, Alert } from "@emdash-cms/admin";
 ```
 
 ## Auto-Generated Settings
@@ -169,13 +160,13 @@ Admin components need a separate build entry:
 ```typescript
 // tsdown.config.ts
 export default {
-  entry: {
-    index: "src/index.ts",
-    admin: "src/admin.tsx",
-  },
-  format: "esm",
-  dts: true,
-  external: ["react", "react-dom", "emdash", "@emdash-cms/admin"],
+	entry: {
+		index: "src/index.ts",
+		admin: "src/admin.tsx",
+	},
+	format: "esm",
+	dts: true,
+	external: ["react", "react-dom", "emdash", "@emdash-cms/admin"],
 };
 ```
 
@@ -187,14 +178,14 @@ The descriptor (returned by factory function) also declares admin metadata:
 
 ```typescript
 export function myPlugin(options = {}): PluginDescriptor {
-  return {
-    id: "my-plugin",
-    entrypoint: "@my-org/my-plugin",
-    version: "1.0.0",
-    options,
-    adminEntry: "@my-org/my-plugin/admin",
-    adminPages: [{ path: "/settings", label: "Settings", icon: "settings" }],
-    adminWidgets: [{ id: "status", title: "Status", size: "half" }],
-  };
+	return {
+		id: "my-plugin",
+		entrypoint: "@my-org/my-plugin",
+		version: "1.0.0",
+		options,
+		adminEntry: "@my-org/my-plugin/admin",
+		adminPages: [{ path: "/settings", label: "Settings", icon: "settings" }],
+		adminWidgets: [{ id: "status", title: "Status", size: "half" }],
+	};
 }
 ```

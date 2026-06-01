@@ -1,28 +1,28 @@
 ---
-import { getEmDashEntry, decodeSlug } from "emdash";
-import { PortableText } from "emdash/ui";
-import Base from "../../layouts/Base.astro";
+import { getEmDashEntry, decodeSlug } from 'emdash'
+import { PortableText } from 'emdash/ui'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import Base from '../../../layouts/Base.astro'
 
-const slug = decodeSlug(Astro.params.slug);
+const locale = Astro.currentLocale ?? 'es'
+const slug = decodeSlug(Astro.params.slug)
 
 if (!slug) {
-	return Astro.redirect("/404");
+	return Astro.redirect(getRelativeLocaleUrl(locale, '/404'))
 }
 
-const { entry: page, cacheHint, error } = await getEmDashEntry("pages", slug, {
-  locale: Astro.currentLocale,
-});
+const { entry: page, cacheHint } = await getEmDashEntry('pages', slug, { locale })
 
 if (!page) {
-	return Astro.redirect("/404");
+	return Astro.redirect(getRelativeLocaleUrl(locale, '/404'))
 }
 
-Astro.cache.set(cacheHint);
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint)
 ---
 
 <Base
 	title={page.data.title}
-	content={{ collection: "pages", id: page.data.id, slug }}
+	content={{ collection: 'pages', id: page.data.id, slug }}
 >
 	<article class="page-article">
 		<header class="page-header">
@@ -47,6 +47,7 @@ Astro.cache.set(cacheHint);
 	}
 
 	.page-title {
+		font-family: var(--font-serif, var(--font-sans));
 		font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
 		font-weight: 700;
 		line-height: var(--leading-tight);

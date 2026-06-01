@@ -14,22 +14,22 @@ Declare in `definePlugin({ storage })`. EmDash creates the schema automatically 
 
 ```typescript
 definePlugin({
-  id: "forms",
-  version: "1.0.0",
+	id: "forms",
+	version: "1.0.0",
 
-  storage: {
-    submissions: {
-      indexes: [
-        "formId", // Single-field index
-        "status",
-        "createdAt",
-        ["formId", "createdAt"], // Composite index
-      ],
-    },
-    forms: {
-      indexes: ["slug"],
-    },
-  },
+	storage: {
+		submissions: {
+			indexes: [
+				"formId", // Single-field index
+				"status",
+				"createdAt",
+				["formId", "createdAt"], // Composite index
+			],
+		},
+		forms: {
+			indexes: ["slug"],
+		},
+	},
 });
 ```
 
@@ -40,10 +40,7 @@ Storage is scoped to the plugin — `submissions` in plugin `forms` is separate 
 ```typescript
 const { submissions } = ctx.storage;
 
-await submissions.put("sub_123", {
-  formId: "contact",
-  email: "user@example.com",
-});
+await submissions.put("sub_123", { formId: "contact", email: "user@example.com" });
 const item = await submissions.get("sub_123");
 const exists = await submissions.exists("sub_123");
 await submissions.delete("sub_123");
@@ -55,8 +52,8 @@ await submissions.delete("sub_123");
 const items = await submissions.getMany(["sub_1", "sub_2"]); // Map<string, T>
 
 await submissions.putMany([
-  { id: "sub_1", data: { formId: "contact", status: "new" } },
-  { id: "sub_2", data: { formId: "contact", status: "new" } },
+	{ id: "sub_1", data: { formId: "contact", status: "new" } },
+	{ id: "sub_2", data: { formId: "contact", status: "new" } },
 ]);
 
 const deletedCount = await submissions.deleteMany(["sub_1", "sub_2"]);
@@ -68,12 +65,12 @@ Only indexed fields can be queried. Non-indexed queries throw.
 
 ```typescript
 const result = await ctx.storage.submissions.query({
-  where: {
-    formId: "contact",
-    status: "pending",
-  },
-  orderBy: { createdAt: "desc" },
-  limit: 20,
+	where: {
+		formId: "contact",
+		status: "pending",
+	},
+	orderBy: { createdAt: "desc" },
+	limit: 20,
 });
 
 // result.items - Array of { id, data }
@@ -103,13 +100,13 @@ where: { slug: { startsWith: "blog-" } }
 ```typescript
 let cursor: string | undefined;
 do {
-  const result = await ctx.storage.submissions!.query({
-    orderBy: { createdAt: "desc" },
-    limit: 100,
-    cursor,
-  });
-  // process result.items
-  cursor = result.cursor;
+	const result = await ctx.storage.submissions!.query({
+		orderBy: { createdAt: "desc" },
+		limit: 100,
+		cursor,
+	});
+	// process result.items
+	cursor = result.cursor;
 } while (cursor);
 ```
 
@@ -134,9 +131,9 @@ Composite indexes support filtering on the first field + ordering by the second.
 
 ```typescript
 interface Submission {
-  formId: string;
-  status: "pending" | "approved" | "spam";
-  createdAt: string;
+	formId: string;
+	status: "pending" | "approved" | "spam";
+	createdAt: string;
 }
 
 // Cast in hook/route handlers
@@ -147,17 +144,15 @@ const submissions = ctx.storage.submissions as StorageCollection<Submission>;
 
 ```typescript
 interface StorageCollection<T = unknown> {
-  get(id: string): Promise<T | null>;
-  put(id: string, data: T): Promise<void>;
-  delete(id: string): Promise<boolean>;
-  exists(id: string): Promise<boolean>;
-  getMany(ids: string[]): Promise<Map<string, T>>;
-  putMany(items: Array<{ id: string; data: T }>): Promise<void>;
-  deleteMany(ids: string[]): Promise<number>;
-  query(
-    options?: QueryOptions,
-  ): Promise<PaginatedResult<{ id: string; data: T }>>;
-  count(where?: WhereClause): Promise<number>;
+	get(id: string): Promise<T | null>;
+	put(id: string, data: T): Promise<void>;
+	delete(id: string): Promise<boolean>;
+	exists(id: string): Promise<boolean>;
+	getMany(ids: string[]): Promise<Map<string, T>>;
+	putMany(items: Array<{ id: string; data: T }>): Promise<void>;
+	deleteMany(ids: string[]): Promise<number>;
+	query(options?: QueryOptions): Promise<PaginatedResult<{ id: string; data: T }>>;
+	count(where?: WhereClause): Promise<number>;
 }
 ```
 
@@ -167,10 +162,10 @@ General-purpose key-value store. Use for internal state, cached computations, or
 
 ```typescript
 interface KVAccess {
-  get<T>(key: string): Promise<T | null>;
-  set(key: string, value: unknown): Promise<void>;
-  delete(key: string): Promise<boolean>;
-  list(prefix?: string): Promise<Array<{ key: string; value: unknown }>>;
+	get<T>(key: string): Promise<T | null>;
+	set(key: string, value: unknown): Promise<void>;
+	delete(key: string): Promise<boolean>;
+	list(prefix?: string): Promise<Array<{ key: string; value: unknown }>>;
 }
 ```
 

@@ -1,27 +1,95 @@
 ---
-import { getTranslations } from "emdash";
-import { getRelativeLocaleUrl } from "astro:i18n";
+import { getTranslations } from 'emdash'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { LOCALES, LOCALE_LABELS, type Locale } from '../i18n/utils'
 
 interface Props {
-  collection: string;
-  entryId: string;
+	collection?: string
+	entryId?: string
+	entrySlug?: string
+	currentPath?: string
 }
 
-const { collection, entryId } = Astro.props;
-const { translations } = await getTranslations(collection, entryId);
+const { collection, entryId, entrySlug, currentPath } = Astro.props
+const currentLocale = Astro.currentLocale as Locale | undefined
+
+let translations:
+	| Array<{ locale: string; slug: string; status: string }>
+	| undefined
+
+if (collection && entryId) {
+	const result = await getTranslations(collection, entryId)
+	translations = result.translations.filter((t) => t.status === 'published')
+}
+
+function getPathForLocale(locale: string): string {
+	if (translations && entrySlug) {
+		const t = translations.find((tr) => tr.locale === locale)
+		if (t) {
+			return getRelativeLocaleUrl(locale, `/${collection}/${t.slug}`)
+		}
+	}
+	if (currentPath) {
+		const segments = currentPath.split('/').filter(Boolean)
+		if (LOCALES.includes(segments[0] as Locale)) {
+			segments[0] = locale
+			return `/${segments.join('/')}`
+		}
+		return `/${locale}${currentPath}`
+	}
+	return getRelativeLocaleUrl(locale, '/')
+}
 ---
 
-<nav aria-label="Language">
-  <ul>
-    {translations.map((t) => (
-      <li>
-        <a
-          href={getRelativeLocaleUrl(t.locale, `/blog/${t.slug}`)}
-          aria-current={t.locale === Astro.currentLocale ? "page" : undefined}
-        >
-          {t.locale.toUpperCase()}
-        </a>
-      </li>
-    ))}
-  </ul>
+<nav aria-label="Language switcher" class="lang-switcher">
+	{LOCALES.map((locale) => {
+		const isCurrent = locale === currentLocale
+		const href = getPathForLocale(locale)
+		return (
+			<a
+				href={href}
+				class:list={['lang-link', { 'lang-link--current': isCurrent }]}
+				aria-current={isCurrent ? 'page' : undefined}
+			>
+				{LOCALE_LABELS[locale]}
+			</a>
+		)
+	})}
 </nav>
+
+<style>
+	.lang-switcher {
+		display: flex;
+		gap: var(--spacing-1);
+	}
+
+	.lang-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--spacing-1) var(--spacing-2);
+		font-size: var(--font-size-xs);
+		font-weight: 500;
+		color: var(--color-muted);
+		text-decoration: none;
+		border-radius: var(--radius);
+		transition:
+			color var(--transition-fast),
+			background var(--transition-fast);
+	}
+
+	.lang-link:hover {
+		color: var(--color-text);
+		background: var(--color-surface);
+	}
+
+	.lang-link--current {
+		color: var(--color-accent);
+		background: var(--color-accent-ring);
+	}
+
+	.lang-link--current:hover {
+		color: var(--color-accent-hover);
+		background: var(--color-accent-ring);
+	}
+</style>

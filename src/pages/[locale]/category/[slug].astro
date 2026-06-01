@@ -1,29 +1,40 @@
 ---
-import { getTerm, getEmDashCollection, getEntryTerms, decodeSlug } from "emdash";
-import Base from "../../layouts/Base.astro";
-import PostCard from "../../components/PostCard.astro";
-import { getReadingTime } from "../../utils/reading-time";
+import {
+	getTerm,
+	getEmDashCollection,
+	getTermsForEntries,
+	decodeSlug,
+} from 'emdash'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import Base from '../../../layouts/Base.astro'
+import PostCard from '../../../components/PostCard.astro'
+import type { Locale } from '../../../i18n/utils'
 
-const slug = decodeSlug(Astro.params.slug);
-const term = slug ? await getTerm("category", slug) : null;
+const locale = (Astro.currentLocale ?? 'es') as Locale
+const slug = decodeSlug(Astro.params.slug)
+const term = slug ? await getTerm('category', slug, { locale }) : null
 
 if (!term) {
-	return Astro.redirect("/404");
+	return Astro.redirect(getRelativeLocaleUrl(locale, '/404'))
 }
 
-const { entries: posts } = await getEmDashCollection("posts", {
-    locale: Astro.currentLocale,
+const { entries: posts, cacheHint } = await getEmDashCollection('posts', {
 	where: { category: term.slug },
-	orderBy: { published_at: "desc" },
-});
+	orderBy: { published_at: 'desc' },
+	locale,
+})
 
-// Fetch tags for display on each post card
-const filteredPosts = await Promise.all(
-	posts.map(async (post) => {
-		const tags = await getEntryTerms("posts", post.data.id, "tag");
-		return { post, tags };
-	})
-);
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint)
+
+const tagsByEntry = await getTermsForEntries(
+	'posts',
+	posts.map((p) => p.data.id),
+	'tag'
+)
+const filteredPosts = posts.map((post) => ({
+	post,
+	tags: tagsByEntry.get(post.data.id) ?? [],
+}))
 ---
 
 <Base title={`${term.label} posts`} description={`All posts in ${term.label}`}>
@@ -33,7 +44,7 @@ const filteredPosts = await Promise.all(
 			<h1 class="archive-title">{term.label}</h1>
 			<p class="archive-count">
 				{filteredPosts.length}
-				{filteredPosts.length === 1 ? "post" : "posts"}
+				{filteredPosts.length === 1 ? 'post' : 'posts'}
 			</p>
 		</header>
 
@@ -47,10 +58,10 @@ const filteredPosts = await Promise.all(
 							title={post.data.title}
 							excerpt={post.data.excerpt}
 							featuredImage={post.data.featured_image}
-							href={`/posts/${post.id}`}
+							href={getRelativeLocaleUrl(locale, `/posts/${post.id}`)}
 							date={post.data.publishedAt ?? undefined}
-							readingTime={getReadingTime(post.data.content)}
 							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
+							locale={locale}
 						/>
 					))}
 				</div>
@@ -83,6 +94,7 @@ const filteredPosts = await Promise.all(
 	}
 
 	.archive-title {
+		font-family: var(--font-serif, var(--font-sans));
 		font-size: var(--font-size-4xl);
 		font-weight: 700;
 		letter-spacing: var(--tracking-tight);

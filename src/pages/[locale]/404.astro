@@ -1,12 +1,15 @@
 ---
-import Base from "../layouts/Base.astro";
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import Base from '../../layouts/Base.astro'
+
+const locale = Astro.currentLocale ?? 'es'
 ---
 
 <Base title="Page not found">
 	<div class="not-found">
 		<h1>404</h1>
 		<p>The page you're looking for doesn't exist.</p>
-		<a href="/">Go back home</a>
+		<a href={getRelativeLocaleUrl(locale, '/')}>Go back home</a>
 	</div>
 </Base>
 

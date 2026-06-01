@@ -21,11 +21,11 @@ The bundle command uses `package.json` exports to find entrypoints:
 
 ```json
 {
-  "exports": {
-    ".": { "import": "./dist/index.mjs" },
-    "./sandbox": { "import": "./dist/sandbox-entry.mjs" },
-    "./admin": { "import": "./dist/admin.mjs" }
-  }
+	"exports": {
+		".": { "import": "./dist/index.mjs" },
+		"./sandbox": { "import": "./dist/sandbox-entry.mjs" },
+		"./admin": { "import": "./dist/admin.mjs" }
+	}
 }
 ```
 
