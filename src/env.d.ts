@@ -1,22 +1,54 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
-// Rybbit Analytics https://rybbit.com/es/docs/track-events
-interface Rybbit {
-	pageview: () => void
-	event: (name: string, properties?: Record<string, unknown>) => void
-	identify: (userId: string, traits?: Record<string, unknown>) => void
-	setTraits: (traits: Record<string, unknown>) => void
-	clearUserId: () => void
-	getUserId: () => string | null
-	trackOutbound: (url: string, text?: string, target?: string) => void
-	flag: <T = unknown>(key: string, fallback?: T) => T
-	flagPayload: <T = unknown>(key: string, fallback?: T) => T
-	flags: () => Record<string, unknown>
-	flagPayloads: () => Record<string, unknown>
-	onReady: (callback: (rybbit: Rybbit) => void) => void
+// Umami Analytics https://umami.is/docs/tracker-functions
+interface UmamiPayload {
+	hostname?: string
+	language?: string
+	referrer?: string
+	screen?: string
+	title?: string
+	url?: string
+	website?: string
+	[key: string]: any
+}
+
+interface UmamiEventData {
+	[key: string]: string | number | boolean | null
 }
 
 interface Window {
-	rybbit?: Rybbit
+	umami?: {
+		/**
+		 * Track a pageview with default properties
+		 */
+		track(): void
+		/**
+		 * Track a pageview with custom payload or transform function
+		 */
+		track(payload: UmamiPayload | ((props: UmamiPayload) => UmamiPayload)): void
+		/**
+		 * Track a custom event
+		 */
+		track(eventName: string): void
+		/**
+		 * Track a custom event with additional data
+		 * - Numbers: max precision of 4
+		 * - Strings: max 500 characters
+		 * - Objects: max 50 properties
+		 */
+		track(eventName: string, eventData: UmamiEventData): void
+		/**
+		 * Identify a session with a unique ID
+		 */
+		identify(uniqueId: string): void
+		/**
+		 * Identify a session with a unique ID and additional data
+		 */
+		identify(uniqueId: string, data: UmamiEventData): void
+		/**
+		 * Identify a session with data only
+		 */
+		identify(data: UmamiEventData): void
+	}
 }

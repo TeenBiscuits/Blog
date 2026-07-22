@@ -138,7 +138,7 @@ const { title } = Astro.props
 		}
 	})
 
-	// Track Giscus events with Rybbit
+	// Track Giscus events with Umami
 	function handleGiscusMessage(event: MessageEvent) {
 		// Verify the message is from Giscus
 		if (event.origin !== 'https://giscus.pablopl.dev') {
@@ -150,14 +150,14 @@ const { title } = Astro.props
 
 		const giscusData = event.data.giscus
 
-		// Check if rybbit is available
-		if (typeof window.rybbit === 'undefined') {
+		// Check if umami is available
+		if (typeof window.umami === 'undefined') {
 			return
 		}
 
 		// Handle error messages
 		if ('error' in giscusData) {
-			window.rybbit.event('giscus-error', {
+			window.umami.track('giscus-error', {
 				error: giscusData.error,
 			})
 			return
@@ -167,7 +167,7 @@ const { title } = Astro.props
 		if ('discussion' in giscusData) {
 			const { discussion } = giscusData
 
-			window.rybbit.event('giscus-discussion-loaded', {
+			window.umami.track('giscus-discussion-loaded', {
 				discussionId: discussion.id || 'unknown',
 				reactionCount: discussion.reactionCount || 0,
 				totalCommentCount: discussion.totalCommentCount || 0,

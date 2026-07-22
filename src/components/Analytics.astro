@@ -6,8 +6,10 @@ const locale = Astro.currentLocale
 	is:inline
 	defer
 	data-astro-rerun
-	src="https://analytics.pablopl.dev/api/script.js"
-	data-site-id="c3f261367b80"
+	src="https://analytics.pablopl.dev/script.js"
+	data-website-id="22e6e276-eba7-4919-9174-5a3b9787afc0"
+	data-performance="true"
+	data-domains="blog.pablopl.dev"
 	data-tag={`blog-${locale}`}></script>
 
 <script
@@ -16,11 +18,3 @@ const locale = Astro.currentLocale
 	src="https://analytics.ahrefs.com/analytics.js"
 	data-key="41AHUOkOrsmT26f+Ow8zaQ"
 	async></script>
-
-<script>
-	document.addEventListener('astro:after-swap', () => {
-		if (window.rybbit) {
-			window.rybbit.pageview()
-		}
-	})
-</script>

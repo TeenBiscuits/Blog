@@ -47,8 +47,8 @@ const today = new Date()
 								href={link.url}
 								target="_blank"
 								rel="nofollow noopener noreferrer me"
-								data-rybbit-event="Social Footer Link"
-								data-rybbit-prop-url={link.url}
+								data-umami-event="Social Footer Link"
+								data-umami-event-url={link.url}
 							>
 								{link.name}
 							</a>
@@ -56,7 +56,7 @@ const today = new Date()
 					}
 					<a
 						href={`/${locale}/rss.xml`}
-						data-rybbit-event="RSS Feed Footer Link"
+						data-umami-event="RSS Feed Footer Link"
 						target="_blank"
 						class="hover:text-secondary dark:hover:text-secondary-dark text-lg"
 						aria-label="RSS Feed"
