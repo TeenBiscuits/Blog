@@ -15,7 +15,10 @@ export const getStaticPaths = () =>
 import profilePicture from '/src/assets/about-me.jpg'
 const currentLang = Astro.currentLocale as Lang
 const aboutContent = await getEntry('about', currentLang)
-const { Content } = await render(aboutContent!)
+if (!aboutContent) {
+	return Astro.redirect('/404')
+}
+const { Content } = await render(aboutContent)
 ---
 
 <Layout

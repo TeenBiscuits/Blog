@@ -2,6 +2,7 @@ import js from '@eslint/js'
 import prettierConfig from 'eslint-config-prettier'
 import astro from 'eslint-plugin-astro'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
+import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default [
@@ -9,6 +10,14 @@ export default [
 	...tseslint.configs.recommended,
 	...astro.configs.recommended,
 	prettierConfig,
+	{
+		languageOptions: {
+			globals: {
+				...globals.browser,
+				...globals.node,
+			},
+		},
+	},
 	{
 		// Apply jsx-a11y only to JSX/TSX files, not Astro
 		files: ['**/*.jsx', '**/*.tsx'],

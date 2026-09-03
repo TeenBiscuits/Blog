@@ -6,3 +6,6 @@ dist
 # Ignore all MD/MDX files:
 **/*.mdx
 **/*.md
+
+# Ignore lockfiles
+bun.lock
