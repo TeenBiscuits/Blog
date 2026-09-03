@@ -1,3 +1,4 @@
+import { unified } from '@astrojs/markdown-remark'
 import { defineConfig, fontProviders } from 'astro/config'
 
 import mdx from '@astrojs/mdx'
@@ -53,18 +54,20 @@ export default defineConfig({
 	},
 
 	markdown: {
-		remarkPlugins: [
-			remarkMath,
-			remarkGfm,
-			remarkReadingTime,
-			remarkModifiedTime,
-		],
-		rehypePlugins: [
-			rehypeKatex,
-			rehypeFigureTitle,
-			rehypeAccessibleEmojis,
-			rehypeLocalizedFootnotes,
-		],
+		processor: unified({
+			remarkPlugins: [
+				remarkMath,
+				remarkGfm,
+				remarkReadingTime,
+				remarkModifiedTime,
+			],
+			rehypePlugins: [
+				rehypeKatex,
+				rehypeFigureTitle,
+				rehypeAccessibleEmojis,
+				rehypeLocalizedFootnotes,
+			],
+		}),
 	},
 
 	adapter: vercel({
@@ -73,44 +76,42 @@ export default defineConfig({
 		},
 	}),
 
-	experimental: {
-		fonts: [
-			{
-				provider: fontProviders.fontsource(),
-				name: 'Rubik',
-				cssVariable: '--font-rubik',
-				weights: ['300', '600', '700'], // Variable font range
-				styles: ['normal'],
-				subsets: ['latin'],
-				display: 'swap',
-			},
-			{
-				provider: fontProviders.fontsource(),
-				name: 'Rubik',
-				cssVariable: '--font-rubik',
-				weights: ['300'], // Only font light weight
-				styles: ['italic'],
-				subsets: ['latin'],
-				display: 'swap',
-			},
-			{
-				provider: fontProviders.fontsource(),
-				name: 'Merriweather',
-				cssVariable: '--font-merriweather',
-				weights: ['700'], // Only font bold weight
-				styles: ['normal'],
-				subsets: ['latin'],
-				display: 'swap',
-			},
-			{
-				provider: fontProviders.fontsource(),
-				name: 'Cascadia Code',
-				cssVariable: '--font-cascadia',
-				weights: ['400'], // Only the bold weight
-				styles: ['normal'],
-				subsets: ['latin'],
-				display: 'swap',
-			},
-		],
-	},
+	fonts: [
+		{
+			provider: fontProviders.fontsource(),
+			name: 'Rubik',
+			cssVariable: '--font-rubik',
+			weights: ['300', '600', '700'], // Variable font range
+			styles: ['normal'],
+			subsets: ['latin'],
+			display: 'swap',
+		},
+		{
+			provider: fontProviders.fontsource(),
+			name: 'Rubik',
+			cssVariable: '--font-rubik',
+			weights: ['300'], // Only font light weight
+			styles: ['italic'],
+			subsets: ['latin'],
+			display: 'swap',
+		},
+		{
+			provider: fontProviders.fontsource(),
+			name: 'Merriweather',
+			cssVariable: '--font-merriweather',
+			weights: ['700'], // Only font bold weight
+			styles: ['normal'],
+			subsets: ['latin'],
+			display: 'swap',
+		},
+		{
+			provider: fontProviders.fontsource(),
+			name: 'Cascadia Code',
+			cssVariable: '--font-cascadia',
+			weights: ['400'], // Only the bold weight
+			styles: ['normal'],
+			subsets: ['latin'],
+			display: 'swap',
+		},
+	],
 })

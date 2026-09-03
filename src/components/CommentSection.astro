@@ -26,7 +26,11 @@ const data: data_type = {
 	},
 }
 
-const localeData = data[locale]!
+const defaultLocaleData = {
+	category: 'Comentarios Español',
+	category_id: 'DIC_kwDOQBB9ks4CxNXE',
+}
+const localeData = data[locale] ?? defaultLocaleData
 const { title } = Astro.props
 ---
 
@@ -92,7 +96,7 @@ const { title } = Astro.props
 			}
 		})
 
-		script.parentNode!.appendChild(newScript)
+		script.parentNode?.appendChild(newScript)
 	}
 
 	function setupGiscus() {

@@ -6,3 +6,7 @@ dist
 # Ignore all MD/MDX files:
 **/*.mdx
 **/*.md
+
+# Ignore lockfiles
+pnpm-lock.yaml
+bun.lock

@@ -1,5 +1,5 @@
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts'
-import { localeParams } from '@/i18n'
+import { getLocaleParams } from '@/i18n'
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
 import MarkdownIt from 'markdown-it'
@@ -7,7 +7,7 @@ import sanitizeHtml from 'sanitize-html'
 
 const parser = new MarkdownIt()
 
-export const getStaticPaths = () => localeParams
+export const getStaticPaths = () => getLocaleParams()
 
 export async function GET(context) {
 	const locale = context.params.lang

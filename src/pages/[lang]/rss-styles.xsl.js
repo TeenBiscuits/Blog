@@ -1,6 +1,6 @@
-import { localeParams, useTranslations } from '@/i18n'
+import { getLocaleParams, useTranslations } from '@/i18n'
 
-export const getStaticPaths = () => localeParams
+export const getStaticPaths = () => getLocaleParams()
 
 export async function GET(context) {
 	const locale = context.params.lang
