@@ -34,6 +34,12 @@ export default defineConfig({
 	site: siteUrl,
 	trailingSlash: 'never',
 
+	image: {
+		layout: 'constrained',
+		responsiveStyles: true,
+		breakpoints: [320, 480, 640, 750, 828, 1080, 1280, 1668, 1920, 2048],
+	},
+
 	build: {
 		inlineStylesheets: 'always',
 	},

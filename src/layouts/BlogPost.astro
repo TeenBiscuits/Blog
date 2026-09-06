@@ -43,6 +43,9 @@ const blogImages = import.meta.glob<{ default: ImageMetadata }>(
 )
 
 const coverImagePath = `/src/assets/blogimages/${pubId}/cover.jpg`
+const coverImage = blogImages[coverImagePath]
+	? await blogImages[coverImagePath]()
+	: undefined
 
 const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
 	.utc()
@@ -122,12 +125,12 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead))
 						</div>
 
 						{
-							blogImages[coverImagePath] && (
+							coverImage && (
 								<>
 									<BlogPostImage
 										title={title}
 										pubId={pubId}
-										imageSrc={blogImages[coverImagePath]()}
+										imageSrc={coverImage.default}
 									/>
 									{coverImageCredit && (
 										<p class="mt-2 mb-3 text-sm italic opacity-80">

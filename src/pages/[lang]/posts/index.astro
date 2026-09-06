@@ -83,9 +83,9 @@ const tags = [
 		</h2>
 		<ul class="posts-grid-container">
 			{
-				posts.map((post) => (
+				posts.map((post, index) => (
 					<li>
-						<BlogCard post={post} />
+						<BlogCard post={post} priority={index === 0} />
 					</li>
 				))
 			}
