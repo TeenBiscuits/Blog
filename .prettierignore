@@ -8,4 +8,4 @@ dist
 **/*.md
 
 # Ignore lockfiles
-bun.lock
+pnpm-lock.yaml
