@@ -58,7 +58,7 @@
     "prettier": "^3.9.9",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "prettier-plugin-tailwindcss": "^0.7.4",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "rehype-accessible-emojis": "^0.3.2",
     "typescript-eslint": "^8.71.0"
   },
