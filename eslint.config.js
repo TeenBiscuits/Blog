@@ -66,16 +66,6 @@ export default [
     },
   },
   {
-    files: ["**/*.astro"],
-    languageOptions: {
-      parser: astro.parser,
-      parserOptions: {
-        parser: "@typescript-eslint/parser",
-        extraFileExtensions: [".astro"],
-      },
-    },
-  },
-  {
     files: ["**/*.d.ts"],
     rules: {
       "@typescript-eslint/triple-slash-reference": "off",
