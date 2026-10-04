@@ -64,9 +64,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead));
 >
   <main>
     <article>
-      <div
-        class="app-container relative flex flex-col justify-between gap-8 py-24 lg:flex-row-reverse"
-      >
+      <div class="app-container relative flex flex-col justify-between gap-8 py-24 lg:flex-row-reverse">
         <div class="relative md:w-1/4">
           <div class="sticky top-0 hidden md:top-28 lg:block">
             <TableOfContents headings={headings} />
@@ -91,17 +89,15 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead));
               </span>
 
               <!-- Updated date -->
-              {
-                updatedDate && (
-                  <span>
-                    <Icon
-                      name="mdi:calendar-refresh-outline"
-                      class="text-secondary dark:text-accent-dark inline-block"
-                    />
-                    Last updated on <FormattedDate date={updatedDate} />
-                  </span>
-                )
-              }
+              {updatedDate && (
+                <span>
+                  <Icon
+                    name="mdi:calendar-refresh-outline"
+                    class="text-secondary dark:text-accent-dark inline-block"
+                  />
+                  Last updated on <FormattedDate date={updatedDate} />
+                </span>
+              )}
 
               <!-- Read time -->
               <span>
@@ -110,13 +106,11 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead));
                   class="text-accent dark:text-accent-dark inline-block"
                 />
                 {minutesRead}
-                {
-                  t({
-                    es: "minutos de lectura",
-                    gl: "minutos de lectura",
-                    en: "min read",
-                  })
-                }
+                {t({
+                  es: "minutos de lectura",
+                  gl: "minutos de lectura",
+                  en: "min read",
+                })}
               </span>
               <span class="grow"></span>
               <span>
@@ -124,34 +118,30 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead));
               </span>
             </div>
 
-            {
-              coverImage && (
-                <>
-                  <BlogPostImage
-                    title={title}
-                    pubId={pubId}
-                    imageSrc={coverImage.default}
-                  />
-                  {coverImageCredit && (
-                    <p class="mt-2 mb-3 text-sm italic opacity-80">
-                      {t({ es: "Créditos", gl: "Créditos", en: "Credit" })}:{" "}
-                      {coverImageCredit}
-                    </p>
-                  )}
-                </>
-              )
-            }
+            {coverImage && (
+              <>
+                <BlogPostImage
+                  title={title}
+                  pubId={pubId}
+                  imageSrc={coverImage.default}
+                />
+                {coverImageCredit && (
+                  <p class="mt-2 mb-3 text-sm italic opacity-80">
+                    {t({ es: "Créditos", gl: "Créditos", en: "Credit" })}:{" "}
+                    {coverImageCredit}
+                  </p>
+                )}
+              </>
+            )}
           </div>
           <div class="mb-8 flex flex-wrap justify-between gap-2">
             <div class="flex flex-wrap gap-4">
-              {
-                tags &&
-                  tags.map((tag) => (
-                    <div class="bg-secondary dark:bg-secondary-dark rounded-xl px-5 py-3 font-medium italic md:px-4 md:py-2">
-                      #{tag}
-                    </div>
-                  ))
-              }
+              {tags &&
+                tags.map((tag) => (
+                  <div class="bg-secondary dark:bg-secondary-dark rounded-xl px-5 py-3 font-medium italic md:px-4 md:py-2">
+                    #{tag}
+                  </div>
+                ))}
             </div>
             <SocialShare
               title={title}
@@ -160,9 +150,7 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead));
               url={`${Astro.url.href}?utm_medium=social_share`}
             />
           </div>
-          <div
-            class="prose prose-neutral prose-lg md:prose-xl dark:prose-invert prose-img:rounded-xl prose-figure:text-center prose-img:mx-auto prose-style"
-          >
+          <div class="prose prose-neutral prose-lg md:prose-xl dark:prose-invert prose-img:rounded-xl prose-figure:text-center prose-img:mx-auto prose-style">
             <slot />
           </div>
 
@@ -175,23 +163,21 @@ const minutesRead = Math.ceil(Number(remarkPluginFrontmatter.minutesRead));
               target="_blank"
               rel="nofollow noopener noreferrer"
               class="underline-offset-4 opacity-70 hover:underline hover:opacity-100"
-              ><Icon name="mdi:pencil-outline" class="inline-block" />
-              {
-                t({
-                  es: "Sugerir un cambio",
-                  gl: "Suxerir un cambio",
-                  en: "Suggest an edit",
-                })
-              }
+            >
+              <Icon name="mdi:pencil-outline" class="inline-block" />
+              {t({
+                es: "Sugerir un cambio",
+                gl: "Suxerir un cambio",
+                en: "Suggest an edit",
+              })}
             </a>
             <p class="opacity-70">
-              {
-                t({
-                  es: "Última modificación",
-                  gl: "Última modificación",
-                  en: "Last modified",
-                })
-              }: {lastModified}
+              {t({
+                es: "Última modificación",
+                gl: "Última modificación",
+                en: "Last modified",
+              })}
+              : {lastModified}
             </p>
           </div>
 

@@ -11,9 +11,7 @@ interface Props {
 const { title, pubId, imageSrc } = Astro.props;
 ---
 
-<div
-  class="dark:bg-primary-dark bg-primary relative overflow-hidden rounded-xl"
->
+<div class="dark:bg-primary-dark bg-primary relative overflow-hidden rounded-xl">
   <Picture
     src={imageSrc}
     alt={title}

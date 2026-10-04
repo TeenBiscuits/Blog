@@ -46,13 +46,11 @@ const tags = [
       {t({ es: "Artículos", gl: "Artigos", en: "Posts" })}
     </h1>
     <p class="text-lg leading-8 md:w-2/3">
-      {
-        t({
-          es: "escribo cosas y las publico, a veces, hasta pienso antes de escribirlas",
-          gl: "escribo cousas e publícoas, ás veces, ata penso antes de escribilas",
-          en: "I write things and publish them, sometimes I even think before writing them",
-        })
-      }
+      {t({
+        es: "escribo cosas y las publico, a veces, hasta pienso antes de escribirlas",
+        gl: "escribo cousas e publícoas, ás veces, ata penso antes de escribilas",
+        en: "I write things and publish them, sometimes I even think before writing them",
+      })}
     </p>
   </main>
   <section class="app-container py-12">
@@ -74,21 +72,17 @@ const tags = [
       <div class="grow"></div>
       <div>
         {posts.length}
-        {
-          posts.length !== 1
-            ? t({ es: "artículos", gl: "artigos", en: "posts" })
-            : t({ es: "artículo", gl: "artigo", en: "post" })
-        }
+        {posts.length !== 1
+          ? t({ es: "artículos", gl: "artigos", en: "posts" })
+          : t({ es: "artículo", gl: "artigo", en: "post" })}
       </div>
     </h2>
     <ul class="posts-grid-container">
-      {
-        posts.map((post, index) => (
-          <li>
-            <BlogCard post={post} priority={index === 0} />
-          </li>
-        ))
-      }
+      {posts.map((post, index) => (
+        <li>
+          <BlogCard post={post} priority={index === 0} />
+        </li>
+      ))}
     </ul>
   </section>
 </Layout>

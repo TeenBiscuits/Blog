@@ -29,33 +29,29 @@ const coverImage = blogImages[coverImagePath]
   href={`/${locale}/posts/${id}`}
   class="group hover:bg-secondary dark:hover:bg-secondary-dark flex h-full flex-col gap-4 rounded-3xl p-3 pb-8 transition-colors"
 >
-  {
-    coverImage && (
-      <div class="timeline-view animate-blurred-fade-in animate-range-[entry_10%_contain_30%] relative overflow-hidden rounded-xl">
-        <Picture
-          src={coverImage.default}
-          alt={post.data.title}
-          widths={[320, 480, 640, 768]}
-          sizes="(min-width: 1536px) 334px, (min-width: 1280px) 280px, (min-width: 768px) calc((100vw - 7.5rem) / 2), calc(100vw - 3rem)"
-          formats={["avif", "webp"]}
-          fallbackFormat="jpg"
-          priority={priority}
-          layout="constrained"
-          class="relative aspect-video w-full rounded-xl object-cover transition-transform duration-200 group-hover:scale-110"
-          transition:name={`blog-cover-${post.data.pubId}`}
-        />
-      </div>
-    )
-  }
+  {coverImage && (
+    <div class="timeline-view animate-blurred-fade-in animate-range-[entry_10%_contain_30%] relative overflow-hidden rounded-xl">
+      <Picture
+        src={coverImage.default}
+        alt={post.data.title}
+        widths={[320, 480, 640, 768]}
+        sizes="(min-width: 1536px) 334px, (min-width: 1280px) 280px, (min-width: 768px) calc((100vw - 7.5rem) / 2), calc(100vw - 3rem)"
+        formats={["avif", "webp"]}
+        fallbackFormat="jpg"
+        priority={priority}
+        layout="constrained"
+        class="relative aspect-video w-full rounded-xl object-cover transition-transform duration-200 group-hover:scale-110"
+        transition:name={`blog-cover-${post.data.pubId}`}
+      />
+    </div>
+  )}
   <h3
     class="text-2xl font-semibold transition-colors"
     transition:name={`blog-title-${post.data.pubId}`}
   >
     {post.data.title}
   </h3>
-  <p class="line-clamp-3 opacity-80">
-    {post.data.description}
-  </p>
+  <p class="line-clamp-3 opacity-80">{post.data.description}</p>
   <p class="mt-auto text-sm tracking-tight uppercase">
     <FormattedDate date={post.data.pubDate} />
   </p>

@@ -22,17 +22,15 @@ const locale = Astro.currentLocale as Lang;
         />
       </a>
       <div class="hidden items-center gap-8 md:flex">
-        {
-          WebsiteLinks.map((link) => (
-            <NavbarLink
-              class="text-lg"
-              href={`/${locale}${link.url}`}
-              target={link.url.charAt(0) === "h" ? "_blank" : "_self"}
-            >
-              {link.name[locale]}
-            </NavbarLink>
-          ))
-        }
+        {WebsiteLinks.map((link) => (
+          <NavbarLink
+            class="text-lg"
+            href={`/${locale}${link.url}`}
+            target={link.url.charAt(0) === "h" ? "_blank" : "_self"}
+          >
+            {link.name[locale]}
+          </NavbarLink>
+        ))}
         <LocaleSelector transition:persist />
         <ThemeSelector transition:persist />
       </div>
@@ -61,16 +59,14 @@ const locale = Astro.currentLocale as Lang;
           <Icon aria-hidden name="mdi:close" size={32} />
         </button>
         <div class="flex h-full flex-col items-start gap-8 pt-16">
-          {
-            WebsiteLinks.map((link) => (
-              <NavbarLink
-                class="text-4xl font-light"
-                href={`/${locale}${link.url}`}
-              >
-                {link.name[locale]}
-              </NavbarLink>
-            ))
-          }
+          {WebsiteLinks.map((link) => (
+            <NavbarLink
+              class="text-4xl font-light"
+              href={`/${locale}${link.url}`}
+            >
+              {link.name[locale]}
+            </NavbarLink>
+          ))}
           <div class="mt-4 flex gap-8">
             <LocaleSelector />
             <ThemeSelector />

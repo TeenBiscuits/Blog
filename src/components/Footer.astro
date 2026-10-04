@@ -11,9 +11,7 @@ const today = new Date();
 ---
 
 <footer transition:persist>
-  <div
-    class="app-container border-foreground/50 dark:border-foreground-dark/50 border-t-2"
-  >
+  <div class="app-container border-foreground/50 dark:border-foreground-dark/50 border-t-2">
     <div class="flex justify-center gap-12 pt-12">
       <Frase class="h-auto w-xl" />
     </div>
@@ -23,16 +21,14 @@ const today = new Date();
           {t({ es: "Enlaces", gl: "Enlaces", en: "Links" })}
         </h3>
         <div class="mt-4 flex flex-wrap gap-4">
-          {
-            WebsiteLinks.map((link) => (
-              <a
-                class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
-                href={`/${locale}${link.url}`}
-              >
-                {link.name[locale]}
-              </a>
-            ))
-          }
+          {WebsiteLinks.map((link) => (
+            <a
+              class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
+              href={`/${locale}${link.url}`}
+            >
+              {link.name[locale]}
+            </a>
+          ))}
         </div>
       </div>
       <div>
@@ -40,20 +36,18 @@ const today = new Date();
           {t({ es: "Redes Sociales", gl: "Redes Sociais", en: "Socials" })}
         </h3>
         <div class="mt-4 flex flex-wrap gap-4">
-          {
-            SocialLinks.map((link) => (
-              <a
-                class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
-                href={link.url}
-                target="_blank"
-                rel="nofollow noopener noreferrer me"
-                data-umami-event="Social Footer Link"
-                data-umami-event-url={link.url}
-              >
-                {link.name}
-              </a>
-            ))
-          }
+          {SocialLinks.map((link) => (
+            <a
+              class="decoration-secondary dark:decoration-secondary-dark text-lg decoration-wavy underline-offset-2 hover:underline"
+              href={link.url}
+              target="_blank"
+              rel="nofollow noopener noreferrer me"
+              data-umami-event="Social Footer Link"
+              data-umami-event-url={link.url}
+            >
+              {link.name}
+            </a>
+          ))}
           <a
             href={`/${locale}/rss.xml`}
             data-umami-event="RSS Feed Footer Link"
@@ -69,18 +63,14 @@ const today = new Date();
         <Firma />
       </div>
     </div>
-    <div
-      class="app-container flex items-center justify-between pb-6 text-center"
-    >
+    <div class="app-container flex items-center justify-between pb-6 text-center">
       <p class="w-full text-center">
         &copy; {today.getFullYear()}
-        {
-          t({
-            es: "Hecho con ❤️ por Pablo Portas López",
-            gl: "Feito con ❤️ por Pablo Portas López",
-            en: "Made with ❤️ by Pablo Portas López",
-          })
-        }
+        {t({
+          es: "Hecho con ❤️ por Pablo Portas López",
+          gl: "Feito con ❤️ por Pablo Portas López",
+          en: "Made with ❤️ by Pablo Portas López",
+        })}
       </p>
     </div>
   </div>

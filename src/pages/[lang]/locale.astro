@@ -22,29 +22,25 @@ export const getStaticPaths = () =>
       {t({ es: "Elige Idioma", gl: "Escolle Idioma", en: "Choose Language" })}
     </h1>
     <p class="text-lg leading-8">
-      {
-        t({
-          es: "Dicen que escribir en varios idiomas es bueno para el cerebro y que en cada idioma que hablas tienes una personalidad. No sé si nada de eso es verdad, pero mi blog esta en los tres idioma que domino.",
-          gl: "Din que escribir en varios idiomas é bo para o cerebro e que en cada idioma que falas tes unha personalidade. Non sei se nada diso é verdade, pero o meu blog está nos tres idiomas que domino.",
-          en: "They say that writing in multiple languages is good for the brain and that in each language you speak you have a different personality. I don't know if any of that is true, but my blog is in the three languages I master.",
-        })
-      }
+      {t({
+        es: "Dicen que escribir en varios idiomas es bueno para el cerebro y que en cada idioma que hablas tienes una personalidad. No sé si nada de eso es verdad, pero mi blog esta en los tres idioma que domino.",
+        gl: "Din que escribir en varios idiomas é bo para o cerebro e que en cada idioma que falas tes unha personalidade. Non sei se nada diso é verdade, pero o meu blog está nos tres idiomas que domino.",
+        en: "They say that writing in multiple languages is good for the brain and that in each language you speak you have a different personality. I don't know if any of that is true, but my blog is in the three languages I master.",
+      })}
     </p>
   </main>
   <section class="app-container py-24">
     <div class="flex flex-col justify-center gap-12 md:flex-row md:gap-30">
-      {
-        Object.entries(LOCALES).map(([lang, config]) => (
-          <div>
-            <a
-              class="item-center decoration-primary dark:decoration-primary-dark text-4xl decoration-wavy underline-offset-4 hover:underline"
-              href={`/${lang}`}
-            >
-              {config.emogi} {config.label}
-            </a>
-          </div>
-        ))
-      }
+      {Object.entries(LOCALES).map(([lang, config]) => (
+        <div>
+          <a
+            class="item-center decoration-primary dark:decoration-primary-dark text-4xl decoration-wavy underline-offset-4 hover:underline"
+            href={`/${lang}`}
+          >
+            {config.emogi} {config.label}
+          </a>
+        </div>
+      ))}
     </div>
   </section>
 </Layout>
