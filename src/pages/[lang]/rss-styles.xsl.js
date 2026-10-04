@@ -1,11 +1,11 @@
-import { getLocaleParams, useTranslations } from '@/i18n'
+import { getLocaleParams, useTranslations } from "@/i18n";
 
-export const getStaticPaths = () => getLocaleParams()
+export const getStaticPaths = () => getLocaleParams();
 
 export async function GET(context) {
-	const locale = context.params.lang
-	const t = useTranslations(locale)
-	const content = `
+  const locale = context.params.lang;
+  const t = useTranslations(locale);
+  const content = `
 <!--
 
 # This XML stylesheet is from Pretty Feed
@@ -29,17 +29,17 @@ https://github.com/genmon/aboutfeeds/blob/main/tools/pretty-feed-v3.xsl
         <nav class="container-md px-3 py-2 mt-2 mt-md-5 mb-5 markdown-body">
           <p class="bg-yellow-light ml-n1 px-1 py-1 mb-1">
             ${t({
-							es: '<strong>Este es un feed web,</strong> también conocido como feed RSS. <strong>Suscríbete</strong> copiando la URL de la barra de direcciones en tu lector de noticias.',
-							gl: '<strong>Esta é unha fonte web,</strong> tamén coñecida como fonte RSS. <strong>Subscríbete</strong> copiando o URL da barra de enderezos no teu lector de noticias.',
-							en: '<strong>This is a web feed,</strong> also known as an RSS feed. <strong>Subscribe</strong> by copying the URL from the address bar into your newsreader.',
-						})}
+              es: "<strong>Este es un feed web,</strong> también conocido como feed RSS. <strong>Suscríbete</strong> copiando la URL de la barra de direcciones en tu lector de noticias.",
+              gl: "<strong>Esta é unha fonte web,</strong> tamén coñecida como fonte RSS. <strong>Subscríbete</strong> copiando o URL da barra de enderezos no teu lector de noticias.",
+              en: "<strong>This is a web feed,</strong> also known as an RSS feed. <strong>Subscribe</strong> by copying the URL from the address bar into your newsreader.",
+            })}
           </p>
           <p class="text-gray">
             ${t({
-							es: 'Visita <a href="https://aboutfeeds.com">About Feeds</a> para comenzar con los lectores de noticias y las suscripciones. Es gratis.',
-							gl: 'Visita <a href="https://aboutfeeds.com">About Feeds</a> para comezar cos lectores de noticias e as subscricións. É de balde.',
-							en: 'Visit <a href="https://aboutfeeds.com">About Feeds</a> to get started with newsreaders and subscribing. It’s free.',
-						})}
+              es: 'Visita <a href="https://aboutfeeds.com">About Feeds</a> para comenzar con los lectores de noticias y las suscripciones. Es gratis.',
+              gl: 'Visita <a href="https://aboutfeeds.com">About Feeds</a> para comezar cos lectores de noticias e as subscricións. É de balde.',
+              en: 'Visit <a href="https://aboutfeeds.com">About Feeds</a> to get started with newsreaders and subscribing. It’s free.',
+            })}
           </p>
         </nav>
         <div class="container-md px-3 py-3 markdown-body">
@@ -63,7 +63,7 @@ https://github.com/genmon/aboutfeeds/blob/main/tools/pretty-feed-v3.xsl
                 <path d="M184 213A140 140 0 0 0 44 73 V 38a175 175 0 0 1 175 175z" fill="#FFF"/>
               </svg>
 
-              ${t({ es: 'Vista Previa del Feed Web', gl: 'Vista Previa da Fonte Web', en: 'Web Feed Preview' })}
+              ${t({ es: "Vista Previa del Feed Web", gl: "Vista Previa da Fonte Web", en: "Web Feed Preview" })}
             </h1>
             <h2><xsl:value-of select="/rss/channel/title"/></h2>
             <p><xsl:value-of select="/rss/channel/description"/></p>
@@ -71,10 +71,10 @@ https://github.com/genmon/aboutfeeds/blob/main/tools/pretty-feed-v3.xsl
               <xsl:attribute name="href">
                 <xsl:value-of select="/rss/channel/link"/>
               </xsl:attribute>
-              ${t({ es: 'Visitar el Sitio Web', gl: 'Visitar o Sitio Web', en: 'Visit Website' })} &#x2192;
+              ${t({ es: "Visitar el Sitio Web", gl: "Visitar o Sitio Web", en: "Visit Website" })} &#x2192;
             </a>
           </header>
-          <h2>${t({ es: 'Artículos Recientes', gl: 'Artigos Recentes', en: 'Recent Posts' })}</h2>
+          <h2>${t({ es: "Artículos Recientes", gl: "Artigos Recentes", en: "Recent Posts" })}</h2>
           <xsl:for-each select="/rss/channel/item">
             <div class="pb-5">
               <h3 class="mb-0">
@@ -86,7 +86,7 @@ https://github.com/genmon/aboutfeeds/blob/main/tools/pretty-feed-v3.xsl
                 </a>
               </h3>
               <small class="text-gray">
-                ${t({ es: 'Publicado', gl: 'Publicado', en: 'Published' })}: <xsl:value-of select="pubDate" />
+                ${t({ es: "Publicado", gl: "Publicado", en: "Published" })}: <xsl:value-of select="pubDate" />
               </small>
             </div>
           </xsl:for-each>
@@ -95,7 +95,7 @@ https://github.com/genmon/aboutfeeds/blob/main/tools/pretty-feed-v3.xsl
     </html>
   </xsl:template>
 </xsl:stylesheet>
-  `
+  `;
 
-	return new Response(content)
+  return new Response(content);
 }

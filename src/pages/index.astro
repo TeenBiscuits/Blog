@@ -2,54 +2,54 @@
 // Inspired from https://github.com/psephopaiktes/astro-i18n-starter/
 // Redirect to Top page for user's system locale
 
-import { LOCALES, DEFAULT_LOCALE } from '@/i18n'
-import Favicons from '@/components/Favicons.astro'
-import OpenGraph from '@/components/OpenGraph.astro'
+import { LOCALES, DEFAULT_LOCALE } from "@/i18n";
+import Favicons from "@/components/Favicons.astro";
+import OpenGraph from "@/components/OpenGraph.astro";
 
-const langs = Object.keys(LOCALES)
-const baseUrl = import.meta.env.PROD ? Astro.site : '/'
-const defaultLocale = DEFAULT_LOCALE
+const langs = Object.keys(LOCALES);
+const baseUrl = import.meta.env.PROD ? Astro.site : "/";
+const defaultLocale = DEFAULT_LOCALE;
 ---
 
 <html lang={DEFAULT_LOCALE}>
-	<head>
-		<meta charset="UTF-8" />
-		<link rel="sitemap" href="/sitemap-index.xml" />
-		<meta name="generator" content={Astro.generator} />
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
 
-		<Favicons />
-		<OpenGraph title="redirect..." />
+    <Favicons />
+    <OpenGraph title="redirect..." />
 
-		<noscript>
-			<meta
-				http-equiv="refresh"
-				content={`0;url=${baseUrl + DEFAULT_LOCALE}`}
-			/>
-		</noscript>
+    <noscript>
+      <meta
+        http-equiv="refresh"
+        content={`0;url=${baseUrl + DEFAULT_LOCALE}`}
+      />
+    </noscript>
 
-		<script is:inline define:vars={{ langs, baseUrl, defaultLocale }}>
-			if (
-				localStorage.selectedLang &&
-				langs.includes(localStorage.selectedLang)
-			) {
-				location.href = `${baseUrl + localStorage.selectedLang}`
-			} else {
-				const browserLang = navigator.language.toLowerCase()
+    <script is:inline define:vars={{ langs, baseUrl, defaultLocale }}>
+      if (
+        localStorage.selectedLang &&
+        langs.includes(localStorage.selectedLang)
+      ) {
+        location.href = `${baseUrl + localStorage.selectedLang}`;
+      } else {
+        const browserLang = navigator.language.toLowerCase();
 
-				if (langs.includes(browserLang)) {
-					location.href = `${baseUrl + browserLang}`
-				} else if (langs.includes(browserLang.split('-')[0])) {
-					location.href = `${baseUrl + browserLang.split('-')[0]}`
-				} else {
-					location.href = `${baseUrl + defaultLocale}`
-				}
-			}
-		</script>
-	</head>
-	<body>
-		<h1>redirect...</h1>
-		<p>
-			If not redirected, <a href={`${baseUrl + DEFAULT_LOCALE}`}>click here</a>.
-		</p>
-	</body>
+        if (langs.includes(browserLang)) {
+          location.href = `${baseUrl + browserLang}`;
+        } else if (langs.includes(browserLang.split("-")[0])) {
+          location.href = `${baseUrl + browserLang.split("-")[0]}`;
+        } else {
+          location.href = `${baseUrl + defaultLocale}`;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>redirect...</h1>
+    <p>
+      If not redirected, <a href={`${baseUrl + DEFAULT_LOCALE}`}>click here</a>.
+    </p>
+  </body>
 </html>

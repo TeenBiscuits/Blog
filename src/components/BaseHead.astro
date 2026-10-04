@@ -1,26 +1,26 @@
 ---
-import { SITE_TITLE } from '@/consts'
-import { useTranslations, type Lang } from '@/i18n'
-const t = useTranslations(Astro.currentLocale as Lang)
-import Favicons from '@/components/Favicons.astro'
-import OpenGraph from '@/components/OpenGraph.astro'
-import Analytics from '@/components/Analytics.astro'
-import HRefLang from '@/components/HRefLang.astro'
-import '@/styles/global.css'
-import { Font } from 'astro:assets'
-import { ClientRouter } from 'astro:transitions'
+import { SITE_TITLE } from "@/consts";
+import { useTranslations, type Lang } from "@/i18n";
+const t = useTranslations(Astro.currentLocale as Lang);
+import Favicons from "@/components/Favicons.astro";
+import OpenGraph from "@/components/OpenGraph.astro";
+import Analytics from "@/components/Analytics.astro";
+import HRefLang from "@/components/HRefLang.astro";
+import "@/styles/global.css";
+import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
-	title?: string
-	description?: string
-	keywords?: string
-	image?: string
+  title?: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
 }
 
-const locale = Astro.currentLocale as Lang
-const siteUrl = Astro.site
-const canonicalURL = new URL(Astro.url.pathname, siteUrl)
-const { title, description, keywords, image } = Astro.props
+const locale = Astro.currentLocale as Lang;
+const siteUrl = Astro.site;
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const { title, description, keywords, image } = Astro.props;
 ---
 
 {/* Global Metadata */}
@@ -36,36 +36,33 @@ const { title, description, keywords, image } = Astro.props
 <link rel="canonical" href={canonicalURL} />
 
 <OpenGraph
-	title={title}
-	description={description}
-	keywords={keywords}
-	image={image}
+  title={title}
+  description={description}
+  keywords={keywords}
+  image={image}
 />
 
 {/* Auto-discovery */}
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
-	rel="alternate"
-	type="application/rss+xml"
-	title={`${t(SITE_TITLE)} RSS`}
-	href={new URL(`${locale}/rss.xml`, Astro.site)}
+  rel="alternate"
+  type="application/rss+xml"
+  title={`${t(SITE_TITLE)} RSS`}
+  href={new URL(`${locale}/rss.xml`, Astro.site)}
 />
 
 <Analytics />
 
 {/* Fonts */}
 <Font
-	cssVariable="--font-merriweather"
-	preload={[{ subset: 'latin', style: 'normal' }, { weight: '700' }]}
+  cssVariable="--font-merriweather"
+  preload={[{ subset: "latin", style: "normal", weight: "700" }]}
 />
 <Font
-	cssVariable="--font-rubik"
-	preload={[{ subset: 'latin', style: 'normal' }, { weight: '300' }]}
+  cssVariable="--font-rubik"
+  preload={[{ subset: "latin", style: "normal", weight: "300" }]}
 />
-<Font
-	cssVariable="--font-cascadia"
-	preload={[{ subset: 'latin', style: 'normal' }, { weight: '400' }]}
-/>
+<Font cssVariable="--font-cascadia" />
 
 {/* View Transitions */}
 <ClientRouter />

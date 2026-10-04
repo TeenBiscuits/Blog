@@ -1,30 +1,32 @@
 ---
 import {
-	SITE_TITLE,
-	SITE_TITLE_SOCIAL,
-	SITE_DESCRIPTION,
-	SITE_KEYWORDS,
-	X_ACCOUNT,
-} from '@/consts'
-import { useTranslations, LOCALES, type Lang } from '@/i18n'
-const t = useTranslations(Astro.currentLocale as Lang)
+  SITE_TITLE,
+  SITE_TITLE_SOCIAL,
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  X_ACCOUNT,
+} from "@/consts";
+import { useTranslations, LOCALES, type Lang } from "@/i18n";
+const t = useTranslations(Astro.currentLocale as Lang);
 interface Props {
-	title?: string
-	description?: string
-	keywords?: string
-	image?: string
+  title?: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
 }
-const { title, description, keywords, image } = Astro.props
+const { title, description, keywords, image } = Astro.props;
 
-const locale = Astro.currentLocale as Lang
-const localeTitle = title ? `${title} - ${t(SITE_TITLE)}` : t(SITE_TITLE_SOCIAL)
-const localeDescription = description || t(SITE_DESCRIPTION)
+const locale = Astro.currentLocale as Lang;
+const localeTitle = title
+  ? `${title} - ${t(SITE_TITLE)}`
+  : t(SITE_TITLE_SOCIAL);
+const localeDescription = description || t(SITE_DESCRIPTION);
 const localeKeywords = keywords
-	? `${t(SITE_KEYWORDS)}, ${keywords}`
-	: t(SITE_KEYWORDS)
+  ? `${t(SITE_KEYWORDS)}, ${keywords}`
+  : t(SITE_KEYWORDS);
 const ogImage = image
-	? `/open-graph/${image}.jpg`
-	: `/open-graph/${locale}/og.png`
+  ? `/open-graph/${image}.jpg`
+  : `/open-graph/${locale}/og.png`;
 ---
 
 {/* Primary Meta Tags */}
@@ -44,7 +46,7 @@ const ogImage = image
 <meta property="og:image" content={new URL(ogImage, Astro.url)} />
 <meta property="og:locale" content={LOCALES[locale]?.lang || locale} />
 {
-	/*
+  /*
 <meta property="og:locale:alternate" content="es_ES" />
 <meta property="og:locale:alternate" content="gl_ES" />
 <meta property="og:locale:alternate" content="en_GB" />
