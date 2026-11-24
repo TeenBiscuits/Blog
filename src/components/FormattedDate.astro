@@ -10,6 +10,11 @@ import dayjs from "dayjs";
 import "dayjs/locale/en.js";
 import "dayjs/locale/es.js";
 import "dayjs/locale/gl.js";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 /* Limitations of Vite analyze
 Object.keys(LOCALES).forEach((lang) => {
 	import(`dayjs/locale/${lang}.js`)
@@ -18,5 +23,5 @@ Object.keys(LOCALES).forEach((lang) => {
 ---
 
 <time datetime={date.toISOString()}>
-  {dayjs(date).locale(Locale).format("D MMMM YYYY")}
+  {dayjs(date).tz("Europe/Madrid").locale(Locale).format("D MMMM YYYY")}
 </time>

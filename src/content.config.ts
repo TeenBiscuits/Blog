@@ -9,6 +9,7 @@ const blog = defineCollection({
     pubId: z.string(),
     title: z.string(),
     description: z.string(),
+    // For publication times, use ISO 8601 with the offset for Europe/Madrid on that date.
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     coverImageCredit: z.string().optional(),
