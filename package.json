@@ -23,7 +23,7 @@
     "@astrojs/vercel": "^11.0.15",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "7.4.0",
+    "astro": "7.4.7",
     "astro-embed": "^0.14.0",
     "astro-icon": "^1.2.0",
     "astro-social-share": "^2.2.0",
